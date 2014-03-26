@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * @author Erik Lunna<eslunna@gmail.com>
- Date: Purpose:
+ * Date: Purpose:
  * @param <T>
  */
 public class Bag_ResizeableArray<T> implements BagInterface<T> {
@@ -94,23 +94,20 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
     public T remove() {
         T result = removeEntry(numberOfEntries - 1);
         return result;
-    } // end remove
+    }
     // Removes and returns the entry at a given array index.
     // If no such entry exists, returns null.
 
-    @Override
     /**
      * Removes one occurrence of a given entry from this bag.
      *
      * @param anEntry the entry to be removed
      * @return true if the removal was successful, or false if not
+     *
+     * public boolean remove(T anEntry) { int index = getIndexOf(anEntry); T
+     * result = removeEntry(index); return anEntry.equals(result); } // end
+     * remove
      */
-    public boolean remove(T anEntry) {
-        int index = getIndexOf(anEntry);
-        T result = removeEntry(index);
-        return anEntry.equals(result);
-    } // end remove
-
     /**
      * Removes all entries from this bag.
      */
@@ -187,11 +184,16 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         }
         return found;
     }
-    
-   // Doubles the size of the array bag if it is full.
+
+    // Doubles the size of the array bag if it is full.
     private void ensureCapacity() {
         if (numberOfEntries == bagArray.length) {
             bagArray = Arrays.copyOf(bagArray, 2 * bagArray.length);
-        } 
+        }
+    }
+
+    @Override
+    public T remove(int givenIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

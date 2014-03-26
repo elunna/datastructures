@@ -2,6 +2,7 @@ package adts;
 
 //LISTING 15-4 An outline of the class LinkedListWithIterator
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class List_LinkedWithIterator<T> implements ListWithIteratorInterface<T> {
 
@@ -272,6 +273,7 @@ public class List_LinkedWithIterator<T> implements ListWithIteratorInterface<T> 
         // < Implementations of the methods in the interface Iterator  go here; 
         // you can see them in Segments 15.21 through  15.23.> . .
 
+        @Override
         public T next() {
             if (hasNext()) {
                 Node returnNode = nextNode; // get next node

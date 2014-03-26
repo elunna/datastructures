@@ -1,8 +1,13 @@
 package adts;
 
 /**
+ * Description:  This is an array based generic collection.
+ * This bag is a fixed sized array. 
+ * It includes methods to manage manage its contents.
+ * 
  * @author Erik Lunna<eslunna@gmail.com>
- * Date: Purpose:
+ * Date: 
+ * 
  * @param <T>
  */
 public class ArrayBag<T> implements BagInterface<T> {
@@ -64,7 +69,6 @@ public class ArrayBag<T> implements BagInterface<T> {
 
     /**
      * Sees whether this bag is full.
-     *
      * @return true if the bag is full, or false if not
      */
     @Override
@@ -102,12 +106,13 @@ public class ArrayBag<T> implements BagInterface<T> {
     public T remove() {
         T result = remove(numberOfEntries - 1);
         return result;
-    } // end remove
-    // Removes and returns the entry at a given array index.
-    // If no such entry exists, returns null.
+    }
 
-// Removes and returns the entry at a given index within the arraybag.
-// If no such entry exists, returns null.
+    /**
+     * Removes and returns the entry at a given index within the arraybag.
+     * @param givenIndex
+     * @return If no such entry exists, returns null.
+     */
     @Override
     public T remove(int givenIndex) {
         T result = null;
