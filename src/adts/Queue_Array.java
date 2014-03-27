@@ -4,21 +4,21 @@ package adts;
  * An outline of an array-based implementation of the ADT queue 
  * implements a queue of objects by using A Circular Array
  *
- * @author Erik Lunna<eslunna@gmail.com>
- * Date: 11/12 Purpose:
+ * @author Erik Lunna
+ * <eslunna@gmail.com>
+ * Purpose: Circular array of queue entries and one unused location
  * @param <T>
  */
 public class Queue_Array<T> implements QueueInterface<T> {
-// circular array of queue entries and one unused location
-
+    private static final int DEFAULT_INITIAL_CAPACITY = 50;
     private T[] queue;
     private int frontIndex;
     private int backIndex;
-    private static final int DEFAULT_INITIAL_CAPACITY = 50;
-
+    
+  
     public Queue_Array() {
         this(DEFAULT_INITIAL_CAPACITY);
-    } // end default constructor 
+    }  
 
     public Queue_Array(int initialCapacity) {
         // the cast is safe because the new array contains null entries 
@@ -27,9 +27,9 @@ public class Queue_Array<T> implements QueueInterface<T> {
         queue = tempQueue;
         frontIndex = 0;
         backIndex = initialCapacity;
-    } // end constructor 
+    }
 
-//    < Implementations of the queue operations go here. > 
+
     @Override
     public void enqueue(T newEntry) {
         ensureCapacity();
@@ -63,12 +63,12 @@ public class Queue_Array<T> implements QueueInterface<T> {
     } 
     
     /**
-     * detects when the array is full by using the criterion in Segment 11.10: 
-     * Doubles the size of the array queue if it is full 
+     * detects when the array is full, and doubles size if it is full 
      */
     private void ensureCapacity() {
+        // if array is full, double size of array 
         if (frontIndex == ((backIndex + 2) % queue.length)) {
-            // if array is full, double size of array 
+            
             T[] oldQueue = queue;
             int oldSize = oldQueue.length;
             // the cast is safe because the new array contains null entries 
@@ -93,8 +93,20 @@ public class Queue_Array<T> implements QueueInterface<T> {
         }
     }
 
+    // Test this!!
     @Override
     public int getLength() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if (frontIndex < backIndex) {
+            return backIndex - frontIndex;
+            
+        }
+        else if (frontIndex > backIndex) {
+            return queue.length - frontIndex + backIndex;
+        }
+        else 
+            return -1;
+    
     }
+
 }

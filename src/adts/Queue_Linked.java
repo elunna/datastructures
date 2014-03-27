@@ -17,7 +17,7 @@ public class Queue_Linked< T> implements QueueInterface< T> {
         if (isEmpty()) {
             firstNode = newNode;
         } else {
-            lastNode.setNextNode(newNode);
+            lastNode.next = newNode;
         }
         lastNode = newNode;
     }
@@ -26,8 +26,8 @@ public class Queue_Linked< T> implements QueueInterface< T> {
     public T dequeue() {
         T front = null;
         if (!isEmpty()) {
-            front = firstNode.getData();
-            firstNode = firstNode.getNextNode();
+            front = firstNode.data;
+            firstNode = firstNode.next;
             if (firstNode == null) {
                 lastNode = null;
             }
@@ -37,7 +37,7 @@ public class Queue_Linked< T> implements QueueInterface< T> {
 
     @Override
     public boolean isEmpty() {
-        return (firstNode == null)&& (lastNode == null);
+        return (firstNode == null) && (lastNode == null);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Queue_Linked< T> implements QueueInterface< T> {
     public T getFront() {
         T front = null;
         if (!isEmpty()) {
-            front = firstNode.getData();
+            front = firstNode.data;
         }
         return front;
     }
@@ -61,8 +61,8 @@ public class Queue_Linked< T> implements QueueInterface< T> {
     }
 
     private class Node {
-        private T data; // entry in queue
-        private Node next; // link to next node
+        private T data;     // entry in queue
+        private Node next;  // link to next node
 
         private Node(T dataPortion) {
             this(dataPortion, null);
@@ -72,21 +72,5 @@ public class Queue_Linked< T> implements QueueInterface< T> {
             data = dataPortion;
             next = nextNode;
         }
-
-        private T getData() {
-            return data;
-        }
-
-        private void setData(T newData) {
-            data = newData;
-        }
-
-        private Node getNextNode() {
-            return next;
-        }
-
-        private void setNextNode(Node nextNode) {
-            next = nextNode;
-        }
-    }
+   }
 }
