@@ -1,26 +1,25 @@
 package adts;
 
 /**
- * Description:  This is an array based generic collection.
- * This bag is a fixed sized array. 
- * It includes methods to manage manage its contents.
- * 
+ * Description: This is an array based generic collection. This bag is a fixed
+ * sized array. It includes methods to manage manage its contents.
+ *
  * @author Erik Lunna<eslunna@gmail.com>
- * Date: 
- * 
+ * Date:
+ *
  * @param <T>
  */
-public class ArrayBag<T> implements BagInterface<T> {
+public class Bag_Array<T> implements BagInterface<T> {
 
     private final T[] bagArray;
     private static final int DEFAULT_CAPACITY = 25;
     private int numberOfEntries;
 
-    public ArrayBag() {
+    public Bag_Array() {
         this(DEFAULT_CAPACITY);
     }
 
-    public ArrayBag(int capacity) {
+    public Bag_Array(int capacity) {
         numberOfEntries = 0;
         if (capacity < 0) {
             capacity = 0;
@@ -44,7 +43,7 @@ public class ArrayBag<T> implements BagInterface<T> {
             result = false;
         } else if (newEntry == null) {
             result = false;
-        } else {  // assertion: result is true here
+        } else {
             bagArray[numberOfEntries] = newEntry;
             numberOfEntries++;
         }
@@ -69,6 +68,7 @@ public class ArrayBag<T> implements BagInterface<T> {
 
     /**
      * Sees whether this bag is full.
+     *
      * @return true if the bag is full, or false if not
      */
     @Override
@@ -104,27 +104,40 @@ public class ArrayBag<T> implements BagInterface<T> {
      */
     @Override
     public T remove() {
-        T result = remove(numberOfEntries - 1);
-        return result;
+        if (getSize() > 0) {
+            T result = remove(numberOfEntries - 1);
+            if (result != null) {
+                numberOfEntries--;
+            }
+            return result;
+        }
+        return null;
+
     }
 
     /**
      * Removes and returns the entry at a given index within the arraybag.
-     * @param givenIndex
+     *
+     * @param index
      * @return If no such entry exists, returns null.
      */
-    @Override
-    public T remove(int givenIndex) {
+    public T remove(int index) {
         T result = null;
-        if (!isEmpty() && (givenIndex >= 0)) {
-            result = bagArray[givenIndex]; // entry to remove
+
+        if (index > bagArray.length) {
+            return null;
+        }
+
+        if (!isEmpty() && (index >= 0)) {
+            result = bagArray[index]; // entry to remove
             numberOfEntries--;
-            bagArray[givenIndex] = bagArray[numberOfEntries]; 
+            bagArray[index] = bagArray[numberOfEntries];
             // replace entry with last entry
             bagArray[numberOfEntries] = null;
         }
         return result;
     }
+
 
     /**
      * Removes all entries from this bag.
@@ -161,8 +174,7 @@ public class ArrayBag<T> implements BagInterface<T> {
      * @param anEntry
      * @return
      */
-    @Override
-    public int getIndexOf(T anEntry) {
+        public int getIndexOf(T anEntry) {
         int where = -1;
         boolean stillLooking = true;
         for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
@@ -192,5 +204,23 @@ public class ArrayBag<T> implements BagInterface<T> {
             }
         }
         return found;
+    }
+
+    /**
+     * Removes one occurrence of a given entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+        // Move the last entry in the removed entry
+        if (getSize() > 2) {
+
+        }
+        return anEntry.equals(result);
     }
 }

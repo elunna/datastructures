@@ -2,6 +2,7 @@ package adts;
 
 /**
  * @author Erik Lunna<eslunna@gmail.com>
+ * @param <T>
  */
 public interface QueueInterface<T> {
 
@@ -13,17 +14,18 @@ public interface QueueInterface<T> {
     public void enqueue(T newEntry);
 
     /**
+     * AKA: 'Poll'
      * Removes and returns the entry at the front of this queue.
      *
-     * @return either the object at the front of the queue or, if the queue is
+     * @return either the object at the front or, if the queue is
      * empty before the operation, null
      */
-    public T dequeue();  //aka 'poll'
+    public T dequeue();
 
     /**
      * Retrieves the entry at the front of this queue.
      *
-     * @return either the object at the front of the queue or, if the queue is
+     * @return either the object at the front or, if the queue is
      * empty, null
      */
     public T getFront();
@@ -41,8 +43,8 @@ public interface QueueInterface<T> {
     public void clear();
 
     /**
-     * 
-     * @return  an int indicating length of Queue
+     * Gets the integer size of this queue.
+     * @return  an int indicating the length this queue
      */
     public int getLength();
 

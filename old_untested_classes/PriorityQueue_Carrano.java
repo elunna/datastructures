@@ -4,6 +4,6 @@ package adts;
  *
  * @author Erik Lunna
  */
-public class QueuePriority {
+public class PriorityQueue_Carrano {
 
 }

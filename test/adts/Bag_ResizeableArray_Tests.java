@@ -1,56 +1,52 @@
+package adts;
 
-import adts.ArrayBag;
-import adts.BagInterface;
 import junit.framework.Assert;
 import org.junit.Test;
 
 /**
  *
- * @author lunatic007
+ * @author lunatunez
  */
-public class ArrayBagTests extends BaseBagTests {
+public class Bag_ResizeableArray_Tests extends Bag_BaseTests {
 
-    
-    
     @Override
     protected BagInterface<String> GetBag() {
-        return new ArrayBag<>();
+        return new Bag_ResizeableArray<>();
     }
 
-    
-    
-    @Override
-    protected BagInterface GetBag(int capacity) {
-        return new ArrayBag<>(capacity);
+    protected BagInterface<String> GetBag(int capacity) {
+        return new Bag_Array<>(capacity);
     }
 
-    
-    
     @Test
     public void newBag_zeroCapacity_makesEmptyBag() {
 //        BagInterface testBag = GetBag();
-        ArrayBag<String> testBag = (ArrayBag) GetBag();
+        Bag_Array<String> testBag = (Bag_Array) GetBag();
+        System.out.println(testBag.toString()
+                + ": newBag_zeroCapacity_makesEmptyBag");
         Assert.assertEquals(0, testBag.getSize());
     }
 
-    
-    
     @Test
     public void isFull_usingFullBag_returnsTrue() {
 //        BagInterface testBag = GetBag(3);
-        ArrayBag<String> testBag = (ArrayBag) GetBag(3);
+        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
+
+        System.out.println(testBag.toString()
+                + ": isFull_usingFullBag_returnsTrue");
         testBag.add("A");
         testBag.add("B");
         testBag.add("C");
         Assert.assertTrue(testBag.isFull());
     }
 
-    
-    
     @Test
-    public void add_passingValidToFullBag_returnsFalse() {
+    public void add_toFullBag_returnsFalse() {
 //        BagInterface testBag = GetBag(3);
-        ArrayBag<String> testBag = (ArrayBag) GetBag(3);
+        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
+
+        System.out.println(testBag.toString()
+                + ": add_toFullBag_returnsFalse");
         testBag.add("A");
         testBag.add("B");
         testBag.add("C");
@@ -58,21 +54,18 @@ public class ArrayBagTests extends BaseBagTests {
         Assert.assertTrue(!addSucceeded);
     }
 
-    
-    
     @Test
     public void newBag_negativeCapacity_makesEmptyBag() {
-
 //        BagInterface testBag = GetBag(-1);
-        ArrayBag<String> testBag = (ArrayBag) GetBag(-1);
+        Bag_Array<String> testBag = (Bag_Array) GetBag(-1);
+
+        System.out.println(testBag.toString()
+                + ": newBag_negativeCapacity_makesEmptyBag");
         Assert.assertEquals(0, testBag.getSize());
     }
 
-    
-    
     @Override
     public String toString() {
-        return "LinkedBagTests";
+        return "Bag_ResizeableArray_Tests";
     }
-
 }

@@ -1,4 +1,5 @@
-package adts;   
+package adts;
+
 import java.util.Arrays;
 
 /**
@@ -8,11 +9,10 @@ import java.util.Arrays;
  * @param <T>
  */
 public class Stack_Array<T> implements StackInterface<T> {
-    
+
     private static final int DEFAULT_INITIAL_CAPACITY = 50;
     private T[] stack;      // array of stack entries
     private int topIndex;   // index of top entry
-    
 
     public Stack_Array() {
         this(DEFAULT_INITIAL_CAPACITY);
@@ -36,17 +36,18 @@ public class Stack_Array<T> implements StackInterface<T> {
         topIndex++;
         stack[topIndex] = newEntry;
     }
-    
+
     private void ensureCapacity() {
-        // if array is full,
+        // if array is full
         if (topIndex == stack.length - 1) {
             // double size of array
             stack = Arrays.copyOf(stack, 2 * stack.length);
+        } else if (stack.length == 0) {
+            // If user specified zero capacity
+            stack = Arrays.copyOf(stack, 1);
         }
     }
 
-    
-    
     @Override
     public T peek() {
         T top = null;
@@ -56,12 +57,10 @@ public class Stack_Array<T> implements StackInterface<T> {
         return top;
     }
 
-    
-    
     @Override
     public T pop() {
         T top = null;
-        if ( !isEmpty() ) {
+        if (!isEmpty()) {
             top = stack[topIndex];
             stack[topIndex] = null;
             topIndex--;
@@ -69,28 +68,31 @@ public class Stack_Array<T> implements StackInterface<T> {
         return top;
     }
 
-    
-    
     @Override
     public boolean isEmpty() {
         return topIndex < 0;
     }
 
-    
+    /**
+     * clear could set topIndex to -1, bc stack methods would behave correctly
+     * as though the stack were empty. However, objects in the stack would
+     * remain. clear should set to null each array loc that was used for the
+     * stack. Alternatively, call pop repeatedly until empty.
+     */
     @Override
     public void clear() {
-        
-        while(!isEmpty()) {
+
+        while (!isEmpty()) {
             pop();
-        } 
+        }
     }
-    
+
     /**
-     * clear could set topIndex to -1, bc stack methods would behave 
-     * correctly as though the stack were empty. 
-     * However, objects in the stack would remain. 
-     * clear should set to null each array loc that was 
-     * used for the stack. 
-     * Alternatively, call pop repeatedly until empty.
+     *
+     * @ the size (or height) of the stack.
      */
+    @Override
+    public int getSize() {
+        return stack.length;
+    }
 }

@@ -9,6 +9,7 @@ import java.util.Vector;
  * @param <T>
  */
 public class Stack_Vector<T> implements StackInterface<T> {
+
     private Vector<T> stack; // last element is the top entry in stack
     private static final int DEFAULT_INITIAL_CAPACITY = 50;
 
@@ -24,7 +25,7 @@ public class Stack_Vector<T> implements StackInterface<T> {
     @Override
     public void push(T newEntry) {
         stack.add(newEntry);
-    } 
+    }
 
     @Override
     public T peek() {
@@ -48,8 +49,14 @@ public class Stack_Vector<T> implements StackInterface<T> {
     public boolean isEmpty() {
         return stack.isEmpty();
     }
+
     @Override
     public void clear() {
         stack.clear();
+    }
+
+    @Override
+    public int getSize() {
+        return stack.size();
     }
 }

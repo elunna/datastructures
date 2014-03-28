@@ -6,7 +6,8 @@ package adts;
  * @param <T>
  */
 public class Stack_Linked<T> implements StackInterface<T> {
-    public Node topNode;
+    private Node topNode;
+    private int size;
     
     Stack_Linked() {
         topNode = null;
@@ -16,6 +17,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
     public void push(T newEntry) {
         Node newNode = new Node(newEntry, topNode);
         topNode = newNode;
+        size++;
     }
 
     @Override
@@ -24,6 +26,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
         if (topNode != null) {
             topNode = topNode.next;
         }
+        size--;
         return top;
     }
 
@@ -43,7 +46,22 @@ public class Stack_Linked<T> implements StackInterface<T> {
 
     @Override
     public void clear() {
+        while (!isEmpty() ) {
+            pop();
+        }
         topNode = null;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(int size) {
+        this.size = size;
     }
 
     private class Node {

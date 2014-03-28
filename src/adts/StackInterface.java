@@ -10,6 +10,7 @@ public interface StackInterface<T> {
     /**
      * Adds a new entry to the top of this stack.
      *
+     * @param newEntry
      */
     public void push(T newEntry);
 
@@ -24,11 +25,13 @@ public interface StackInterface<T> {
      * Retrieves this stack’s top entry.
      *
      * empty
+     * @return 
      */
     public T peek();
 
     /**
      * Detects whether this stack is empty
+     * @return 
      */
     public boolean isEmpty();
 
@@ -36,5 +39,9 @@ public interface StackInterface<T> {
      * Removes all entries from this stack
      */
     public void clear();
+    
+    /**
+     * @return the current size of the Stack
+     */
+    public int getSize();
 }
-
