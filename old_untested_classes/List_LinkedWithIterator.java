@@ -4,7 +4,7 @@ package adts;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class List_LinkedWithIterator<T> implements ListWithIteratorInterface<T> {
+public class List_LinkedWithIterator<T> implements ListInterface, ListWithIteratorInterface<T> {
 
     private Node firstNode; 		// head reference to first node 
     private Node lastNode; 		// tail reference to last node 
