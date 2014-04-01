@@ -10,11 +10,11 @@ import org.junit.Test;
 public class Bag_ResizeableArray_Tests extends Bag_BaseTests {
 
     @Override
-    protected BagInterface<String> GetBag() {
+    protected BagInterface GetBag() {
         return new Bag_ResizeableArray<>();
     }
 
-    protected BagInterface<String> GetBag(int capacity) {
+    protected BagInterface GetBag(int capacity) {
         return new Bag_Array<>(capacity);
     }
 

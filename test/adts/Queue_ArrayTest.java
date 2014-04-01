@@ -4,11 +4,11 @@ package adts;
  *
  * @author lunatunez
  */
-public class Queue_LinkedTest extends BaseQueueTests {
+public class Queue_ArrayTest extends BaseQueueTests {
 
     @Override
     protected QueueInterface GetQueue() {
 
-        return new Queue_Linked();
+        return new Queue_Array();
     }
 }

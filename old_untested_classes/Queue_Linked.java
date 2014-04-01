@@ -1,6 +1,6 @@
 package adts;
 
-public class Queue_Linked< T> implements QueueInterface< T> {
+public class Queue_Linked<T> implements QueueInterface< T> {
     // references node at front of queue
     private Node firstNode;
     // references node at back of queue
@@ -57,6 +57,11 @@ public class Queue_Linked< T> implements QueueInterface< T> {
 
     @Override
     public int getLength() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T peek() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

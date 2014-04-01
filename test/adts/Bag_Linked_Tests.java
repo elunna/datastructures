@@ -7,7 +7,7 @@ package adts;
 public class Bag_Linked_Tests extends Bag_BaseTests {
 
     @Override
-    protected BagInterface<String> GetBag() {
+    protected BagInterface GetBag() {
         // Note: We don't care about a size, the constructor for Bag_Linked
         // doesn't take an arg.
         return new Bag_Linked<>();

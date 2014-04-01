@@ -10,9 +10,8 @@ import org.junit.Test;
  * @author lunatunez
  */
 public class Stack_Array_Tests extends Stack_BaseTests {
-
     @Override
-    protected StackInterface<String> GetStack() {
+    protected StackInterface GetStack() {
         return new Stack_Array<>();
     }
 
@@ -21,7 +20,7 @@ public class Stack_Array_Tests extends Stack_BaseTests {
         return new Stack_Array<>(capacity);
     }
 
-    // newStack is not a method, it is the default constructor
+    
     @Test
     public void Stack_noCapacity_sizeEqualsZero() {
         Stack_Array<String> testStack = (Stack_Array) GetStack();

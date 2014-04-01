@@ -9,22 +9,23 @@ package adts;
  */
 public class Queue_TwoPartCircularLinked<T> implements QueueInterface<T> {
     // references first node in queue 
-    private Node queueNode;
+    private Node firstNode;
+    
     // references node after back of queue 
     private Node freeNode;
 
     public Queue_TwoPartCircularLinked() {
         freeNode = new Node(null, null);
         freeNode.next = freeNode;
-        queueNode = freeNode;
-    } // end default constructor 
+        firstNode = freeNode;
+    }
 
     @Override
     public void enqueue(T newEntry) {
         freeNode.data = newEntry;
         if (isChainFull()) {
-            // allocate a new node and insert it after the node that
-            // freeNode references
+            // allocate a new node 
+            // insert it after the node that freeNode references
             Node newNode = new Node(null, freeNode.next);
             freeNode.next = newNode;
         }
@@ -35,7 +36,7 @@ public class Queue_TwoPartCircularLinked<T> implements QueueInterface<T> {
     public T getFront() {
         T front = null;
         if (!isEmpty()) {
-            front = queueNode.data;
+            front = firstNode.data;
         }
         return front;
     }
@@ -44,25 +45,25 @@ public class Queue_TwoPartCircularLinked<T> implements QueueInterface<T> {
     public T dequeue() {
         T front = null;
         if (!isEmpty()) {
-            front = queueNode.data;
-            queueNode.data = null;
-            queueNode = queueNode.next;
+            front = firstNode.data;
+            firstNode.data = null;
+            firstNode = firstNode.next;
         }
         return front;
     }
 
     @Override
     public boolean isEmpty() {
-        return queueNode == freeNode;
+        return firstNode == freeNode;
     }
 
     private boolean isChainFull() {
-        return queueNode == freeNode.next;
+        return firstNode == freeNode.next;
     } 
 
     @Override
     public void clear() {
-        queueNode = freeNode; // ??
+        firstNode = freeNode; // ??
         // unless you set the data portions of these nodes
         // to null, the objects in the queue are not deallocated.
     
