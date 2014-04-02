@@ -6,18 +6,19 @@ package adts;
  * The chain can grow to any size.
  *
  * @author lunatunez
+ * @param <T>
  */
 public class Queue_Linked<T> implements QueueInterface<T> {
 
-    Node_LinkedQueue<T> firstNode;
-    Node_LinkedQueue<T> lastNode;
+    Node<T> firstNode;
+    Node<T> lastNode;
 
     @Override
     public void enqueue(Object newEntry) {
         if (newEntry == null) {
             return;
         }
-        Node_LinkedQueue newNode = new Node_LinkedQueue(newEntry, null);
+        Node newNode = new Node(newEntry, null);
 
         if (isEmpty()) {
             firstNode = newNode;
@@ -58,7 +59,7 @@ public class Queue_Linked<T> implements QueueInterface<T> {
     @Override
     public int getLength() {
         int length = 0;
-        Node_LinkedQueue node = firstNode;
+        Node node = firstNode;
         if (node == null) {
             return length;
         }
@@ -80,5 +81,4 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         }
         return front;
     }
-
 }

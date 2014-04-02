@@ -4,16 +4,16 @@ package adts;
  *
  * @author Erik Lunna
  */
-class Node_LinkedBag<T> {
+class Node<T> {
     private T data;
-    private Node_LinkedBag<T> next;
+    private Node<T> next;
     
-    // the constructor’s name is Node_LinkedBag, not Node_LinkedBag<T>
-    Node_LinkedBag(T dataPortion) {
+    // the constructor’s name is Node, not Node<T>
+    Node(T dataPortion) {
         this(dataPortion, null);
     }
 
-    Node_LinkedBag(T dataPortion, Node_LinkedBag<T> nextNode) {
+    Node(T dataPortion, Node<T> nextNode) {
         data = dataPortion;
         next = nextNode;
     }
@@ -26,11 +26,11 @@ class Node_LinkedBag<T> {
         data = newData;
     }
 
-    Node_LinkedBag<T> getNext() {
+    Node<T> getNext() {
         return next;
     }
 
-    void setNext(Node_LinkedBag<T> nextNode) {
+    void setNext(Node<T> nextNode) {
         next = nextNode;
     }
 }
