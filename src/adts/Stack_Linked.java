@@ -6,18 +6,21 @@ package adts;
  * @param <T>
  */
 public class Stack_Linked<T> implements StackInterface<T> {
+
     private Node topNode;
     private int size;
-    
-    Stack_Linked() {
+
+    public Stack_Linked() {
         topNode = null;
     }
 
     @Override
     public void push(T newEntry) {
-        Node newNode = new Node(newEntry, topNode);
-        topNode = newNode;
-        size++;
+        if (newEntry != null) {
+            Node newNode = new Node( (T)newEntry, topNode);
+            topNode = newNode;
+            size++;
+        }
     }
 
     @Override
@@ -46,7 +49,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
 
     @Override
     public void clear() {
-        while (!isEmpty() ) {
+        while (!isEmpty()) {
             pop();
         }
         topNode = null;
@@ -65,6 +68,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
     }
 
     private class Node {
+
         private T data;     // reference to entry in bag
         private Node next;  // reference to next node
 

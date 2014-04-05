@@ -4,12 +4,11 @@ package adts;
  *
  * @author lunatunez
  */
-public class Queue_CircularLinkedTest extends BaseQueueTests {
+public class Queue_Linked_Test extends Queue_Base_Tests {
 
     @Override
     protected QueueInterface GetQueue() {
-
-        return new Queue_CircularLinked<>();
+        return new Queue_Linked();
     }
 
     @Override

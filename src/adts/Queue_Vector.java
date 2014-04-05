@@ -18,22 +18,29 @@ class Queue_Vector<T> implements QueueInterface {
 
     @Override
     public void enqueue(Object newEntry) {
-        vector.addElement((T) newEntry);
-        
+        if (newEntry != null) {
+            vector.addElement((T) newEntry);
+        }
     }
 
     @Override
-    public Object dequeue() {
-        T front = vector.get(0);
-        vector.removeElementAt(0);
+    public T dequeue() {
+
+        T front = null;
+        if (vector.size() > 0) {
+            // front = vector.get(0);
+            front = vector.firstElement();
+            vector.removeElementAt(0);
+        }
         return front;
     }
 
     @Override
-    public Object getFront() {
+    public T getFront() {
         T front = null;
         if (vector.size() > 0) {
-            vector.removeElementAt(0);
+            //vector.get(0);
+            front = vector.firstElement();
         }
         return front;
     }
@@ -41,13 +48,14 @@ class Queue_Vector<T> implements QueueInterface {
     @Override
     public boolean isEmpty() {
         return vector.isEmpty();
+//        return vector.size() == 0;
     }
 
     @Override
     public void clear() {
-        vector.removeAllElements();
+        // vector.removeAllElements();
         // or
-        // vector.clear();     
+        vector.clear();
     }
 
     @Override

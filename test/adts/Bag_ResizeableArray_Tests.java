@@ -7,7 +7,7 @@ import org.junit.Test;
  *
  * @author lunatunez
  */
-public class Bag_ResizeableArray_Tests extends Bag_BaseTests {
+public class Bag_ResizeableArray_Tests extends Bag_Base_Tests {
 
     @Override
     protected BagInterface GetBag() {
@@ -15,53 +15,47 @@ public class Bag_ResizeableArray_Tests extends Bag_BaseTests {
     }
 
     protected BagInterface GetBag(int capacity) {
-        return new Bag_Array<>(capacity);
+        return new Bag_ResizeableArray<>(capacity);
     }
 
-    @Test
-    public void newBag_zeroCapacity_makesEmptyBag() {
-//        BagInterface testBag = GetBag();
-        Bag_Array<String> testBag = (Bag_Array) GetBag();
-        System.out.println(testBag.toString()
-                + ": newBag_zeroCapacity_makesEmptyBag");
-        Assert.assertEquals(0, testBag.getSize());
+    // If a resizeable bag is passed a zero capacity argument,
+    // throw an exception.
+    @Test(expected = IllegalArgumentException.class)
+    public void newBag_zeroCapacity_throwException() {
+        Bag_ResizeableArray<String> testBag
+                = (Bag_ResizeableArray) GetBag(0);
     }
 
-    @Test
-    public void isFull_usingFullBag_returnsTrue() {
-//        BagInterface testBag = GetBag(3);
-        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
+    // If a resizeable bag is passed a negative capacity argument,
+    // throw an exception.
+    @Test(expected = IllegalArgumentException.class)
+    public void newBag_negativeCapacity_throwException() {
+        Bag_ResizeableArray<String> testBag
+                = (Bag_ResizeableArray) GetBag(-1);
+    }
 
-        System.out.println(testBag.toString()
-                + ": isFull_usingFullBag_returnsTrue");
+
+    @Test
+    public void isFull_bagIsFull_returnsTrue() {
+        Bag_ResizeableArray<String> testBag = (Bag_ResizeableArray) GetBag(3);
         testBag.add("A");
         testBag.add("B");
         testBag.add("C");
         Assert.assertTrue(testBag.isFull());
     }
 
+    /**
+     * Addition to a resizeable array should always succeed until disk space
+     * isn't available.
+     */
     @Test
-    public void add_toFullBag_returnsFalse() {
-//        BagInterface testBag = GetBag(3);
-        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
-
-        System.out.println(testBag.toString()
-                + ": add_toFullBag_returnsFalse");
+    public void add_toFullBag_returnsTrue() {
+        Bag_ResizeableArray<String> testBag = (Bag_ResizeableArray) GetBag(3);
         testBag.add("A");
         testBag.add("B");
         testBag.add("C");
         boolean addSucceeded = testBag.add("D");
-        Assert.assertTrue(!addSucceeded);
-    }
-
-    @Test
-    public void newBag_negativeCapacity_makesEmptyBag() {
-//        BagInterface testBag = GetBag(-1);
-        Bag_Array<String> testBag = (Bag_Array) GetBag(-1);
-
-        System.out.println(testBag.toString()
-                + ": newBag_negativeCapacity_makesEmptyBag");
-        Assert.assertEquals(0, testBag.getSize());
+        Assert.assertTrue(addSucceeded);
     }
 
     @Override

@@ -9,9 +9,8 @@ package adts;
  * @param <T>
  */
 public class Queue_Linked<T> implements QueueInterface<T> {
-
-    Node<T> firstNode;
-    Node<T> lastNode;
+    private Node<T> firstNode;
+    private Node<T> lastNode;
 
     @Override
     public void enqueue(Object newEntry) {

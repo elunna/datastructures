@@ -11,7 +11,7 @@ package adts;
  */
 public class Bag_Array<T> implements BagInterface<T> {
 
-    private final T[] bagArray;
+    private final T[] array;
     private static final int DEFAULT_CAPACITY = 25;
     private int numberOfEntries;
 
@@ -19,15 +19,15 @@ public class Bag_Array<T> implements BagInterface<T> {
         this(DEFAULT_CAPACITY);
     }
 
-    public Bag_Array(int capacity) {
+    public Bag_Array(int capacity) throws IllegalArgumentException {
         numberOfEntries = 0;
-        if (capacity < 0) {
-            capacity = 0;
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Bad constructor arg");
         }
         // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
         T[] tempBag = (T[]) new Object[capacity]; // unchecked cast
-        bagArray = tempBag;
+        array = tempBag;
     }
 
     /**
@@ -44,7 +44,7 @@ public class Bag_Array<T> implements BagInterface<T> {
         } else if (newEntry == null) {
             result = false;
         } else {
-            bagArray[numberOfEntries] = newEntry;
+            array[numberOfEntries] = newEntry;
             numberOfEntries++;
         }
         return result;
@@ -61,7 +61,7 @@ public class Bag_Array<T> implements BagInterface<T> {
         // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
-        System.arraycopy(bagArray, 0, result, 0, numberOfEntries);
+        System.arraycopy(array, 0, result, 0, numberOfEntries);
 
         return result;
     }
@@ -73,7 +73,7 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     @Override
     public boolean isFull() {
-        return numberOfEntries == bagArray.length;
+        return numberOfEntries == array.length;
     }
 
     /**
@@ -107,9 +107,9 @@ public class Bag_Array<T> implements BagInterface<T> {
         if (getSize() > 0) {
             T result = remove(numberOfEntries - 1);
             if (result != null) {
-                numberOfEntries--;
+                return result;
+
             }
-            return result;
         }
         return null;
 
@@ -123,21 +123,20 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     public T remove(int index) {
         T result = null;
-
-        if (index > bagArray.length) {
+        // check bounds
+        if (index > array.length || index < 0) {
             return null;
         }
 
-        if (!isEmpty() && (index >= 0)) {
-            result = bagArray[index]; // entry to remove
+        if (!isEmpty()) {
+            result = array[index]; // entry to remove
             numberOfEntries--;
-            bagArray[index] = bagArray[numberOfEntries];
             // replace entry with last entry
-            bagArray[numberOfEntries] = null;
+            array[index] = array[numberOfEntries];
+            array[numberOfEntries] = null;
         }
         return result;
     }
-
 
     /**
      * Removes all entries from this bag.
@@ -160,7 +159,7 @@ public class Bag_Array<T> implements BagInterface<T> {
         int counter = 0;
 
         for (int i = 0; i < numberOfEntries; i++) {
-            if (anEntry.equals(bagArray[i])) {
+            if (anEntry.equals(array[i])) {
                 counter++;
             }
         }
@@ -174,11 +173,11 @@ public class Bag_Array<T> implements BagInterface<T> {
      * @param anEntry
      * @return
      */
-        public int getIndexOf(T anEntry) {
+    public int getIndexOf(T anEntry) {
         int where = -1;
         boolean stillLooking = true;
         for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
-            if (anEntry.equals(bagArray[index])) {
+            if (anEntry.equals(array[index])) {
                 stillLooking = false;
                 where = index;
             }
@@ -199,7 +198,7 @@ public class Bag_Array<T> implements BagInterface<T> {
         }
         boolean found = false;
         for (int i = 0; !found && (i < numberOfEntries); i++) {
-            if (anEntry.equals(bagArray[i])) {
+            if (anEntry.equals(array[i])) {
                 found = true;
             }
         }
@@ -215,11 +214,17 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     @Override
     public boolean remove(T anEntry) {
+        if (anEntry == null || getSize() == 0) {
+            return false;
+        }
+
         int index = getIndexOf(anEntry);
         T result = remove(index);
+        numberOfEntries--;
         // Move the last entry in the removed entry
-        if (getSize() > 2) {
-
+        if (array[numberOfEntries - 1] != null) {
+            array[index] = array[numberOfEntries - 1];
+            array[numberOfEntries - 1] = null;
         }
         return anEntry.equals(result);
     }

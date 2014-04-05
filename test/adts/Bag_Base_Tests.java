@@ -5,12 +5,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * File: 
- * Description: Abstract test driver class pattern.
+ * File: Description: Abstract test driver class pattern.
  *
  * @author lunatunez
  */
-public abstract class Bag_BaseTests {
+public abstract class Bag_Base_Tests {
 
     /**
      *
@@ -22,25 +21,12 @@ public abstract class Bag_BaseTests {
     @Test
     public void isEmpty_newBag_returnsTrue() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": isEmpty_newBag_returnsTrue");
         assertTrue(testBag.isEmpty());
     }
-
-    // what does this test accomplish?
-//    @Test
-//    public void isFull_onEmptyBag_returnsFalse() {
-//        BagInterface testBag = GetBag();
-//        System.out.println(testBag.toString()
-//                + ": ");
-//        assertTrue(!testBag.isFull());
-//    }
 
     @Test
     public void add_validEntry_sizeEqualsOne() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": add_validEntry_sizeEqualsOne");
         String string1 = "ABCDE";
         testBag.add(string1);
         assertEquals(1, testBag.getSize());
@@ -49,18 +35,14 @@ public abstract class Bag_BaseTests {
     @Test
     public void add_validEntry_isNotEmpty() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": add_validEntry_isNotEmpty");
         String string1 = "ABCDE";
         testBag.add(string1);
         assertTrue(!testBag.isEmpty());
     }
-    
+
     @Test
     public void remove_oneEntry_sizeIsZero() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": remove_oneEntry_sizeIsZero");
         String string1 = "ABCDE";
         testBag.add(string1);
         testBag.remove();
@@ -70,21 +52,15 @@ public abstract class Bag_BaseTests {
     @Test
     public void remove_oneEntry_isEmpty() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": remove_oneEntry_isEmpty");
         String string1 = "ABCDE";
         testBag.add(string1);
         testBag.remove();
         assertTrue(testBag.isEmpty());
     }
-    
-
 
     @Test
     public void add_NullToBag_returnsFalse() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": add_NullToBag_returnsFalse");
         boolean success = testBag.add(null);
         assertTrue(!success);
     }
@@ -92,8 +68,6 @@ public abstract class Bag_BaseTests {
     @Test
     public void add_nullToEmptyBag_bagIsEmpty() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": add_nullToEmptyBag_bagIsEmpty");
         testBag.add(null);
         assertTrue(testBag.isEmpty());
     }
@@ -101,8 +75,6 @@ public abstract class Bag_BaseTests {
     @Test
     public void toArray_copyElements_correctSize() {
         BagInterface testBag = GetBag();
-        System.out.println(testBag.toString()
-                + ": toArray_copyElements_correctSize");
         int numberOfElements = 3;
         testBag.add("A");
         testBag.add("B");
@@ -149,6 +121,7 @@ public abstract class Bag_BaseTests {
         testBag.clear();
         assertEquals(0, testBag.getSize());
     }
+
     @Test
     public void contains_usingEmptyBag_returnsFalse() {
         BagInterface testBag = GetBag();
@@ -183,7 +156,6 @@ public abstract class Bag_BaseTests {
         assertEquals(false, testBag.contains(null));
     }
 
-    
     @Test
     public void getFrequencyOf_oneElementMatch_returnsOne() {
         BagInterface testBag = GetBag();
@@ -199,7 +171,9 @@ public abstract class Bag_BaseTests {
 
     @Test
     public void getFrequencyOf_noElementMatch_returnsZero() {
-        Bag_Array<String> testBag = new Bag_Array<>();
+//        Bag_Array<String> testBag = new Bag_Array<>();
+        BagInterface testBag = GetBag();
+
         String targetString = "D";
         testBag.add("A");
         testBag.add("B");

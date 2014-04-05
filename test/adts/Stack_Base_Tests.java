@@ -9,9 +9,15 @@ import org.junit.Test;
  *
  * @author lunatunez
  */
-public abstract class Stack_BaseTests {
+public abstract class Stack_Base_Tests {
+
+    /**
+     * Factory only returns a default empty stack. Array stack accepts a
+     * capacity parameter.
+     *
+     * @return
+     */
     protected abstract StackInterface GetStack();
-    protected abstract StackInterface GetStack(int capacity);
 
     /**
      * Test of isEmpty method, using new empty stack
@@ -19,8 +25,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void isEmpty_onNewStack_returnsTrue() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": isEmpty_onNewStack_returnsTrue");
         assertTrue(testStack.isEmpty());
     }
 
@@ -29,26 +33,23 @@ public abstract class Stack_BaseTests {
      */
     @Test
     public void push_toEmptyStack_sizeEqualsOne() {
-        Stack_Array<String> testStack = (Stack_Array) GetStack();
-        System.out.println(testStack.toString()
-                + ": push_toEmptyStack_sizeEqualsOne");
+        StackInterface testStack = GetStack();
+        String string1 = "ABCDE";
+        testStack.push(string1);
+        Assert.assertEquals(1, testStack.getSize());
     }
 
     @Test
-    public void push_toEmptyStack_isNotEmpty() {
+    public void isEmpty_pushToEmptyStack_returnsFalse() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": push_toEmptyStack_isNotEmpty");
         String string1 = "ABCDE";
         testStack.push(string1);
-        Assert.assertTrue(!testStack.isEmpty());
+        Assert.assertFalse(testStack.isEmpty());
     }
 
     @Test
     public void push_sizeEqualsOne_sizeEqualsTwo() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": push_sizeEqualsOne_sizeEqualsTwo");
         String string1 = "ABCDE";
         String string2 = "DEFGH";
         testStack.push(string1);
@@ -59,8 +60,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void push_nullEntry_stackIsEmpty() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": push_nullEntry_stackIsEmpty");
         testStack.push(null);
         Assert.assertTrue(testStack.isEmpty());
     }
@@ -68,8 +67,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void push_nullEntry_sizeEqualsZero() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": push_nullEntry_sizeEqualsZero");
         testStack.push(null);
         Assert.assertEquals(0, testStack.getSize());
     }
@@ -77,8 +74,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void pop_oneEntry_sizeEqualsZero() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": pop_oneEntry_sizeEqualsZero");
         String string1 = "ABCDE";
         testStack.push(string1);
         testStack.pop();
@@ -88,8 +83,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void pop_oneEntry_isEmpty() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": pop_oneEntry_isEmpty");
         String string1 = "ABCDE";
         testStack.push(string1);
         testStack.pop();
@@ -99,18 +92,13 @@ public abstract class Stack_BaseTests {
     @Test
     public void pop_emptyStack_returnsNull() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": pop_emptyStack_returnsNull");
         Object result = testStack.pop();
         Assert.assertNull(result);
-
     }
 
     @Test
     public void peek_emptyStack_returnsNull() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": pop_emptyStack_returnsNull");
         Object result = testStack.peek();
         Assert.assertNull(result);
     }
@@ -118,8 +106,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void peek_stackWithContents_matchesObject() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": push_sizeEqualsOne_sizeEqualsTwo");
         String firstString = "ABCDE";
         String lastString = "DEFGH";
         testStack.push(firstString);
@@ -131,8 +117,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void clear_contents_stackIsEmpty() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": clear_contents_isEmpty");
         testStack.push("A");
         testStack.push("B");
         testStack.push("C");
@@ -143,8 +127,6 @@ public abstract class Stack_BaseTests {
     @Test
     public void clear_contents_sizeEqualsZero() {
         StackInterface testStack = GetStack();
-        System.out.println(testStack.toString()
-                + ": clear_contents_sizeEqualsZero");
         testStack.push("A");
         testStack.push("B");
         testStack.push("C");

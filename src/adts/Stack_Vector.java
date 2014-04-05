@@ -24,7 +24,9 @@ public class Stack_Vector<T> implements StackInterface<T> {
 
     @Override
     public void push(T newEntry) {
-        stack.add(newEntry);
+        if (newEntry != null) {
+            stack.add(newEntry);
+        }
     }
 
     @Override

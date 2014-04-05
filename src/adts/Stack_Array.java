@@ -20,21 +20,28 @@ public class Stack_Array<T> implements StackInterface<T> {
 
     /**
      *
-     * @param initialCapacity
+     * @param capacity
      */
-    public Stack_Array(int initialCapacity) {
+    public Stack_Array(int capacity) {
         // the cast is safe because the new array contains null entries
+
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Bad constructor arg");
+        }
+
         @SuppressWarnings("unchecked")
-        T[] tempStack = (T[]) new Object[initialCapacity];
+        T[] tempStack = (T[]) new Object[capacity];
         stack = tempStack;
-        topIndex = -1;
+        topIndex = -1;  // -1 = empty
     }
 
     @Override
     public void push(T newEntry) {
-        ensureCapacity();
-        topIndex++;
-        stack[topIndex] = newEntry;
+        if (newEntry != null) {
+            ensureCapacity();
+            topIndex++;
+            stack[topIndex] = newEntry;
+        }
     }
 
     private void ensureCapacity() {
@@ -74,14 +81,10 @@ public class Stack_Array<T> implements StackInterface<T> {
     }
 
     /**
-     * clear could set topIndex to -1, bc stack methods would behave correctly
-     * as though the stack were empty. However, objects in the stack would
-     * remain. clear should set to null each array loc that was used for the
-     * stack. Alternatively, call pop repeatedly until empty.
+     * clear the contents of the stack
      */
     @Override
     public void clear() {
-
         while (!isEmpty()) {
             pop();
         }
@@ -93,6 +96,6 @@ public class Stack_Array<T> implements StackInterface<T> {
      */
     @Override
     public int getSize() {
-        return stack.length;
+        return topIndex + 1;
     }
 }

@@ -6,29 +6,33 @@ package adts;
  * lastNode.getNext = null, the bag is empty. If lastNode.getNext = lastNode,
  * the bag is size 1.
  *
- * Description:
- *
  * @author lunatunez
  */
 class Queue_CircularLinked<T> implements QueueInterface {
-
     private Node<T> lastNode;
 
     public Queue_CircularLinked() {
-        lastNode.setData(null);
-        lastNode.setNext(null);
+        lastNode = new Node(null, null);
     }
 
     @Override
     public void enqueue(Object newEntry) {
         if (newEntry == null) {
-            return;
         }
-        
-        Node newNode = new Node(newEntry, lastNode.getNext() );
-        
-        lastNode.setNext(newNode);
-        
+        else if (lastNode.getNext() == null) { // chain is empty
+            lastNode.setData((T)newEntry);
+            lastNode.setNext(lastNode);
+        }
+        else { 
+            // Create a new Node, that references the front.
+            Node newNode = new Node (newEntry, lastNode.getNext());
+            
+            // Set the lastNode's reference to the newNode.
+            lastNode.setNext(newNode);
+            
+            // Reset lastNode to the newNode.
+            lastNode = newNode;
+        }
     }
 
     @Override
@@ -46,8 +50,8 @@ class Queue_CircularLinked<T> implements QueueInterface {
 
     @Override
     public boolean isEmpty() {
-
-        return lastNode.getNext() == null;
+        
+        return lastNode.getData() == null;
     }
 
     @Override
