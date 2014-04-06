@@ -19,6 +19,8 @@ public abstract class Stack_Base_Tests {
      */
     protected abstract StackInterface GetStack();
 
+    // *************************************************************************
+    // *** STATIC TESTS ********************************************************
     /**
      * Test of isEmpty method, using new empty stack
      */
@@ -28,6 +30,61 @@ public abstract class Stack_Base_Tests {
         assertTrue(testStack.isEmpty());
     }
 
+    @Test
+    public void isEmpty_nonEmptyStack_returnsFalse() {
+        StackInterface testStack = GetStack();
+        String string1 = "ABCDE";
+        testStack.push(string1);
+        Assert.assertFalse(testStack.isEmpty());
+    }
+
+    @Test
+    public void peek_emptyStack_returnsNull() {
+        StackInterface testStack = GetStack();
+        Object result = testStack.peek();
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void peek_contents_matchesLast() {
+        StackInterface testStack = GetStack();
+        String firstString = "ABCDE";
+        String lastString = "DEFGH";
+        testStack.push(firstString);
+        testStack.push(lastString);
+        Object result = testStack.peek();
+        Assert.assertEquals(lastString, result);
+    }
+
+    @Test
+    public void peek2_contents_matches2ndLast() {
+        StackInterface testStack = GetStack();
+        String firstString = "ABCDE";
+        String lastString = "DEFGH";
+        testStack.push(firstString);
+        testStack.push(lastString);
+        Object result = testStack.peek2();
+        Assert.assertEquals(firstString, result);
+    }
+
+    @Test
+    public void peek2_singleEntry_returnNull() {
+        StackInterface testStack = GetStack();
+         String firstString = "ABCDE";
+        testStack.push(firstString);
+        Object result = testStack.peek2();
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void peek2_emptyStack_returnNull() {
+        StackInterface testStack = GetStack();
+        Object result = testStack.peek2();
+        Assert.assertNull(result);
+    }
+
+    // *************************************************************************
+    // *** MUTATOR TESTS *******************************************************
     /**
      * Test of push method, using valid element, of class Stack_Array.
      */
@@ -37,14 +94,6 @@ public abstract class Stack_Base_Tests {
         String string1 = "ABCDE";
         testStack.push(string1);
         Assert.assertEquals(1, testStack.getSize());
-    }
-
-    @Test
-    public void isEmpty_pushToEmptyStack_returnsFalse() {
-        StackInterface testStack = GetStack();
-        String string1 = "ABCDE";
-        testStack.push(string1);
-        Assert.assertFalse(testStack.isEmpty());
     }
 
     @Test
@@ -94,24 +143,6 @@ public abstract class Stack_Base_Tests {
         StackInterface testStack = GetStack();
         Object result = testStack.pop();
         Assert.assertNull(result);
-    }
-
-    @Test
-    public void peek_emptyStack_returnsNull() {
-        StackInterface testStack = GetStack();
-        Object result = testStack.peek();
-        Assert.assertNull(result);
-    }
-
-    @Test
-    public void peek_stackWithContents_matchesObject() {
-        StackInterface testStack = GetStack();
-        String firstString = "ABCDE";
-        String lastString = "DEFGH";
-        testStack.push(firstString);
-        testStack.push(lastString);
-        Object result = testStack.peek();
-        Assert.assertEquals(lastString, result);
     }
 
     @Test

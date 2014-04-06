@@ -6,30 +6,10 @@ package adts;
  * @param <T>
  */
 public interface DequeInterface<T> {
+    public static final int DEFAULT_CAPACITY = 5;
 
-    /**
-     * Add an entry to the front of the deque
-     * @param newEntry is the entry to add
-     */
-    public void addToFront(T newEntry);
-
-    /**
-     * Add an entry to the back of the deque
-     * @param newEntry is the entry to add
-     */
-    public void addToBack(T newEntry);
-
-    /**
-     * Remove the entry from the front of the deque
-     * @return the remove entry if successful, otherwise null
-     */
-    public T removeFront();
-
-    /**
-     * Remove the entry from the back of the deque
-     * @return the remove entry if successful, otherwise null
-     */
-    public T removeBack();
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
 
     /**
      * Look at the front entry
@@ -48,6 +28,41 @@ public interface DequeInterface<T> {
      * @return true if empty, false if not empty
      */
     public boolean isEmpty();
+    
+ /**
+     * Gets the integer size of this queue.
+     * @return  an int indicating the length this queue
+     */
+    public int getLength();
+    
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+    
+    /**
+     * Add an entry to the front of the deque
+     * @param newEntry is the entry to add
+     * @return 
+     */
+    public boolean addToFront(T newEntry);
+
+    /**
+     * Add an entry to the back of the deque
+     * @param newEntry is the entry to add
+     * @return 
+     */
+    public boolean addToBack(T newEntry);
+
+    /**
+     * Remove the entry from the front of the deque
+     * @return the remove entry if successful, otherwise null
+     */
+    public T removeFront();
+
+    /**
+     * Remove the entry from the back of the deque
+     * @return the remove entry if successful, otherwise null
+     */
+    public T removeBack();
 
     /**
      * Delete all entries in deque

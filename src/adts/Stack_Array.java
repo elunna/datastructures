@@ -9,8 +9,6 @@ import java.util.Arrays;
  * @param <T>
  */
 public class Stack_Array<T> implements StackInterface<T> {
-
-    private static final int DEFAULT_INITIAL_CAPACITY = 50;
     private T[] stack;      // array of stack entries
     private int topIndex;   // index of top entry
 

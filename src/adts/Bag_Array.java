@@ -10,9 +10,7 @@ package adts;
  * @param <T>
  */
 public class Bag_Array<T> implements BagInterface<T> {
-
     private final T[] array;
-    private static final int DEFAULT_CAPACITY = 25;
     private int numberOfEntries;
 
     public Bag_Array() {

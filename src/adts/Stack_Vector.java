@@ -15,7 +15,7 @@ public class Stack_Vector<T> implements StackInterface<T> {
 
     public Stack_Vector() {
         this(DEFAULT_INITIAL_CAPACITY);
-    } // end default constructor
+    } 
 
     public Stack_Vector(int initialCapacity) {
         stack = new Vector<>(initialCapacity);

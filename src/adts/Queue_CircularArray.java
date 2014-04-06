@@ -20,8 +20,6 @@ package adts;
  * @param <T>
  */
 public class Queue_CircularArray<T> implements QueueInterface<T> {
-
-    private static final int INITIAL_CAPACITY = 20;
     private T[] queue;
     private int frontIndex;
     private int backIndex;

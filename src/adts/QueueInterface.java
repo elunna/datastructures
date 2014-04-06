@@ -5,7 +5,36 @@ package adts;
  * @param <T>
  */
 public interface QueueInterface<T> {
+    public static final int DEFAULT_CAPACITY = 5;
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    
+    /**
+     * Retrieves the entry at the front of this queue.
+     *
+     * @return either the object at the front or, if the queue is
+     * empty, null
+     */
+    public T getFront();
+
+    /**
+     * Detects whether this queue is empty.
+     *
+     * @return true if the queue is empty, or false otherwise
+     */
+    public boolean isEmpty();
+
+    /**
+     * Gets the integer size of this queue.
+     * @return  an int indicating the length this queue
+     */
+    public int getLength();
+    
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+   
+    
     /**
      * Adds a new entry to the back of the queue.
      *
@@ -23,29 +52,8 @@ public interface QueueInterface<T> {
     public T dequeue();
 
     /**
-     * Retrieves the entry at the front of this queue.
-     *
-     * @return either the object at the front or, if the queue is
-     * empty, null
-     */
-    public T getFront();
-
-    /**
-     * Detects whether this queue is empty.
-     *
-     * @return true if the queue is empty, or false otherwise
-     */
-    public boolean isEmpty();
-
-    /**
      * Removes all entries from this queue.
      */
     public void clear();
 
-    /**
-     * Gets the integer size of this queue.
-     * @return  an int indicating the length this queue
-     */
-    public int getLength();
-    
 }

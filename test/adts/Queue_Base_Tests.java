@@ -16,6 +16,10 @@ public abstract class Queue_Base_Tests {
     // protected abstract QueueInterface GetQueue(int capacity);
     protected abstract QueueInterface GetQueue(); // empty queue
 
+    // *************************************************************************
+    // *** STATIC TESTS ********************************************************
+    
+    
     /**
      * Test of ieEmpty method, using a new empty queue, should return true
      */
@@ -39,6 +43,65 @@ public abstract class Queue_Base_Tests {
         assertFalse(testQueue.isEmpty());
     }
 
+    /**
+     * Test of getFront method, adding and removing one valid entry.
+     */
+    @Test
+    public void getFront_oneEntry_resultMatches() {
+        QueueInterface testQueue = GetQueue();
+
+        String string = "ABCDE";
+        testQueue.enqueue(string);
+        // Check for correct casting here.
+//        Object result = testQueue.getFront();
+        String result = (String) testQueue.getFront();
+
+        assertEquals(string, result);
+    }
+
+    /**
+     * Test of getFront method, on queue containing multiple entries. Should
+     * return the first entry added.
+     */
+    @Test
+    public void getFront_existingEntry_resultMatches() {
+        QueueInterface testQueue = GetQueue();
+        String addedFirst = "ABC";
+        String addedLast = "DEF";
+        testQueue.enqueue(addedFirst);
+        testQueue.enqueue(addedLast);
+
+        // Check for correct casting here.
+//        Object result = testQueue.getFront();
+        String result = (String) testQueue.getFront();
+        assertEquals(addedFirst, result);
+    }
+
+    /**
+     * Test of getFront method, remove from empty dequeue, should return null.
+     */
+    @Test
+    public void getFront_emptyQueue_returnsNull() {
+        QueueInterface testQueue = GetQueue();
+
+        // Check for correct casting here.
+        Object result = testQueue.getFront();
+        assertNull(result);
+    }
+
+    /**
+     * Test of getLength method, of class QueueInterface.
+     */
+    @Test
+    public void getLength_newQueue_returnsZero() {
+        QueueInterface testQueue = GetQueue();
+        assertEquals(0, testQueue.getLength());
+    }
+    
+    // *************************************************************************
+    // *** MUTATOR TESTS *******************************************************
+    
+    
     /**
      * Test of enqueue method, test adding a valid element to an empty queue.
      */
@@ -120,52 +183,6 @@ public abstract class Queue_Base_Tests {
     }
 
     /**
-     * Test of getFront method, adding and removing one valid entry.
-     */
-    @Test
-    public void getFront_oneEntry_resultMatches() {
-        QueueInterface testQueue = GetQueue();
-
-        String string = "ABCDE";
-        testQueue.enqueue(string);
-        // Check for correct casting here.
-//        Object result = testQueue.getFront();
-        String result = (String) testQueue.getFront();
-
-        assertEquals(string, result);
-    }
-
-    /**
-     * Test of getFront method, on queue containing multiple entries. Should
-     * return the first entry added.
-     */
-    @Test
-    public void getFront_existingEntry_resultMatches() {
-        QueueInterface testQueue = GetQueue();
-        String addedFirst = "ABC";
-        String addedLast = "DEF";
-        testQueue.enqueue(addedFirst);
-        testQueue.enqueue(addedLast);
-
-        // Check for correct casting here.
-//        Object result = testQueue.getFront();
-        String result = (String) testQueue.getFront();
-        assertEquals(addedFirst, result);
-    }
-
-    /**
-     * Test of getFront method, remove from empty dequeue, should return null.
-     */
-    @Test
-    public void getFront_emptyQueue_returnsNull() {
-        QueueInterface testQueue = GetQueue();
-
-        // Check for correct casting here.
-        Object result = testQueue.getFront();
-        assertNull(result);
-    }
-
-    /**
      * Test of clearmethod, using a queue w/ contents, isEmpty should return
      * true
      */
@@ -180,12 +197,4 @@ public abstract class Queue_Base_Tests {
         assertTrue(testQueue.isEmpty());
     }
 
-    /**
-     * Test of getLength method, of class QueueInterface.
-     */
-    @Test
-    public void getLength_newQueue_returnsZero() {
-        QueueInterface testQueue = GetQueue();
-        assertEquals(0, testQueue.getLength());
-    }
 }

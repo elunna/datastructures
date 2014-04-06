@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author lunatunez
  */
 public abstract class Bag_Base_Tests {
-
+ 
     /**
      *
      * @return a Bag extending the BagInterface of initialized capacity
@@ -18,61 +18,16 @@ public abstract class Bag_Base_Tests {
     // protected abstract BagInterface GetBag(int capacity);
     protected abstract BagInterface GetBag(); // empty bag
 
+    // *************************************************************************
+    // *** STATIC TESTS ********************************************************
+    
     @Test
     public void isEmpty_newBag_returnsTrue() {
         BagInterface testBag = GetBag();
         assertTrue(testBag.isEmpty());
     }
 
-    @Test
-    public void add_validEntry_sizeEqualsOne() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABCDE";
-        testBag.add(string1);
-        assertEquals(1, testBag.getSize());
-    }
-
-    @Test
-    public void add_validEntry_isNotEmpty() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABCDE";
-        testBag.add(string1);
-        assertTrue(!testBag.isEmpty());
-    }
-
-    @Test
-    public void remove_oneEntry_sizeIsZero() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABCDE";
-        testBag.add(string1);
-        testBag.remove();
-        assertEquals(0, testBag.getSize());
-    }
-
-    @Test
-    public void remove_oneEntry_isEmpty() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABCDE";
-        testBag.add(string1);
-        testBag.remove();
-        assertTrue(testBag.isEmpty());
-    }
-
-    @Test
-    public void add_NullToBag_returnsFalse() {
-        BagInterface testBag = GetBag();
-        boolean success = testBag.add(null);
-        assertTrue(!success);
-    }
-
-    @Test
-    public void add_nullToEmptyBag_bagIsEmpty() {
-        BagInterface testBag = GetBag();
-        testBag.add(null);
-        assertTrue(testBag.isEmpty());
-    }
-
-    @Test
+     @Test
     public void toArray_copyElements_correctSize() {
         BagInterface testBag = GetBag();
         int numberOfElements = 3;
@@ -89,10 +44,12 @@ public abstract class Bag_Base_Tests {
         testBag.add("A");
         testBag.add("B");
         testBag.add("C");
-        Object[] testReturnArray = testBag.toArray();
-        assertEquals("A", testReturnArray[0]);
-        assertEquals("B", testReturnArray[1]);
-        assertEquals("C", testReturnArray[2]);
+       Object[] resultingArray = testBag.toArray();
+        boolean elementsMatch = (
+                resultingArray[0] == "A" &&
+                resultingArray[1] == "B" &&
+                resultingArray[2] == "C");
+        assertTrue(elementsMatch);
     }
 
     @Test
@@ -102,24 +59,6 @@ public abstract class Bag_Base_Tests {
         Object[] testReturnArray;
         testReturnArray = testBag.toArray();
         assertEquals(0, testReturnArray.length);
-    }
-
-    @Test
-    public void clear_bagWithContents_bagIsEmpty() {
-        BagInterface testBag = GetBag();
-        testBag.add("A");
-        testBag.add("B");
-        testBag.clear();
-        assertTrue(testBag.isEmpty());
-    }
-
-    @Test
-    public void clear_bagWithContents_sizeEqualsZero() {
-        BagInterface testBag = GetBag();
-        testBag.add("A");
-        testBag.add("B");
-        testBag.clear();
-        assertEquals(0, testBag.getSize());
     }
 
     @Test
@@ -159,8 +98,6 @@ public abstract class Bag_Base_Tests {
     @Test
     public void getFrequencyOf_oneElementMatch_returnsOne() {
         BagInterface testBag = GetBag();
-
-//        Bag_Array<String> testBag = new Bag_Array<>(3);
         String targetString = "A";
         testBag.add("A");
         testBag.add("B");
@@ -180,6 +117,78 @@ public abstract class Bag_Base_Tests {
         testBag.add("C");
         int count = testBag.getFrequencyOf(targetString);
         assertEquals(0, count);
+    }
+
+    // *************************************************************************
+    // *** MUTATOR TESTS *******************************************************
+
+    @Test
+    public void add_validEntry_sizeEqualsOne() {
+        BagInterface testBag = GetBag();
+        String string1 = "ABCDE";
+        testBag.add(string1);
+        assertEquals(1, testBag.getSize());
+    }
+
+    @Test
+    public void add_validEntry_isNotEmpty() {
+        BagInterface testBag = GetBag();
+        String string1 = "ABCDE";
+        testBag.add(string1);
+        assertTrue(!testBag.isEmpty());
+    }
+
+    @Test
+    public void add_nullToBag_returnsFalse() {
+        BagInterface testBag = GetBag();
+        boolean success = testBag.add(null);
+        assertTrue(!success);
+    }
+
+    @Test
+    public void add_nullToEmptyBag_bagIsEmpty() {
+        BagInterface testBag = GetBag();
+        testBag.add(null);
+        assertTrue(testBag.isEmpty());
+    }
+
+   
+    
+    @Test
+    public void remove_oneEntry_sizeIsZero() {
+        BagInterface testBag = GetBag();
+        String string1 = "ABCDE";
+        testBag.add(string1);
+        testBag.remove();
+        assertEquals(0, testBag.getSize());
+    }
+
+    @Test
+    public void remove_oneEntry_isEmpty() {
+        BagInterface testBag = GetBag();
+        String string1 = "ABCDE";
+        testBag.add(string1);
+        testBag.remove();
+        assertTrue(testBag.isEmpty());
+    }
+
+    
+    @Test
+    public void clear_bagWithContents_bagIsEmpty() {
+        BagInterface testBag = GetBag();
+        testBag.add("A");
+        testBag.add("B");
+        testBag.clear();
+        assertTrue(testBag.isEmpty());
+    }
+
+    @Test
+    public void clear_bagWithContents_sizeEqualsZero() {
+        BagInterface testBag = GetBag();
+        testBag.add("A");
+        testBag.add("B");
+        testBag.clear();
+        assertEquals(0, testBag.getSize());
     }
 
 }
