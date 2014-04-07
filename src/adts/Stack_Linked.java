@@ -15,11 +15,15 @@ public class Stack_Linked<T> implements StackInterface<T> {
     }
 
     @Override
-    public void push(T newEntry) {
+    public boolean push(T newEntry) {
         if (newEntry != null) {
             Node newNode = new Node( (T)newEntry, topNode);
             topNode = newNode;
             size++;
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -27,7 +31,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
     public T pop() {
         T top = peek();
         if (topNode != null) {
-            topNode = topNode.next;
+            topNode = topNode.getNext();
         }
         size--;
         return top;
@@ -37,7 +41,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
     public T peek() {
         T top = null;
         if (topNode != null) {
-            top = topNode.data;
+            top = (T) topNode.getData();
         }
         return top;
     }
@@ -56,7 +60,7 @@ public class Stack_Linked<T> implements StackInterface<T> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 
@@ -67,18 +71,14 @@ public class Stack_Linked<T> implements StackInterface<T> {
         this.size = size;
     }
 
-    private class Node {
-
-        private T data;     // reference to entry in bag
-        private Node next;  // reference to next node
-
-        private Node(T dataPortion) {
-            this(dataPortion, null);
+    @Override
+    public T peek2() {
+        if (size < 2) {
+            return null;
         }
-
-        private Node(T dataPortion, Node nextNode) {
-            data = dataPortion;
-            next = nextNode;
+        else {
+            return (T) topNode.getNext().getData();
         }
     }
+
 }

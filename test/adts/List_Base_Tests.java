@@ -263,9 +263,9 @@ public abstract class List_Base_Tests {
         assertEquals(oldSize, newSize);
 
     }
-
+    // remove()
     @Test
-    public void remove_validEntry_returnsEntry() {
+    public void remove_validContents_returnsEntry() {
         ListInterface testList = GetList();
         String string1 = "ABC";
         testList.add(string1);
@@ -274,7 +274,7 @@ public abstract class List_Base_Tests {
     }
 
     @Test
-    public void remove_validEntry_sizeDecrements() {
+    public void remove_validContents_sizeDecrements() {
         ListInterface testList = GetList();
         String string1 = "ABC";
         testList.add(string1);
@@ -285,7 +285,7 @@ public abstract class List_Base_Tests {
     }
 
     @Test
-    public void remove_validEntrySizeOne_isEmpty() {
+    public void remove_validContentsSizeOne_isEmpty() {
         ListInterface testList = GetList();
         String string1 = "ABC";
         testList.add(string1);
@@ -307,7 +307,8 @@ public abstract class List_Base_Tests {
         assertNull(result);
 
     }
-
+    
+    // remove(int index)
     @Test
     public void remove_validIndex_returnsEntry() {
         ListInterface testList = GetList();
@@ -456,15 +457,6 @@ public abstract class List_Base_Tests {
         assertTrue(testList.contains(oldValue));
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @Test
     public void replace_negativeIndex_returnsFalse() {
         ListInterface testList = GetList();
@@ -485,19 +477,7 @@ public abstract class List_Base_Tests {
         testList.replace(-1, newValue);
         assertTrue(testList.contains(oldValue));
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     @Test
     public void replace_nullEntry_returnsFalse() {
         ListInterface testList = GetList();
@@ -526,78 +506,85 @@ public abstract class List_Base_Tests {
         assertFalse(result);
     }
 
+    @Test
+    public void clear_contents_bagIsEmpty() {
+        ListInterface testList = GetList();
+        String string = "ABC";
+        testList.add(string);
+        testList.clear();
+        assertTrue(testList.isEmpty());
+    }
+
+    @Test
+    public void clear_contents_sizeEqualsZero() {
+        ListInterface testList = GetList();
+        String string = "ABC";
+        testList.add(string);
+        testList.clear();
+        assertEquals(0, testList.size());
+    }
+
 // swap:
     // size says the same
     // both ints need to be different
     // both ints cannot be the same
     // doesn't work on an empty bag
     // doesn't work on 1 element
-    
     /*
-    @Test
-    public void swap_invalidIndex_Entry1Present() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_invalidIndex_Entry1Present() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_invalidIndex_Entry2Present() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_invalidIndex_Entry2Present() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_invalidIndex_returnFalse() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_invalidIndex_returnFalse() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_sameIndices_returnsFalse() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_sameIndices_returnsFalse() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_emptyList_returnsFalse() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_emptyList_returnsFalse() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_sizeOne_returnsFalse() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_sizeOne_returnsFalse() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_validIndices_returnTrue() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_validIndices_returnTrue() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_validIndices_valueSwapped() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_validIndices_valueSwapped() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void swap_validIndices_sameSize() {
-        ListInterface testList = GetList();
+     @Test
+     public void swap_validIndices_sameSize() {
+     ListInterface testList = GetList();
 
-    }
+     }
 
-    @Test
-    public void clear_contents_bagIsEmpty() {
-        ListInterface testList = GetList();
-
-    }
-
-    @Test
-    public void clear_contents_sizeEqualsZero() {
-        ListInterface testList = GetList();
-
-    }
-*/
+    
+     */
 }

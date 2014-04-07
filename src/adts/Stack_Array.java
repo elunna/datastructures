@@ -9,6 +9,7 @@ import java.util.Arrays;
  * @param <T>
  */
 public class Stack_Array<T> implements StackInterface<T> {
+
     private T[] stack;      // array of stack entries
     private int topIndex;   // index of top entry
 
@@ -34,12 +35,15 @@ public class Stack_Array<T> implements StackInterface<T> {
     }
 
     @Override
-    public void push(T newEntry) {
+    public boolean push(T newEntry) {
+        boolean success = false;
         if (newEntry != null) {
             ensureCapacity();
             topIndex++;
             stack[topIndex] = newEntry;
+            success = true;
         }
+        return success;
     }
 
     private void ensureCapacity() {
@@ -93,7 +97,16 @@ public class Stack_Array<T> implements StackInterface<T> {
      * @ the size (or height) of the stack.
      */
     @Override
-    public int getSize() {
+    public int size() {
         return topIndex + 1;
+    }
+
+    @Override
+    public T peek2() {
+        if (size() > 1) {
+            return stack[topIndex - 1];
+        } else {
+            return null;
+        }
     }
 }

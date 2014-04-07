@@ -89,7 +89,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
      * @return the integer number of entries currently in the bag
      */
     @Override
-    public int getSize() {
+    public int size() {
         return numberOfEntries; // STUB
     }
 

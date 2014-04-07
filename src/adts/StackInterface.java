@@ -35,7 +35,7 @@ public interface StackInterface<T> {
     /**
      * @return the current size of the Stack
      */
-    public int getSize();
+    public int size();
 
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

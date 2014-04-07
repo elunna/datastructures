@@ -38,9 +38,11 @@ public class List_ArrayList<T> implements ListInterface<T> {
     }
 
     @Override
-    public void add(T newEntry) {
-        arrayList.add(newEntry);
+    public boolean add(T newEntry) {
+        return arrayList.add(newEntry);
     }
+    
+ 
 
     @Override
     public boolean insert(int index, T newEntry) {
@@ -50,8 +52,9 @@ public class List_ArrayList<T> implements ListInterface<T> {
 
     @Override
     public T remove() {
-        return null;
-        // STUB arrayList.remove(); 
+        T temp = arrayList.remove(arrayList.size()-1);
+        return temp;
+        
     }
 
     @Override
@@ -68,5 +71,7 @@ public class List_ArrayList<T> implements ListInterface<T> {
     public void clear() {
         arrayList.clear();
     }
+
+
     
 }

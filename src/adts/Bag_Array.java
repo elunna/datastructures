@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Random;
+
 /**
  * Description: This is an array based generic collection. This bag is a fixed
  * sized array. It includes methods to manage manage its contents.
@@ -10,6 +12,7 @@ package adts;
  * @param <T>
  */
 public class Bag_Array<T> implements BagInterface<T> {
+
     private final T[] array;
     private int numberOfEntries;
 
@@ -90,7 +93,7 @@ public class Bag_Array<T> implements BagInterface<T> {
      * @return the integer number of entries currently in the bag
      */
     @Override
-    public int getSize() {
+    public int size() {
         return numberOfEntries;
     }
 
@@ -102,7 +105,7 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     @Override
     public T remove() {
-        if (getSize() > 0) {
+        if (size() > 0) {
             T result = remove(numberOfEntries - 1);
             if (result != null) {
                 return result;
@@ -110,7 +113,6 @@ public class Bag_Array<T> implements BagInterface<T> {
             }
         }
         return null;
-
     }
 
     /**
@@ -119,6 +121,7 @@ public class Bag_Array<T> implements BagInterface<T> {
      * @param index
      * @return If no such entry exists, returns null.
      */
+    
     public T remove(int index) {
         T result = null;
         // check bounds
@@ -134,6 +137,50 @@ public class Bag_Array<T> implements BagInterface<T> {
             array[numberOfEntries] = null;
         }
         return result;
+    }
+
+    /**
+     * Removes one occurrence of a given entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+        numberOfEntries--;
+        // Move the last entry in the removed entry
+        if (array[numberOfEntries - 1] != null) {
+            array[index] = array[numberOfEntries - 1];
+            array[numberOfEntries - 1] = null;
+        }
+        return anEntry.equals(result);
+    }
+
+    public T removeRandom() {
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        } else {
+            Random randomNumbers = new Random();
+            int randomIndex = randomNumbers.nextInt(numberOfEntries);
+            result = array[randomIndex];
+            numberOfEntries--;  // decrease size
+
+            if (randomIndex != numberOfEntries) {
+                // Move the end to the empty space
+                array[randomIndex] = array[numberOfEntries];
+            }
+            // Delete last entry
+            array[numberOfEntries] = null;
+            return result;
+        }
     }
 
     /**
@@ -203,27 +250,4 @@ public class Bag_Array<T> implements BagInterface<T> {
         return found;
     }
 
-    /**
-     * Removes one occurrence of a given entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || getSize() == 0) {
-            return false;
-        }
-
-        int index = getIndexOf(anEntry);
-        T result = remove(index);
-        numberOfEntries--;
-        // Move the last entry in the removed entry
-        if (array[numberOfEntries - 1] != null) {
-            array[index] = array[numberOfEntries - 1];
-            array[numberOfEntries - 1] = null;
-        }
-        return anEntry.equals(result);
-    }
 }

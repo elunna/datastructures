@@ -25,7 +25,7 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
     private int backIndex;
 
     public Queue_CircularArray() {
-        this(INITIAL_CAPACITY);
+        this(ListInterface.DEFAULT_CAPACITY);
     }
 
     public Queue_CircularArray(int capacity) {

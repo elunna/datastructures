@@ -23,7 +23,7 @@ public class Stack_Array_Tests extends Stack_Base_Tests {
     @Test
     public void Stack_noCapacity_sizeEqualsZero() {
         Stack_Array<String> testStack = (Stack_Array) GetStack();
-        Assert.assertEquals(0, testStack.getSize());
+        Assert.assertEquals(0, testStack.size());
     }
 
     // If an array stack is passed a zero capacity argument,
@@ -43,7 +43,7 @@ public class Stack_Array_Tests extends Stack_Base_Tests {
 //    @Test
 //    public void Stack_zeroCapacity_throwsException() {
 //        Stack_Array<String> testStack = (Stack_Array) GetStack(0);
-//        Assert.assertEquals(0, testStack.getSize());
+//        Assert.assertEquals(0, testStack.size());
 //    }
 //
 //    @Test

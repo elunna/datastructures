@@ -26,31 +26,6 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    public void isFull_fullSet_returnsTrue() {
-        SetInterface testSet = GetSet();
-        // add a bunch of items here
-        // Reason for using loop: Make sure we fill the bag.
-        for (int i = 0; i < SetInterface.DEFAULT_CAPACITY; i++) {
-            testSet.add("testSet");
-        }
-        assertTrue(testSet.isFull());
-    }
-
-    @Test
-    public void isFull_emptySet_returnsFalse() {
-        SetInterface testSet = GetSet();
-        // default set is empty.
-        assertFalse(testSet.isFull());
-    }
-
-    @Test
-    public void isFull_setIsNotFull_returnsFalse() {
-        SetInterface testSet = GetSet();
-        testSet.add("testSet");
-        assertFalse(testSet.isFull());
-    }
-
-    @Test
     public void isEmpty_emptySet_returnsTrue() {
         SetInterface testSet = GetSet();
         assertTrue(testSet.isEmpty());
@@ -95,10 +70,10 @@ public abstract class Set_Base_Tests {
     @Test
     public void contains_missingValue_returnFalse() {
         SetInterface testSet = GetSet();
-        String testString2 = "testSet";
-        String testString1 = "Not looking for this one.";
-        testSet.add(testString2);   // add so the set is not empty.
-        assertFalse(testSet.contains(testString2));
+        String goodString = "testSet";
+        String missing = "missing string";
+        testSet.add(goodString);   
+        assertFalse(testSet.contains(missing));
     }
 
     @Test
@@ -119,7 +94,6 @@ public abstract class Set_Base_Tests {
     @Test
     void getMin_multipleEntries_returnMin() {
         SetInterface testSet = GetSet();
-
     }
 
     @Test
@@ -135,13 +109,11 @@ public abstract class Set_Base_Tests {
         Object result = testSet.getMax();
         Object entry = testSet.remove();
         assertEquals(result, entry);
-
     }
 
     @Test
     void getMax_multipleEntries_returnMax() {
         SetInterface testSet = GetSet();
-
     }
 
     @Test
@@ -161,23 +133,34 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void toArray_validSet_elementsMatche() {
+    public void toArray_validList_elementsMatch() {
         SetInterface testSet = GetSet();
-        String string1 = "ABC";
-        String string2 = "DEF";
-        testSet.add(string1);
-        testSet.add(string2);
-        Object[] testArray = testSet.toArray();
-        // Is there a better way to check this
-        // with one assert?
-        assertEquals(string1, testArray[0]);
-        assertEquals(string2, testArray[1]);
-
+        testSet.add("A");
+        testSet.add("B");
+        testSet.add("C");
+        Object[] resultingArray = testSet.toArray();
+        boolean elementsMatch = (resultingArray[0] == "A"
+                && resultingArray[1] == "B"
+                && resultingArray[2] == "C");
+        assertTrue(elementsMatch);
     }
 
+//    @Test
+//    void toArray_validSet_elementsMatch() {
+//        SetInterface testSet = GetSet();
+//        String string1 = "ABC";
+//        String string2 = "DEF";
+//        testSet.add(string1);
+//        testSet.add(string2);
+//        Object[] testArray = testSet.toArray();
+//        // Is there a better way to check this
+//        // with one assert?
+//        assertEquals(string1, testArray[0]);
+//        assertEquals(string2, testArray[1]);
+//
+//    }
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
-    
     @Test
     void add_validEntry_sizeEqualsOne() {
         SetInterface testSet = GetSet();
@@ -330,4 +313,11 @@ public abstract class Set_Base_Tests {
         assertEquals(0, testSet.size());
     }
 
+    
+    // Test Union: combines all elements, no duplicates allowed.
+    // Set union(Set x): must be a valid set, size 1+ and non-null.
+    
+    
+    
+    
 }
