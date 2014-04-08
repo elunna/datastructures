@@ -20,6 +20,7 @@ package adts;
  * @param <T>
  */
 public class Queue_CircularArray<T> implements QueueInterface<T> {
+
     private T[] queue;
     private int frontIndex;
     private int backIndex;
@@ -32,16 +33,47 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Bad constructor arg");
         }
-        // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
-        T[] tempBag; // unchecked cast
+        T[] tempBag;
         tempBag = (T[]) new Object[capacity];
         queue = tempBag;
         frontIndex = 0;
         backIndex = capacity - 1;
-        // the null index would be capacity - 2;
     }
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    @Override
+    public int size() {
+        if (frontIndex == (backIndex + 1) % queue.length) {
+            return 0;
+        } else if (frontIndex == backIndex) {
+            return 1;
+        } else if (frontIndex < backIndex) {
+            return backIndex - frontIndex + 1;
+        } else if (frontIndex > backIndex) {
+            return backIndex + 1 + frontIndex - queue.length;
+        } else {
+            return -1;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return frontIndex == (backIndex + 1) % queue.length;
+    }
+
+    @Override
+    public T getFront() {
+        T front = null;
+        if (!isEmpty()) {
+            return queue[frontIndex];
+        }
+        return front;
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
     @Override
     public void enqueue(T newEntry) {
         if (newEntry != null) {
@@ -64,45 +96,9 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
     }
 
     @Override
-    public T getFront() {
-        T front = null;
-        if (!isEmpty()) {
-            return queue[frontIndex];
-        }
-        return front;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return frontIndex == (backIndex + 1) % queue.length;
-    }
-
-    @Override
     public void clear() {
         while (!isEmpty()) {
             dequeue();
-        }
-    }
-
-    // Copied from Queue_Array, check this. 
-    // May be able to use a clear algorithm.
-    // Test this!!
-    @Override
-    public int getLength() {
-        if (frontIndex == (backIndex + 1) % queue.length) {
-            return 0;
-            
-        } else if (frontIndex == backIndex) {
-            return 1;
-            
-        } else if (frontIndex < backIndex) {
-            return backIndex - frontIndex + 1;
-
-        } else if (frontIndex > backIndex) {
-            return backIndex + 1 + frontIndex - queue.length;
-        }
-        else {
-            return -1;
         }
     }
 
@@ -110,6 +106,7 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
         if (frontIndex == ((backIndex + 2) % queue.length)) {
             T[] oldQueue = queue;
             int oldSize = oldQueue.length;
+            
             @SuppressWarnings("unchecked")
             T[] tempQueue = (T[]) new Object[2 - oldSize];
             queue = tempQueue;

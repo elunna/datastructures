@@ -1,6 +1,6 @@
 package adts;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * File:        
@@ -9,69 +9,69 @@ import java.util.ArrayList;
  * @param <T>
  */
 
-public class List_ArrayList<T> implements ListInterface<T> {
-    private ArrayList<T> arrayList;
+public class List_Vector<T> implements ListInterface<T> {
+    private Vector vector;
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-
     @Override
     public int size() {
-        return arrayList.size();
+        return vector.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return arrayList.isEmpty();
+        return vector.isEmpty();
     }
 
     @Override
     public T get(int index) {
-        return arrayList.get(index);
+        return (T) vector.get(index);
+        
     }
 
     @Override
     public boolean contains(T anEntry) {
-        return arrayList.contains(anEntry);
+        return vector.contains(anEntry);
     }
 
     @Override
     public T[] toArray() {
-        return (T[]) arrayList.toArray();
+        return (T[]) vector.toArray();
     }
+
     
     // *************************************************************************
-    // *** MUTATOR METHODS ******************************************************
-
-
+    // *** MUTATOR METHODS *****************************************************
+    
     @Override
     public boolean add(T newEntry) {
-        return arrayList.add(newEntry);
+        return vector.add(newEntry);
     }
-    
- 
 
     @Override
     public boolean insert(int index, T newEntry) {
-        arrayList.add(index, newEntry);
+        vector.add(index, newEntry);
         return true;
     }
 
     @Override
     public T remove() {
-        T temp = arrayList.remove(arrayList.size()-1);
-        return temp;
-        
+        Object result = vector.get(0);
+        vector.remove(0);
+        return (T) result;
     }
 
     @Override
     public T remove(int index) {
-        return arrayList.remove(index);
+        Object result = vector.get(index);
+        vector.remove(index);
+        return (T) result;
     }
 
     @Override
     public boolean replace(int index, T newEntry) {
-        if (arrayList.set(index, newEntry) != null) {
+        if (vector.set(index, newEntry) != null) {
             return true;
         }
         return false;
@@ -79,6 +79,6 @@ public class List_ArrayList<T> implements ListInterface<T> {
 
     @Override
     public void clear() {
-        arrayList.clear();
-    }    
+        vector.clear();
+    }
 }

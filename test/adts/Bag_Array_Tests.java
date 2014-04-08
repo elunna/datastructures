@@ -31,13 +31,11 @@ public class Bag_Array_Tests extends Bag_Base_Tests {
     // throw an exception.
     @Test(expected = IllegalArgumentException.class)
     public void newBag_negativeCapacity_throwException() {
-//        Bag_Array<String> testBag = (Bag_Array) GetBag(-1);
         BagInterface testBag = GetBag(-1);
     }
 
     @Test
     public void isFull_usingFullBag_returnsTrue() {
-//        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
         BagInterface testBag = GetBag(3);
         testBag.add("A");
         testBag.add("B");
@@ -47,7 +45,6 @@ public class Bag_Array_Tests extends Bag_Base_Tests {
 
     @Test
     public void add_validToFullBag_returnsFalse() {
-//        Bag_Array<String> testBag = (Bag_Array) GetBag(3);
         BagInterface testBag = GetBag(3);
         testBag.add("A");
         testBag.add("B");

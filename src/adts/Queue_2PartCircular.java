@@ -18,6 +18,47 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         queueNode = freeNode;
     }
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    
+    @Override
+    public int size() {
+        int count = 0;
+        if (isEmpty()) {
+            return count;
+        } else {
+            count++;
+            Node scanner = queueNode;
+            while (scanner.getNext() != freeNode) {
+                count++;
+                scanner = scanner.getNext();
+            }
+            return count;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return queueNode == freeNode;
+    }
+
+    @Override
+    public T getFront() {
+        T front = null;
+        if (!isEmpty()) {
+            front = (T) queueNode.getData();
+        }
+        return front;
+
+    }
+
+    private boolean isChainFull() {
+        return queueNode == freeNode.getNext();
+
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
     @Override
     public void enqueue(T newEntry) {
         if (newEntry != null) {
@@ -42,46 +83,9 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
     }
 
     @Override
-    public T getFront() {
-        T front = null;
-        if (!isEmpty()) {
-            front = (T) queueNode.getData();
-        }
-        return front;
-
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return queueNode == freeNode;
-    }
-
-    @Override
     public void clear() {
         while (!isEmpty()) {
             dequeue();
         }
-    }
-
-    @Override
-    public int getLength() {
-        int count = 0;
-        if (isEmpty()) {
-            return count;
-        } else {
-            count++;
-            Node scanner = queueNode;
-            while (scanner.getNext() != freeNode) {
-                count++;
-                scanner = scanner.getNext();
-            }
-            return count;
-
-        }
-    }
-
-    private boolean isChainFull() {
-        return queueNode == freeNode.getNext();
-
     }
 }

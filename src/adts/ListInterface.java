@@ -1,27 +1,28 @@
 package adts;
 
 /**
- * An interface for the ADT list. 
- * Entries in the list have positions that begin with 0.
+ * An interface for the ADT list. Entries in the list have positions that begin
+ * with 0.
  *
  * @param <T>
  */
 public interface ListInterface<T> {
+
     public static final int DEFAULT_CAPACITY = 5;
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-    
     public int size();
-    
+
     public boolean isEmpty();
+
+    // public boolean isFull();
     
     public T get(int index);
-    
-    public boolean contains(T anEntry);
-    
-    public T[] toArray();
 
+    public boolean contains(T anEntry);
+
+    public T[] toArray();
 
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
@@ -32,6 +33,8 @@ public interface ListInterface<T> {
     public T remove(); // remove last entry
 
     public T remove(int index);
+    
+    // public T remove(T anEntry);
 
     public boolean replace(int index, T newEntry);
 

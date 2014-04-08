@@ -9,27 +9,61 @@ package adts;
  * @author lunatunez
  */
 class Queue_CircularLinked<T> implements QueueInterface {
+
     private Node<T> lastNode;
 
     public Queue_CircularLinked() {
         lastNode = new Node(null, null);
     }
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    @Override
+    public int size() {
+        if (lastNode.getNext() == null) {
+            return 0;
+        } else if (lastNode.getNext() == lastNode) {
+            return 1;
+        } else {
+            int length = 2;
+            Node node = lastNode.getNext();
+
+            while (node.getNext() != lastNode) {
+                node = node.getNext();
+                length++;
+            }
+            return length;
+        }
+    }
+
+    @Override
+    public T getFront() {
+        T front = null;
+        if (!isEmpty()) {
+            front = lastNode.getNext().getData();
+        }
+        return front;
+    }
+
+    @Override
+    public boolean isEmpty() {
+
+        return lastNode.getData() == null;
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
     @Override
     public void enqueue(Object newEntry) {
         if (newEntry == null) {
-        }
-        else if (lastNode.getNext() == null) { // chain is empty
-            lastNode.setData((T)newEntry);
+        } else if (lastNode.getNext() == null) { // chain is empty
+            lastNode.setData((T) newEntry);
             lastNode.setNext(lastNode);
-        }
-        else { 
+        } else {
             // Create a new Node, that references the front.
-            Node newNode = new Node (newEntry, lastNode.getNext());
-            
+            Node newNode = new Node(newEntry, lastNode.getNext());
             // Set the lastNode's reference to the newNode.
             lastNode.setNext(newNode);
-            
             // Reset lastNode to the newNode.
             lastNode = newNode;
         }
@@ -49,43 +83,9 @@ class Queue_CircularLinked<T> implements QueueInterface {
     }
 
     @Override
-    public boolean isEmpty() {
-        
-        return lastNode.getData() == null;
-    }
-
-    @Override
     public void clear() {
         while (!isEmpty()) {
             dequeue();
         }
     }
-
-    @Override
-    public int getLength() {
-        if (lastNode.getNext() == null) {
-            return 0;
-        } else if (lastNode.getNext() == lastNode) {
-            return 1;
-        }
-        int length = 2; // Length must be at least 2.
-        Node node = lastNode.getNext();
-
-        while (node.getNext() != lastNode) {
-            node = node.getNext();
-            length++;
-        }
-        return length;
-
-    }
-
-    @Override
-    public T getFront() {
-        T front = null;
-        if (!isEmpty()) {
-            front = lastNode.getNext().getData();
-        }
-        return front;
-    }
-
 }

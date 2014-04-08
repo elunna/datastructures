@@ -31,25 +31,56 @@ public class Bag_Array<T> implements BagInterface<T> {
         array = tempBag;
     }
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
     /**
-     * Adds a new entry to this bag.
+     * Gets the current number of entries in this bag.
      *
-     * @param newEntry the object to be added as a new entry
-     * @return true if the addition is successful, or false if not
+     * @return the integer number of entries currently in the bag
      */
     @Override
-    public boolean add(T newEntry) {
-        boolean result = true;
-        if (isFull()) {
-            result = false;
-        } else if (newEntry == null) {
-            result = false;
-        } else {
-            array[numberOfEntries] = newEntry;
-            numberOfEntries++;
+    public int size() {
+        return numberOfEntries;
+    }
+
+    /**
+     * Sees whether this bag is empty.
+     *
+     * @return true if the bag is empty, or false if not
+     */
+    @Override
+    public boolean isEmpty() {
+        return numberOfEntries == 0;
+    }
+
+    /**
+     * Sees whether this bag is full.
+     *
+     * @return true if the bag is full, or false if not
+     */
+    @Override
+    public boolean isFull() {
+        return numberOfEntries == array.length;
+    }
+
+    /**
+     * Tests whether this bag contains a given entry.
+     *
+     * @param anEntry the entry to locate
+     * @return true if the bag contains anEntry, or false otherwise
+     */
+    @Override
+    public boolean contains(T anEntry) {
+        if (anEntry == null) {
+            return false;
         }
-        return result;
-        // Returns true if add executed
+        boolean found = false;
+        for (int i = 0; !found && (i < numberOfEntries); i++) {
+            if (anEntry.equals(array[i])) {
+                found = true;
+            }
+        }
+        return found;
     }
 
     /**
@@ -65,132 +96,6 @@ public class Bag_Array<T> implements BagInterface<T> {
         System.arraycopy(array, 0, result, 0, numberOfEntries);
 
         return result;
-    }
-
-    /**
-     * Sees whether this bag is full.
-     *
-     * @return true if the bag is full, or false if not
-     */
-    @Override
-    public boolean isFull() {
-        return numberOfEntries == array.length;
-    }
-
-    /**
-     * Sees whether this bag is empty.
-     *
-     * @return true if the bag is empty, or false if not
-     */
-    @Override
-    public boolean isEmpty() {
-        return numberOfEntries == 0;
-    }
-
-    /**
-     * Gets the current number of entries in this bag.
-     *
-     * @return the integer number of entries currently in the bag
-     */
-    @Override
-    public int size() {
-        return numberOfEntries;
-    }
-
-    /**
-     * Removes one unspecified entry from this bag, if possible.
-     *
-     * @return either the removed entry, if the removal was successful, or null
-     * otherwise
-     */
-    @Override
-    public T remove() {
-        if (size() > 0) {
-            T result = remove(numberOfEntries - 1);
-            if (result != null) {
-                return result;
-
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Removes and returns the entry at a given index within the arraybag.
-     *
-     * @param index
-     * @return If no such entry exists, returns null.
-     */
-    
-    public T remove(int index) {
-        T result = null;
-        // check bounds
-        if (index > array.length || index < 0) {
-            return null;
-        }
-
-        if (!isEmpty()) {
-            result = array[index]; // entry to remove
-            numberOfEntries--;
-            // replace entry with last entry
-            array[index] = array[numberOfEntries];
-            array[numberOfEntries] = null;
-        }
-        return result;
-    }
-
-    /**
-     * Removes one occurrence of a given entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || size() == 0) {
-            return false;
-        }
-
-        int index = getIndexOf(anEntry);
-        T result = remove(index);
-        numberOfEntries--;
-        // Move the last entry in the removed entry
-        if (array[numberOfEntries - 1] != null) {
-            array[index] = array[numberOfEntries - 1];
-            array[numberOfEntries - 1] = null;
-        }
-        return anEntry.equals(result);
-    }
-
-    public T removeRandom() {
-        T result = null;
-        if (isEmpty()) {
-            return result;
-        } else {
-            Random randomNumbers = new Random();
-            int randomIndex = randomNumbers.nextInt(numberOfEntries);
-            result = array[randomIndex];
-            numberOfEntries--;  // decrease size
-
-            if (randomIndex != numberOfEntries) {
-                // Move the end to the empty space
-                array[randomIndex] = array[numberOfEntries];
-            }
-            // Delete last entry
-            array[numberOfEntries] = null;
-            return result;
-        }
-    }
-
-    /**
-     * Removes all entries from this bag.
-     */
-    @Override
-    public void clear() {
-        while (!isEmpty()) {
-            remove();
-        }
     }
 
     /**
@@ -230,24 +135,114 @@ public class Bag_Array<T> implements BagInterface<T> {
         return where;
     }
 
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
     /**
-     * Tests whether this bag contains a given entry.
+     * Adds a new entry to this bag.
      *
-     * @param anEntry the entry to locate
-     * @return true if the bag contains anEntry, or false otherwise
+     * @param newEntry the object to be added as a new entry
+     * @return true if the addition is successful, or false if not
      */
     @Override
-    public boolean contains(T anEntry) {
-        if (anEntry == null) {
-            return false;
+    public boolean add(T newEntry) {
+        boolean result = true;
+        if (isFull()) {
+            result = false;
+        } else if (newEntry == null) {
+            result = false;
+        } else {
+            array[numberOfEntries] = newEntry;
+            numberOfEntries++;
         }
-        boolean found = false;
-        for (int i = 0; !found && (i < numberOfEntries); i++) {
-            if (anEntry.equals(array[i])) {
-                found = true;
+        return result;
+    }
+
+    /**
+     * Removes one unspecified entry from this bag, if possible.
+     *
+     * @return either the removed entry, if the removal was successful, or null
+     * otherwise
+     */
+    @Override
+    public T remove() {
+        if (size() > 0) {
+            T result = remove(numberOfEntries - 1);
+            if (result != null) {
+                return result;
             }
         }
-        return found;
+        return null;
+    }
+
+    /**
+     * Removes and returns the entry at a given index within the arraybag.
+     *
+     * @param index
+     * @return If no such entry exists, returns null.
+     */
+    @Override
+    public T remove(int index) {
+        T result = null;
+        if (index > array.length || index < 0) {
+            return null;
+        }
+
+        if (!isEmpty()) {
+            result = array[index]; // entry to remove
+            numberOfEntries--;
+            array[index] = array[numberOfEntries];
+            array[numberOfEntries] = null; // replace empty entry with last.
+        }
+        return result;
+    }
+
+    /**
+     * Removes one occurrence of a given entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+       
+        return result != null;
+    }
+
+    public T removeRandom() {
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        } else {
+            Random randomNumbers = new Random();
+            int randomIndex = randomNumbers.nextInt(numberOfEntries);
+            result = array[randomIndex];
+            numberOfEntries--;  // decrease size
+
+            if (randomIndex != numberOfEntries) {
+                // Move the end to the empty space
+                array[randomIndex] = array[numberOfEntries];
+            }
+            // Delete last entry
+            array[numberOfEntries] = null;
+            return result;
+        }
+    }
+
+    /**
+     * Removes all entries from this bag.
+     */
+    @Override
+    public void clear() {
+        while (!isEmpty()) {
+            remove();
+        }
     }
 
 }

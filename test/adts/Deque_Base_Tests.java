@@ -24,7 +24,7 @@ public abstract class Deque_Base_Tests {
     @Test
     public void size_newDeque_sizeEqualsZero() {
         DequeInterface testDeque = GetDeque();
-        assertEquals(0, testDeque.getLength());
+        assertEquals(0, testDeque.size());
     }
 
     @Test
@@ -52,13 +52,12 @@ public abstract class Deque_Base_Tests {
 
         String string = "ABCDE";
         testDeque.addToFront(string);
-        // Check for correct casting here.
         Object result = testDeque.getFront();
         assertEquals(string, result);
     }
 
     @Test
-    public void getFront_contents_resultMatches() {
+    public void getFront_contents_returnsFront() {
         DequeInterface testDeque = GetDeque();
         String addedFirst = "ABC";
         String addedLast = "DEF";
@@ -78,7 +77,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    public void getBack_contents_resultMatches() {
+    public void getBack_contents_resultsBack() {
         DequeInterface testDeque = GetDeque();
         String addedFirst = "ABC";
         String addedLast = "DEF";
@@ -98,7 +97,7 @@ public abstract class Deque_Base_Tests {
     @Test
     public void getLength_newDeque_returnsZero() {
         DequeInterface testDeque = GetDeque();
-        assertEquals(0, testDeque.getLength());
+        assertEquals(0, testDeque.size());
     }
 
     // *************************************************************************
@@ -106,10 +105,10 @@ public abstract class Deque_Base_Tests {
     @Test
     void addToFront_validEntry_sizeIncrements() {
         DequeInterface testDeque = GetDeque();
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         String string = "ABCDE";
         testDeque.addToFront(string);
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize + 1, newSize);
 
     }
@@ -140,19 +139,19 @@ public abstract class Deque_Base_Tests {
     @Test
     void addToFront_nullEntry_sameSize() {
         DequeInterface testDeque = GetDeque();
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         testDeque.addToFront(null);
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize, newSize);
     }
 
     @Test
     void addToBack_validEntry_sizeIncrements() {
         DequeInterface testDeque = GetDeque();
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         String string = "ABCDE";
         testDeque.addToBack(string);
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize + 1, newSize);
     }
 
@@ -182,9 +181,9 @@ public abstract class Deque_Base_Tests {
     @Test
     void addToBack_nullEntry_sameSize() {
         DequeInterface testDeque = GetDeque();
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         testDeque.addToBack(null);
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize, newSize);
     }
 
@@ -209,9 +208,9 @@ public abstract class Deque_Base_Tests {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         testDeque.addToFront(string);
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         testDeque.removeFront();
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize, newSize);
     }
 
@@ -250,9 +249,9 @@ public abstract class Deque_Base_Tests {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         testDeque.addToFront(string);
-        int oldSize = testDeque.getLength();
+        int oldSize = testDeque.size();
         testDeque.removeBack();
-        int newSize = testDeque.getLength();
+        int newSize = testDeque.size();
         assertEquals(oldSize - 1, newSize);
     }
 

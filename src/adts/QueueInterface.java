@@ -9,6 +9,21 @@ public interface QueueInterface<T> {
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
+
+        /**
+     * Gets the integer size of this queue.
+     * @return  an int indicating the length this queue
+     */
+    public int size();
+
+    
+    /**
+     * Detects whether this queue is empty.
+     *
+     * @return true if the queue is empty, or false otherwise
+     */
+    public boolean isEmpty();
+
     
     /**
      * Retrieves the entry at the front of this queue.
@@ -18,18 +33,7 @@ public interface QueueInterface<T> {
      */
     public T getFront();
 
-    /**
-     * Detects whether this queue is empty.
-     *
-     * @return true if the queue is empty, or false otherwise
-     */
-    public boolean isEmpty();
-
-    /**
-     * Gets the integer size of this queue.
-     * @return  an int indicating the length this queue
-     */
-    public int getLength();
+    
     
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
@@ -41,6 +45,7 @@ public interface QueueInterface<T> {
      * @param newEntry an object to be added
      */
     public void enqueue(T newEntry);
+    //public boolean enqueue(T newEntry);
 
     /**
      * AKA: 'Poll'

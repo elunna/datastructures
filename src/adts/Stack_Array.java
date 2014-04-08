@@ -34,6 +34,42 @@ public class Stack_Array<T> implements StackInterface<T> {
         topIndex = -1;  // -1 = empty
     }
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    /**
+     *
+     * @ the size (or height) of the stack.
+     */
+    @Override
+    public int size() {
+        return topIndex + 1;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return topIndex < 0;
+    }
+
+    @Override
+    public T peek() {
+        T top = null;
+        if (!isEmpty()) {
+            top = stack[topIndex];
+        }
+        return top;
+    }
+
+    @Override
+    public T peek2() {
+        if (size() > 1) {
+            return stack[topIndex - 1];
+        } else {
+            return null;
+        }
+    }
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+
     @Override
     public boolean push(T newEntry) {
         boolean success = false;
@@ -47,23 +83,12 @@ public class Stack_Array<T> implements StackInterface<T> {
     }
 
     private void ensureCapacity() {
-        // if array is full
         if (topIndex == stack.length - 1) {
-            // double size of array
             stack = Arrays.copyOf(stack, 2 * stack.length);
         } else if (stack.length == 0) {
             // If user specified zero capacity
             stack = Arrays.copyOf(stack, 1);
         }
-    }
-
-    @Override
-    public T peek() {
-        T top = null;
-        if (!isEmpty()) {
-            top = stack[topIndex];
-        }
-        return top;
     }
 
     @Override
@@ -77,11 +102,6 @@ public class Stack_Array<T> implements StackInterface<T> {
         return top;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return topIndex < 0;
-    }
-
     /**
      * clear the contents of the stack
      */
@@ -89,24 +109,6 @@ public class Stack_Array<T> implements StackInterface<T> {
     public void clear() {
         while (!isEmpty()) {
             pop();
-        }
-    }
-
-    /**
-     *
-     * @ the size (or height) of the stack.
-     */
-    @Override
-    public int size() {
-        return topIndex + 1;
-    }
-
-    @Override
-    public T peek2() {
-        if (size() > 1) {
-            return stack[topIndex - 1];
-        } else {
-            return null;
         }
     }
 }

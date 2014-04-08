@@ -13,20 +13,17 @@ public abstract class Queue_Base_Tests {
      *
      * @return a Queue extending the QueueInterface
      */
-    // protected abstract QueueInterface GetQueue(int capacity);
     protected abstract QueueInterface GetQueue(); // empty queue
 
     // *************************************************************************
     // *** STATIC TESTS ********************************************************
-    
-    
     /**
      * Test of ieEmpty method, using a new empty queue, should return true
      */
     @Test
-    public void isEmpty_newQueue_returnsTrue() {
+    public void size_emptyQueue_equalsZero() {
         QueueInterface testQueue = GetQueue();
-        assertTrue(testQueue.isEmpty());
+        assertEquals(0, testQueue.size());
     }
 
     /**
@@ -39,7 +36,6 @@ public abstract class Queue_Base_Tests {
         String string2 = "DEFGH";
         testQueue.enqueue(string1);
         testQueue.enqueue(string2);
-
         assertFalse(testQueue.isEmpty());
     }
 
@@ -49,13 +45,10 @@ public abstract class Queue_Base_Tests {
     @Test
     public void getFront_oneEntry_resultMatches() {
         QueueInterface testQueue = GetQueue();
-
         String string = "ABCDE";
         testQueue.enqueue(string);
         // Check for correct casting here.
-//        Object result = testQueue.getFront();
-        String result = (String) testQueue.getFront();
-
+        Object result = testQueue.getFront();
         assertEquals(string, result);
     }
 
@@ -64,7 +57,7 @@ public abstract class Queue_Base_Tests {
      * return the first entry added.
      */
     @Test
-    public void getFront_existingEntry_resultMatches() {
+    public void getFront_multipleEntries_resultMatches() {
         QueueInterface testQueue = GetQueue();
         String addedFirst = "ABC";
         String addedLast = "DEF";
@@ -89,28 +82,19 @@ public abstract class Queue_Base_Tests {
         assertNull(result);
     }
 
-    /**
-     * Test of getLength method, of class QueueInterface.
-     */
-    @Test
-    public void getLength_newQueue_returnsZero() {
-        QueueInterface testQueue = GetQueue();
-        assertEquals(0, testQueue.getLength());
-    }
-    
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
-    
-    
     /**
      * Test of enqueue method, test adding a valid element to an empty queue.
      */
     @Test
-    public void enqueue_onEmptyQueue_isNotEmpty() {
+    public void enqueue_validEntry_sizeIncrements() {
         QueueInterface testQueue = GetQueue();
+        int oldSize = testQueue.size();
         String string = "ABCDE";
         testQueue.enqueue(string);
-        assertFalse(testQueue.isEmpty());
+        int newSize = testQueue.size();
+        assertEquals(oldSize + 1, newSize);
     }
 
     /**
@@ -118,13 +102,13 @@ public abstract class Queue_Base_Tests {
      * element. Size should equal two.
      */
     @Test
-    public void enqueue_existingElement_sizeEqualsTwo() {
+    public void enqueue_existingElement_notAddedToFront() {
         QueueInterface testQueue = GetQueue();
-        String string1 = "ABCDE";
-        String string2 = "DEFGH";
-        testQueue.enqueue(string1);
-        testQueue.enqueue(string2);
-        assertEquals(2, testQueue.getLength());
+        String front = "ABCDE";
+        String back = "DEFGH";
+        testQueue.enqueue(front);
+        testQueue.enqueue(back);
+        assertFalse(testQueue.getFront() == back);
     }
 
     /**
@@ -138,17 +122,26 @@ public abstract class Queue_Base_Tests {
         assertTrue(testQueue.isEmpty());
     }
 
+    public void enqueue_nullEntry_sameSize() {
+        QueueInterface testQueue = GetQueue();
+        int oldSize = testQueue.size();
+        testQueue.enqueue(null);
+        int newSize = testQueue.size();
+        assertEquals(oldSize, newSize);
+    }
+
     /**
      * Test of dequeue method, adding and removing one valid entry.
      */
     @Test
-    public void dequeue_oneEntry_resultMatches() {
+    public void dequeue_validEntry_sizeDecrements() {
         QueueInterface testQueue = GetQueue();
         String string = "ABCDE";
         testQueue.enqueue(string);
-        // Check for correct casting here.
-        Object result = testQueue.dequeue();
-        assertEquals(string, result);
+        int oldSize = testQueue.size();
+        testQueue.dequeue();
+        int newSize = testQueue.size();
+        assertEquals(oldSize - 1, newSize);
     }
 
     /**
@@ -161,12 +154,10 @@ public abstract class Queue_Base_Tests {
         String addedFirst = "ABC";
         String middle = "BBC";
         String addedLast = "DEF";
-
         testQueue.enqueue(addedFirst);
         testQueue.enqueue(middle);
         testQueue.enqueue(addedLast);
 
-        // Check for correct casting here.
         Object result = testQueue.dequeue();
         assertEquals(addedFirst, result);
     }
@@ -177,7 +168,6 @@ public abstract class Queue_Base_Tests {
     @Test
     public void dequeue_emptyQueue_returnsNull() {
         QueueInterface testQueue = GetQueue();
-        // Check for correct casting here.
         Object result = testQueue.dequeue();
         assertNull(result);
     }
@@ -197,4 +187,16 @@ public abstract class Queue_Base_Tests {
         assertTrue(testQueue.isEmpty());
     }
 
+        @Test
+    public void clear_contents_sizeEqualsZero() {
+        QueueInterface testQueue = GetQueue();
+        String string1 = "ABCDE";
+        String string2 = "DEFGH";
+        testQueue.enqueue(string1);
+        testQueue.enqueue(string2);
+        testQueue.clear();
+        assertEquals(0, testQueue.size());
+    }
+
+    
 }

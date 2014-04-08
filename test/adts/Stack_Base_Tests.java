@@ -76,7 +76,7 @@ public abstract class Stack_Base_Tests {
     }
 
     @Test
-    public void peek2_singleEntry_returnNull() {
+    public void peek2_singleEntry_returnsNull() {
         StackInterface testStack = GetStack();
          String firstString = "ABCDE";
         testStack.push(firstString);
@@ -85,7 +85,7 @@ public abstract class Stack_Base_Tests {
     }
 
     @Test
-    public void peek2_emptyStack_returnNull() {
+    public void peek2_emptyStack_returnsNull() {
         StackInterface testStack = GetStack();
         Object result = testStack.peek2();
         Assert.assertNull(result);

@@ -97,9 +97,10 @@ public abstract class Bag_Base_Tests {
         testBag.add("B");
         testBag.add("C");
         Object[] resultingArray = testBag.toArray();
-        boolean elementsMatch = (resultingArray[0] == "A"
-                && resultingArray[1] == "B"
-                && resultingArray[2] == "C");
+        boolean elementsMatch = (
+                resultingArray[0] == "A" && 
+                resultingArray[1] == "B" && 
+                resultingArray[2] == "C");
         assertTrue(elementsMatch);
     }
 
@@ -210,12 +211,12 @@ public abstract class Bag_Base_Tests {
     @Test
     public void remove_validContents_returnsEntry() {
         BagInterface testBag = GetBag();
-        String string = "ABCDE";
-        String string2 = "FGHIJ";
-        testBag.add(string);
-        testBag.add(string2);
+        String first = "ABCDE";
+        String last = "FGHIJ";
+        testBag.add(first);
+        testBag.add(last);
         Object result = testBag.remove();
-        assertEquals(string, result);
+        assertEquals(last, result);
     }
 
     @Test
@@ -256,14 +257,14 @@ public abstract class Bag_Base_Tests {
 
     // remove(T anEntry)
     @Test
-    public void remove_validEntry_returnsEntry() {
+    public void remove_validEntry_returnsTrue() {
         BagInterface testBag = GetBag();
-        String string = "ABCDE";
-        String string2 = "FGHIJ";
-        testBag.add(string);
-        testBag.add(string2);
-        Object result = testBag.remove(string);
-        assertEquals(string, result);
+        String first = "ABCDE";
+        String last = "FGHIJ";
+        testBag.add(first);
+        testBag.add(last);
+        boolean result = testBag.remove(first);
+        assertTrue(result);
     }
 
     @Test
@@ -292,19 +293,19 @@ public abstract class Bag_Base_Tests {
     }
 
     @Test
-    public void remove_validEntryEmptyBag_returnsNull() {
+    public void remove_validEntryEmptyBag_returnsFalse() {
         BagInterface testBag = GetBag();
         String string = "ABCDE";
-        Object result = testBag.remove(string);
-        assertNull(result);
+        boolean result = testBag.remove(string);
+        assertFalse(result);
     }
 
     @Test
-    public void remove_nullEntry_returnsNull() {
+    public void remove_nullEntry_returnsFalse() {
         BagInterface testBag = GetBag();
         String string = null;
-        Object result = testBag.remove(string);
-        assertNull(result);
+        boolean result = testBag.remove(string);
+        assertFalse(result);
 
     }
 
@@ -324,22 +325,26 @@ public abstract class Bag_Base_Tests {
     @Test
     public void remove_validIndex_returnsEntry() {
         BagInterface testBag = GetBag();
-        String string1 = "ABC";
-        testBag.add(string1);
-        Object result = testBag.remove(0);
-        assertEquals(string1, result);
+        String string = "ABC";
+        testBag.add(string);
+//        Object result = testBag.remove(0);
+        String result = (String) testBag.remove(0);
+        
+        assertEquals(string, result);
     }
 
     @Test
     public void remove_validIndex_sizeDecrements() {
         BagInterface testBag = GetBag();
         String string1 = "ABC";
+        
         testBag.add(string1);
         int oldSize = testBag.size();
+        
         testBag.remove(0);
         int newSize = testBag.size();
+        
         assertEquals(oldSize - 1, newSize);
-
     }
 
     @Test

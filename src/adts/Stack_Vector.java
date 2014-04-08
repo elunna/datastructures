@@ -13,20 +13,19 @@ public class Stack_Vector<T> implements StackInterface<T> {
     private Vector<T> stack; // last element is the top entry in stack
 
     public Stack_Vector() {
-        this(DEFAULT_INITIAL_CAPACITY);
-    } 
+        stack = new Vector<>();
+    }
+// *************************************************************************
+    // *** STATIC METHODS ******************************************************
 
-    public Stack_Vector(int initialCapacity) {
-        stack = new Vector<>(initialCapacity);
-        // size doubles as needed
+    @Override
+    public int size() {
+        return stack.size();
     }
 
     @Override
-    public boolean push(T newEntry) {
-        if (newEntry != null) {
-            return stack.add(newEntry);
-        }
-        return false;
+    public boolean isEmpty() {
+        return stack.isEmpty();
     }
 
     @Override
@@ -39,6 +38,25 @@ public class Stack_Vector<T> implements StackInterface<T> {
     }
 
     @Override
+    public T peek2() {
+        if (stack.size() < 2) {
+            return null;
+        } else {
+            return (T) stack.get(stack.size() - 2);
+        }
+    }
+    // *************************************************************************
+    // *** MUTATOR METHODS ******************************************************
+
+    @Override
+    public boolean push(T newEntry) {
+        if (newEntry != null) {
+            return stack.add(newEntry);
+        }
+        return false;
+    }
+
+    @Override
     public T pop() {
         T top = null;
         if (!isEmpty()) {
@@ -48,27 +66,7 @@ public class Stack_Vector<T> implements StackInterface<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return stack.isEmpty();
-    }
-
-    @Override
     public void clear() {
         stack.clear();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public T peek2() {
-         if (stack.size() < 2) {
-            return null;
-        }
-        else {
-            return (T) stack.get(stack.size() - 2);
-        }
     }
 }

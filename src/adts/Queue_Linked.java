@@ -1,17 +1,52 @@
 package adts;
 
 /**
- * File:        Queue_Linked
- * Description: This is a linked chain implementation using nodes.
- * The chain can grow to any size.
+ * File: Queue_Linked Description: This is a linked chain implementation using
+ * nodes. The chain can grow to any size.
  *
  * @author lunatunez
  * @param <T>
  */
 public class Queue_Linked<T> implements QueueInterface<T> {
+
     private Node<T> firstNode;
     private Node<T> lastNode;
 
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    @Override
+    public int size() {
+        int length = 0;
+        Node node = firstNode;
+        if (node == null) {
+            return length;
+        } else {
+            length++;
+        }
+
+        while (node.getNext() != null) {
+            length++;
+            node = node.getNext();
+        }
+        return length;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return firstNode == null && lastNode == null;
+    }
+
+    @Override
+    public T getFront() {
+        T front = null;
+        if (!isEmpty()) {
+            front = firstNode.getData();
+        }
+        return front;
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS ******************************************************
     @Override
     public void enqueue(Object newEntry) {
         if (newEntry == null) {
@@ -40,44 +75,10 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         return front;
     }
 
-
-    @Override
-    public boolean isEmpty() {
-
-        return firstNode == null
-                && lastNode == null;
-    }
-
     @Override
     public void clear() {
         while (!isEmpty()) {
             dequeue();
         }
-     }
-
-    @Override
-    public int getLength() {
-        int length = 0;
-        Node node = firstNode;
-        if (node == null) {
-            return length;
-        }
-        else length++;
-        
-        while (node.getNext() != null) {
-            length++;
-            node = node.getNext();
-        }
-        return length;
-    
-    }
-
-    @Override
-    public T getFront() {
-        T front = null;
-        if (!isEmpty()) {
-            front = firstNode.getData();
-        }
-        return front;
     }
 }

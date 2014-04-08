@@ -1,5 +1,6 @@
 package adts;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -7,13 +8,16 @@ import java.util.Random;
  *
  * @author lunatunez
  */
-class Set_Array<T> implements SetInterface<T> {
+class Set_Array<T extends Comparable<? super T>>
+        implements SetInterface<T> {
 
-    private final T[] array;
+    private T[] array;
     private int numberOfEntries;
+    private boolean resizeable;
 
     public Set_Array() {
         this(DEFAULT_CAPACITY);
+        resizeable = true;
     }
 
     public Set_Array(int capacity) throws IllegalArgumentException {
@@ -24,7 +28,10 @@ class Set_Array<T> implements SetInterface<T> {
         @SuppressWarnings("unchecked")
         T[] tempSet = (T[]) new Object[capacity]; // unchecked cast
         array = tempSet;
+        resizeable = false;
     }
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
 
     @Override
     public int size() {
@@ -34,11 +41,12 @@ class Set_Array<T> implements SetInterface<T> {
     @Override
     public int cardinality() {
         return numberOfEntries;
-
     }
 
-    public int capacity() {
-        return array.length;
+    @Override
+    public boolean isEmpty() {
+
+        return size() == 0;
     }
 
     @Override
@@ -46,10 +54,8 @@ class Set_Array<T> implements SetInterface<T> {
         return numberOfEntries == array.length;
     }
 
-    @Override
-    public boolean isEmpty() {
-
-        return size() == 0;
+    public int capacity() {
+        return array.length;
     }
 
     /**
@@ -79,7 +85,7 @@ class Set_Array<T> implements SetInterface<T> {
 
     @Override
     public T getMin() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -94,11 +100,9 @@ class Set_Array<T> implements SetInterface<T> {
      */
     @Override
     public T[] toArray() {
-        // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
+        T[] result = (T[]) new Object[numberOfEntries];
         System.arraycopy(array, 0, result, 0, numberOfEntries);
-
         return result;
     }
 
@@ -107,7 +111,69 @@ class Set_Array<T> implements SetInterface<T> {
         return toArray();
     }
 
+    /**
+     * Searches the bag for anEntry and if found, returns its location index. If
+     * not found, return null.
+     *
+     * @param anEntry
+     * @return
+     */
+    public int getIndexOf(T anEntry) {
+        int where = -1;
+        boolean stillLooking = true;
+        for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
+            if (anEntry.equals(array[index])) {
+                stillLooking = false;
+                where = index;
+            }
+        }
+        return where;
+    }
 
+    @Override
+    public SetInterface union(SetInterface anotherSet) {
+        Set_Array union = new Set_Array();
+        // Add all the elements of this set
+        for (T t : this.toArray()) {
+            if (!union.contains(t)) {
+                union.add(t);
+            }
+        }
+        // Add the element from the other set, checking duplicates
+        for (Object t : anotherSet.toArray()) {
+            if (!union.contains((Comparable) t)) {
+                union.add((Comparable) t);
+            }
+        }
+        return union;
+    }
+
+    @Override
+    public SetInterface intersection(SetInterface anotherSet) {
+        Set_Array intersection = new Set_Array();
+
+        for (int i = 0; i < this.size(); i++) {
+            if (anotherSet.contains((Comparable) array[i])) {
+                intersection.add(array[i]);
+            }
+        }
+        return intersection;
+    }
+
+    @Override
+    public SetInterface difference(SetInterface anotherSet) {
+        Set_Array difference = new Set_Array();
+
+        for (int i = 0; i < this.size(); i++) {
+            if (!anotherSet.contains((Comparable) array[i])) {
+                difference.add(array[i]);
+            }
+        }
+        return difference;
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
     /**
      * Adds a new entry to this bag.
      *
@@ -117,17 +183,17 @@ class Set_Array<T> implements SetInterface<T> {
     @Override
     public boolean add(T newEntry) {
         boolean result = true;
-        if (isFull() || this.contains(newEntry)) {
+        if (this.contains(newEntry)) {
             result = false;
         } else if (newEntry == null) {
             result = false;
         } else {
+            ensureCapacity();
             array[numberOfEntries] = newEntry;
             numberOfEntries++;
         }
         return result;
     }
-
 
     /**
      * Removes one unspecified entry from this bag, if possible.
@@ -141,7 +207,6 @@ class Set_Array<T> implements SetInterface<T> {
             T result = remove(numberOfEntries - 1);
             if (result != null) {
                 return result;
-
             }
         }
         return null;
@@ -155,7 +220,6 @@ class Set_Array<T> implements SetInterface<T> {
      */
     private T remove(int index) {
         T result = null;
-        // check bounds
         if (index > array.length || index < 0) {
             return null;
         }
@@ -192,23 +256,16 @@ class Set_Array<T> implements SetInterface<T> {
         return anEntry.equals(result);
     }
 
-    /**
-     * Searches the bag for anEntry and if found, returns its location index. If
-     * not found, return null.
-     *
-     * @param anEntry
-     * @return
-     */
-    public int getIndexOf(T anEntry) {
-        int where = -1;
-        boolean stillLooking = true;
-        for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
-            if (anEntry.equals(array[index])) {
-                stillLooking = false;
-                where = index;
-            }
+    public T removeRandom() {
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        } else {
+            Random randomNumbers = new Random();
+            int randomIndex = randomNumbers.nextInt(numberOfEntries);
+            result = this.remove(randomIndex);
+            return result;
         }
-        return where;
     }
 
     @Override
@@ -218,62 +275,16 @@ class Set_Array<T> implements SetInterface<T> {
         }
     }
 
-    @Override
-    public SetInterface union(SetInterface anotherSet) {
-        // Instantiate a new Set
-        Set_Array union = new Set_Array();
-        // Add all the elements of this set
-        for (T t : this.toArray()) {
-            if (!union.contains(t)) {
-                union.add(t);
-            }
-        }
-        // Add the element from the other set, checking duplicates
-        for (Object t : anotherSet.toArray()) {
-            if (!union.contains(t)) {
-                union.add(t);
-            }
-        }
-       
-        return union;
-    }
+    /**
+     * Doubles the size of the array bag if it is full. If user specified zero
+     * capacity Ensure capacity of at least 1. (minimum required)
+     */
+    private void ensureCapacity() {
+        if (numberOfEntries == array.length) {
+            array = Arrays.copyOf(array, 2 * array.length);
+        } else if (array.length == 0) {
 
-    @Override
-    public SetInterface intersection(SetInterface anotherSet) {
-        // Instantiate a new Set
-        Set_Array intersection = new Set_Array();
-        
-        for (int i = 0; i < this.size(); i++) {
-            if (anotherSet.contains(array[i])) {
-                intersection.add(array[i]);
-            }
-        }
-        return intersection;
-    }
-
-    @Override
-    public SetInterface difference(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public T removeRandom() {
-        T result = null;
-        if (isEmpty()) {
-            return result;
-        } else {
-            Random randomNumbers = new Random();
-            int randomIndex = randomNumbers.nextInt(numberOfEntries);
-            result = array[randomIndex];
-            numberOfEntries--;  // decrease size
-
-            if (randomIndex != numberOfEntries) {
-                // Move the end to the empty space
-                array[randomIndex] = array[numberOfEntries];
-            }
-            // Delete last entry
-            array[numberOfEntries] = null;
-            return result;
+            array = Arrays.copyOf(array, 1);
         }
     }
-
 }

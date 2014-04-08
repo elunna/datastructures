@@ -9,7 +9,7 @@ package adts;
  * @author lunatunez
  * @param <T>
  */
-public interface SetInterface<T> {
+public interface SetInterface<T extends Comparable<? super T>> {
 
     public static final int DEFAULT_CAPACITY = 5;
 
@@ -19,13 +19,12 @@ public interface SetInterface<T> {
 
     public int cardinality();
 
-    //public int capacity(); // get capacity, max space.
-        // we don't need this for chains, only arrays
-    
+    public boolean isEmpty();
+
     public boolean isFull();
         // only needed for arrays
-    
-    public boolean isEmpty();
+    //public int capacity(); // get capacity, max space.
+    // we don't need this for chains, only arrays
 
     public boolean contains(T anEntry);
 
@@ -39,6 +38,12 @@ public interface SetInterface<T> {
 
     public T[] enumerate(); // is the same as toArray???
 
+    public SetInterface union(SetInterface anotherSet);
+
+    public SetInterface intersection(SetInterface anotherSet);
+
+    public SetInterface difference(SetInterface anotherSet);
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     public boolean add(T newEntry);
@@ -48,15 +53,8 @@ public interface SetInterface<T> {
     public boolean remove(T anEntry);
 
     // public T remove(int index);  // this is private
-
     // public T removeRandom();     // this isn't available for linked chains
-
     public void clear();
 
-    public SetInterface union(SetInterface anotherSet);
-
-    public SetInterface intersection(SetInterface anotherSet);
-
-    public SetInterface difference(SetInterface anotherSet);
 
 }

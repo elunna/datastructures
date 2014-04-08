@@ -15,24 +15,18 @@ class Queue_Vector<T> implements QueueInterface {
     public Queue_Vector() {
         this.vector = new Vector<>();
     }
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
 
     @Override
-    public void enqueue(Object newEntry) {
-        if (newEntry != null) {
-            vector.addElement((T) newEntry);
-        }
+    public int size() {
+        return vector.size();
     }
 
     @Override
-    public T dequeue() {
-
-        T front = null;
-        if (vector.size() > 0) {
-            // front = vector.get(0);
-            front = vector.firstElement();
-            vector.removeElementAt(0);
-        }
-        return front;
+    public boolean isEmpty() {
+        return vector.isEmpty();
+//        return vector.size() == 0;
     }
 
     @Override
@@ -45,21 +39,29 @@ class Queue_Vector<T> implements QueueInterface {
         return front;
     }
 
+    // *************************************************************************
+    // *** MUTATOR METHODS ******************************************************
     @Override
-    public boolean isEmpty() {
-        return vector.isEmpty();
-//        return vector.size() == 0;
+    public void enqueue(Object newEntry) {
+        if (newEntry != null) {
+            vector.addElement((T) newEntry);
+        }
+    }
+
+    @Override
+    public T dequeue() {
+
+        T front = null;
+        if (vector.size() > 0) {
+            front = vector.firstElement();
+            vector.removeElementAt(0);
+        }
+        return front;
     }
 
     @Override
     public void clear() {
         // vector.removeAllElements();
-        // or
         vector.clear();
-    }
-
-    @Override
-    public int getLength() {
-        return vector.size();
     }
 }
