@@ -7,28 +7,25 @@ import java.util.Random;
  * File: Description:
  *
  * @author lunatunez
+ * @param <T>
  */
-class Set_Array<T extends Comparable<? super T>>
-        implements SetInterface<T> {
+public class Set_Array<T> implements SetInterface<T> {
 
     private T[] array;
     private int numberOfEntries;
-    private boolean resizeable;
 
     public Set_Array() {
         this(DEFAULT_CAPACITY);
-        resizeable = true;
     }
 
     public Set_Array(int capacity) throws IllegalArgumentException {
         numberOfEntries = 0;
         if (capacity <= 0) {
-            throw new IllegalArgumentException("Bad constructor arg");
+            throw new IllegalArgumentException("Bad constructor capacity parameter");
         }
         @SuppressWarnings("unchecked")
         T[] tempSet = (T[]) new Object[capacity]; // unchecked cast
         array = tempSet;
-        resizeable = false;
     }
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
@@ -83,12 +80,10 @@ class Set_Array<T extends Comparable<? super T>>
         return contains(anEntry);
     }
 
-    @Override
     public T getMin() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public T getMax() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -129,48 +124,48 @@ class Set_Array<T extends Comparable<? super T>>
         }
         return where;
     }
-
-    @Override
-    public SetInterface union(SetInterface anotherSet) {
-        Set_Array union = new Set_Array();
-        // Add all the elements of this set
-        for (T t : this.toArray()) {
-            if (!union.contains(t)) {
-                union.add(t);
-            }
-        }
-        // Add the element from the other set, checking duplicates
-        for (Object t : anotherSet.toArray()) {
-            if (!union.contains((Comparable) t)) {
-                union.add((Comparable) t);
-            }
-        }
-        return union;
-    }
-
-    @Override
-    public SetInterface intersection(SetInterface anotherSet) {
-        Set_Array intersection = new Set_Array();
-
-        for (int i = 0; i < this.size(); i++) {
-            if (anotherSet.contains((Comparable) array[i])) {
-                intersection.add(array[i]);
-            }
-        }
-        return intersection;
-    }
-
-    @Override
-    public SetInterface difference(SetInterface anotherSet) {
-        Set_Array difference = new Set_Array();
-
-        for (int i = 0; i < this.size(); i++) {
-            if (!anotherSet.contains((Comparable) array[i])) {
-                difference.add(array[i]);
-            }
-        }
-        return difference;
-    }
+//
+//    @Override
+//    public SetInterface union(SetInterface anotherSet) {
+//        Set_Array union = new Set_Array();
+//        // Add all the elements of this set
+//        for (T t : this.toArray()) {
+//            if (!union.contains(t)) {
+//                union.add(t);
+//            }
+//        }
+//        // Add the element from the other set, checking duplicates
+//        for (Object t : anotherSet.toArray()) {
+//            if (!union.contains((Comparable) t)) {
+//                union.add((Comparable) t);
+//            }
+//        }
+//        return union;
+//    }
+//
+//    @Override
+//    public SetInterface intersection(SetInterface anotherSet) {
+//        Set_Array intersection = new Set_Array();
+//
+//        for (int i = 0; i < this.size(); i++) {
+//            if (anotherSet.contains((Comparable) array[i])) {
+//                intersection.add(array[i]);
+//            }
+//        }
+//        return intersection;
+//    }
+//
+//    @Override
+//    public SetInterface difference(SetInterface anotherSet) {
+//        Set_Array difference = new Set_Array();
+//
+//        for (int i = 0; i < this.size(); i++) {
+//            if (!anotherSet.contains((Comparable) array[i])) {
+//                difference.add(array[i]);
+//            }
+//        }
+//        return difference;
+//    }
 
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
@@ -218,7 +213,8 @@ class Set_Array<T extends Comparable<? super T>>
      * @param index
      * @return If no such entry exists, returns null.
      */
-    private T remove(int index) {
+    @Override
+    public T remove(int index) {
         T result = null;
         if (index > array.length || index < 0) {
             return null;
@@ -245,14 +241,14 @@ class Set_Array<T extends Comparable<? super T>>
         if (anEntry == null || size() == 0) {
             return false;
         }
-
+        T result;
         int index = getIndexOf(anEntry);
-        T result = remove(index);
-        numberOfEntries--;
-        if (array[numberOfEntries - 1] != null) {
-            array[index] = array[numberOfEntries - 1];
-            array[numberOfEntries - 1] = null;
+        if (index == -1) {
+            return false;
+        } else {
+            result = remove(index);
         }
+
         return anEntry.equals(result);
     }
 
@@ -270,7 +266,7 @@ class Set_Array<T extends Comparable<? super T>>
 
     @Override
     public void clear() {
-        while (isEmpty()) {
+        while (!isEmpty()) {
             remove();
         }
     }
@@ -286,5 +282,20 @@ class Set_Array<T extends Comparable<? super T>>
 
             array = Arrays.copyOf(array, 1);
         }
+    }
+
+    @Override
+    public SetInterface union(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public SetInterface intersection(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public SetInterface difference(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

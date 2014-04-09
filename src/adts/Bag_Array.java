@@ -165,13 +165,7 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     @Override
     public T remove() {
-        if (size() > 0) {
-            T result = remove(numberOfEntries - 1);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
+        return remove(numberOfEntries - 1);
     }
 
     /**
@@ -183,16 +177,18 @@ public class Bag_Array<T> implements BagInterface<T> {
     @Override
     public T remove(int index) {
         T result = null;
-        if (index > array.length || index < 0) {
-            return null;
+        if (index > array.length || index < 0 || index > numberOfEntries - 1) {
+            return result;
+        }
+        result = array[index];
+        numberOfEntries--;
+        if (index != numberOfEntries) {
+            // Fill removed entry with last entry
+            array[index] = array[numberOfEntries];
+            // Erase last entry
+            array[numberOfEntries] = null;
         }
 
-        if (!isEmpty()) {
-            result = array[index]; // entry to remove
-            numberOfEntries--;
-            array[index] = array[numberOfEntries];
-            array[numberOfEntries] = null; // replace empty entry with last.
-        }
         return result;
     }
 
@@ -211,7 +207,7 @@ public class Bag_Array<T> implements BagInterface<T> {
 
         int index = getIndexOf(anEntry);
         T result = remove(index);
-       
+
         return result != null;
     }
 

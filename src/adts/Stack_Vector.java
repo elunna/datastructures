@@ -10,6 +10,7 @@ import java.util.Vector;
  */
 public class Stack_Vector<T> implements StackInterface<T> {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private Vector<T> stack; // last element is the top entry in stack
 
     public Stack_Vector() {

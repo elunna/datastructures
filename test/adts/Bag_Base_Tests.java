@@ -97,10 +97,9 @@ public abstract class Bag_Base_Tests {
         testBag.add("B");
         testBag.add("C");
         Object[] resultingArray = testBag.toArray();
-        boolean elementsMatch = (
-                resultingArray[0] == "A" && 
-                resultingArray[1] == "B" && 
-                resultingArray[2] == "C");
+        boolean elementsMatch = (resultingArray[0] == "A"
+                && resultingArray[1] == "B"
+                && resultingArray[2] == "C");
         assertTrue(elementsMatch);
     }
 
@@ -329,21 +328,45 @@ public abstract class Bag_Base_Tests {
         testBag.add(string);
 //        Object result = testBag.remove(0);
         String result = (String) testBag.remove(0);
-        
+
         assertEquals(string, result);
+    }
+
+    @Test
+    public void remove_sandwichedIndex_returnsEntry() {
+        BagInterface testBag = GetBag();
+
+        testBag.add("ABC");
+        testBag.add("DEF");
+        testBag.add("HIJ");
+        Object result = testBag.remove(1);
+        assertEquals("DEF", result);
+    }
+
+    @Test
+    public void remove_sandwichedIndex_sizeDecrements() {
+        BagInterface testBag = GetBag();
+
+        testBag.add("ABC");
+        testBag.add("DEF");
+        testBag.add("HIJ");
+        int oldSize = testBag.size();
+        Object result = testBag.remove(1);
+        int newSize = testBag.size();
+        assertEquals(oldSize - 1, newSize);
     }
 
     @Test
     public void remove_validIndex_sizeDecrements() {
         BagInterface testBag = GetBag();
         String string1 = "ABC";
-        
+
         testBag.add(string1);
         int oldSize = testBag.size();
-        
+
         testBag.remove(0);
         int newSize = testBag.size();
-        
+
         assertEquals(oldSize - 1, newSize);
     }
 

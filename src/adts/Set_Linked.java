@@ -108,12 +108,22 @@ public class Set_Linked<T extends Comparable<? super T>>
         return currentNode;
     }
 
-    @Override
+    private Node getNodeAt(int index) {
+//        assert (firstNode != null)
+//                && (1 <= givenPosition) && (givenPosition <= numberOfEntries);
+        Node currentNode = firstNode;
+        // traverse the chain to locate the desired node
+        for (int counter = 1; counter < index; counter++) {
+            currentNode = currentNode.getNext();
+        }
+        // assert currentNode != null;
+        return currentNode;
+    }
+
     public T getMin() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public T getMax() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -149,7 +159,6 @@ public class Set_Linked<T extends Comparable<? super T>>
             numberOfEntries++;
             return true;
         }
-
     }
 
     /*
@@ -168,6 +177,31 @@ public class Set_Linked<T extends Comparable<? super T>>
         return result;
     }
 
+    
+    @Override
+    public T remove(int index) {
+        if (isEmpty() || index < 0 || index > numberOfEntries - 1) {
+            return null;
+        }
+        T result;
+
+        if (index == 0) {
+            result = (T) firstNode.getData();
+            firstNode = firstNode.getNext();
+        } else {
+            Node nodeBefore = getNodeAt(index);
+            Node nodeToRemove = nodeBefore.getNext();
+            Node nodeAfter = nodeToRemove.getNext();
+            nodeBefore.setNext(nodeAfter);
+
+            result = (T) nodeToRemove.getData();
+        }
+        numberOfEntries--;
+        return result;
+    }
+
+    
+    
     /**
      * Remove one occurrence of an entry. Needs to locate the reference then
      * delete. Uses getReferenceTo(), remove()
@@ -193,4 +227,5 @@ public class Set_Linked<T extends Comparable<? super T>>
         numberOfEntries = 0;
         firstNode = null;
     }
+
 }

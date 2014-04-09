@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class Bag_ResizeableArray<T> implements BagInterface<T> {
 
-    private T[] bagArray;
+    private T[] array;
     private int numberOfEntries;
 
     public Bag_ResizeableArray() {
@@ -23,7 +23,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         numberOfEntries = 0;
         @SuppressWarnings("unchecked")
         T[] tempBag = (T[]) new Object[capacity]; // unchecked cast
-        bagArray = tempBag;
+        array = tempBag;
     }
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
@@ -55,7 +55,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
      */
     @Override
     public boolean isFull() {
-        return numberOfEntries == bagArray.length;
+        return numberOfEntries == array.length;
     }
 
     /**
@@ -71,7 +71,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
             return found;
         }
         for (int i = 0; !found && (i < numberOfEntries); i++) {
-            if (anEntry.equals(bagArray[i])) {
+            if (anEntry.equals(array[i])) {
                 found = true;
             }
         }
@@ -88,7 +88,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
-        System.arraycopy(bagArray, 0, result, 0, numberOfEntries);
+        System.arraycopy(array, 0, result, 0, numberOfEntries);
 
         return result;
     }
@@ -104,7 +104,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         int counter = 0;
 
         for (int i = 0; i < numberOfEntries; i++) {
-            if (anEntry.equals(bagArray[i])) {
+            if (anEntry.equals(array[i])) {
                 counter++;
             }
         }
@@ -122,7 +122,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         int where = -1;
         boolean stillLooking = true;
         for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
-            if (anEntry.equals(bagArray[index])) {
+            if (anEntry.equals(array[index])) {
                 stillLooking = false;
                 where = index;
             }
@@ -144,7 +144,7 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
             return false;
         } else {
             ensureCapacity();
-            bagArray[numberOfEntries] = newEntry;
+            array[numberOfEntries] = newEntry;
             numberOfEntries++;
             return true;
         }
@@ -158,15 +158,9 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
      */
     @Override
     public T remove() {
-        if (size() > 0) {
-            T result = remove(numberOfEntries - 1);
-            if (result != null) {
-                numberOfEntries--;
-                return result;
-            }
-        }
-        return null;
+        return remove(numberOfEntries - 1);
     }
+
 
     /**
      * Removes one occurrence of a given entry from this bag.
@@ -177,25 +171,35 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
      */
     @Override
     public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
         int index = getIndexOf(anEntry);
         T result = remove(index);
-        return anEntry.equals(result);
+
+        return result != null;
     }
 
-    /**
-     * Removes and returns the entry at a given index within the arraybag. If no
-     * such entry exists, returns null.
+     /**
+     * Removes and returns the entry at a given index within the arraybag.
      *
      * @param index
-     * @return
+     * @return If no such entry exists, returns null.
      */
+    @Override
     public T remove(int index) {
         T result = null;
-        if (!isEmpty() && (index >= 0)) {
-            result = bagArray[index]; // entry to remove
-            numberOfEntries--;
-            bagArray[index] = bagArray[numberOfEntries]; // replace entry with last entry
-            bagArray[numberOfEntries] = null; // remove last entry
+        if (index > array.length || index < 0 || index > numberOfEntries - 1) {
+            return result;
+        }
+        result = array[index];
+        numberOfEntries--;
+        if (index != numberOfEntries) {
+            // Fill removed entry with last entry
+            array[index] = array[numberOfEntries];
+            // Erase last entry
+            array[numberOfEntries] = null;
         }
         return result;
     }
@@ -215,11 +219,11 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
      * capacity Ensure capacity of at least 1. (minimum required)
      */
     private void ensureCapacity() {
-        if (numberOfEntries == bagArray.length) {
-            bagArray = Arrays.copyOf(bagArray, 2 * bagArray.length);
-        } else if (bagArray.length == 0) {
+        if (numberOfEntries == array.length) {
+            array = Arrays.copyOf(array, 2 * array.length);
+        } else if (array.length == 0) {
 
-            bagArray = Arrays.copyOf(bagArray, 1);
+            array = Arrays.copyOf(array, 1);
         }
     }
 }

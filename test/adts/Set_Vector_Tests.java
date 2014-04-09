@@ -15,5 +15,4 @@ public class Set_Vector_Tests extends Set_Base_Tests {
     protected SetInterface GetSet() {
         return new Set_Vector<>();
     }
-
 }

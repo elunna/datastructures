@@ -50,8 +50,8 @@ public class SelectionSort_Iterative {
      * Swaps the array entries a[i] and a[j].
      *
      * @param a an array of objects
-     * @param i an integer >= 0 and < a.length @param j an integer >= 0 and <
-     * a.length
+     * @param i an integer >= 0 and less than a.length 
+     * @param j an integer >= 0 and less than a.length
      */
     private static void swap(Object[] a, int i, int j) {
         Object temp = a[i];
@@ -60,10 +60,4 @@ public class SelectionSort_Iterative {
     }
 
     
-    // Recursive definition
-    public static <T extends Comparable<? super T>>
-            void selectionSort(T[] a, int n) {
-        selectionSort(a, 0, n - 1); // invoke recursive method
-    } // end selectionSort
-
 }

@@ -6,6 +6,6 @@ package sorting;
  * @author lunatunez
  */
 
-public class InsertionSort_Recursive implements Sorter {
+public class InsertionSort_Recursive {
 
 }

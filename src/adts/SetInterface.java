@@ -9,7 +9,7 @@ package adts;
  * @author lunatunez
  * @param <T>
  */
-public interface SetInterface<T extends Comparable<? super T>> {
+public interface SetInterface<T> {
 
     public static final int DEFAULT_CAPACITY = 5;
 
@@ -30,9 +30,9 @@ public interface SetInterface<T extends Comparable<? super T>> {
 
     public boolean isElement(T anEntry); // same as contains
 
-    public T getMin();
-
-    public T getMax();
+//    public T getMin();
+//
+//    public T getMax();
 
     public T[] toArray();
 
@@ -52,7 +52,7 @@ public interface SetInterface<T extends Comparable<? super T>> {
 
     public boolean remove(T anEntry);
 
-    // public T remove(int index);  // this is private
+    public T remove(int index);  // this is private
     // public T removeRandom();     // this isn't available for linked chains
     public void clear();
 

@@ -5,11 +5,7 @@ package sorting;
  *
  * @author lunatunez
  */
-public class SelectionSort_Recursive implements Sorter {
+public class SelectionSort_Recursive {
 
-    public static <T extends Comparable<? super T>>
-            void selectionSort(T[] a, int n) {
-        selectionSort(a, 0, n - 1); // invoke recursive method
-    } // end selectionSort
 
 }

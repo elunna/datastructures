@@ -6,7 +6,7 @@ package sorting;
  * @author lunatunez
  */
 
-public class InsertionSort_Iterative implements Sorter {
+public class InsertionSort_Iterative {
 
 //    
 //      Algorithm insertionSort(a, first, last)

@@ -47,8 +47,8 @@ public abstract class Set_Base_Tests {
     @Test
     public void contains_emptySet_returnFalse() {
         SetInterface testSet = GetSet();
-        // Use new empty set.
-        assertFalse(testSet.contains("testEntry"));
+        boolean result = testSet.contains("testEntry");
+        assertFalse(result);
     }
 
     @Test
@@ -64,7 +64,6 @@ public abstract class Set_Base_Tests {
         String testString = "testSet";
         testSet.add(testString);
         assertTrue(testSet.contains(testString));
-
     }
 
     @Test
@@ -77,47 +76,7 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void getMin_emptySet_returnNull() {
-        SetInterface testSet = GetSet();
-        Object result = testSet.getMin();
-        assertNull(result);
-    }
-
-    @Test
-    void getMin_singleEntry_returnEntry() {
-        SetInterface testSet = GetSet();
-        Object result = testSet.getMin();
-        Object entry = testSet.remove();
-        assertEquals(result, entry);
-    }
-
-    @Test
-    void getMin_multipleEntries_returnMin() {
-        SetInterface testSet = GetSet();
-    }
-
-    @Test
-    void getMax_emptySet_returnNull() {
-        SetInterface testSet = GetSet();
-        Object result = testSet.getMax();
-        assertNull(result);
-    }
-
-    @Test
-    void getMax_singleEntry_returnEntry() {
-        SetInterface testSet = GetSet();
-        Object result = testSet.getMax();
-        Object entry = testSet.remove();
-        assertEquals(result, entry);
-    }
-
-    @Test
-    void getMax_multipleEntries_returnMax() {
-        SetInterface testSet = GetSet();
-    }
-
-    @Test
-    void toArray_validSet_sizeMatches() {
+    public void toArray_validSet_sizeMatches() {
         SetInterface testSet = GetSet();
         String testString = "testSet";
         testSet.add(testString);
@@ -126,12 +85,15 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void toArray_emptySet_returnEmptyArray() {
+    public void toArray_emptySet_returnEmptyArray() {
         SetInterface testSet = GetSet();
         Object[] testArray = testSet.toArray();
         assertEquals(0, testArray.length);
     }
 
+    
+    
+    
     @Test
     public void toArray_validList_elementsMatch() {
         SetInterface testSet = GetSet();
@@ -144,25 +106,55 @@ public abstract class Set_Base_Tests {
                 && resultingArray[2] == "C");
         assertTrue(elementsMatch);
     }
-
-//    @Test
-//    void toArray_validSet_elementsMatch() {
-//        SetInterface testSet = GetSet();
-//        String string1 = "ABC";
-//        String string2 = "DEF";
-//        testSet.add(string1);
-//        testSet.add(string2);
-//        Object[] testArray = testSet.toArray();
-//        // Is there a better way to check this
-//        // with one assert?
-//        assertEquals(string1, testArray[0]);
-//        assertEquals(string2, testArray[1]);
 //
+//    
+//    @Test
+//    public void getMin_emptySet_returnNull() {
+//        SetInterface testSet = GetSet();
+//        Object result = testSet.getMin();
+//        assertNull(result);
 //    }
+//
+//    @Test
+//    public void getMin_singleEntry_returnEntry() {
+//        SetInterface testSet = GetSet();
+//        Object result = testSet.getMin();
+//        Object entry = testSet.remove();
+//        assertEquals(result, entry);
+//    }
+//
+//    @Test
+//    public void getMin_multipleEntries_returnMin() {
+//        SetInterface testSet = GetSet();
+//    }
+//
+//    @Test
+//    public void getMax_emptySet_returnNull() {
+//        SetInterface testSet = GetSet();
+//        Object result = testSet.getMax();
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void getMax_singleEntry_returnEntry() {
+//        SetInterface testSet = GetSet();
+//        Object result = testSet.getMax();
+//        Object entry = testSet.remove();
+//        assertEquals(result, entry);
+//    }
+//
+//    @Test
+//    public void getMax_multipleEntries_returnMax() {
+//        SetInterface testSet = GetSet();
+//    }
+//
+//    
+    
+    
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
     @Test
-    void add_validEntry_sizeEqualsOne() {
+    public void add_validEntry_sizeEqualsOne() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -170,7 +162,7 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void add_validEntry_returnsTrue() {
+    public void add_validEntry_returnsTrue() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         boolean result = testSet.add(string1);
@@ -178,7 +170,7 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void add_validEntry_isNotEmpty() {
+    public void add_validEntry_isNotEmpty() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -187,28 +179,28 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void add_nullToBag_returnsFalse() {
+    public void add_nullToSet_returnsFalse() {
         SetInterface testSet = GetSet();
         boolean result = testSet.add(null);
         assertFalse(result);
     }
 
     @Test
-    void add_nullToEmptyBag_bagIsEmpty() {
+    public void add_nullToEmptySet_setIsEmpty() {
         SetInterface testSet = GetSet();
         testSet.add(null);
         assertTrue(testSet.isEmpty());
     }
 
     @Test
-    void add_nullToEmptyBag_sizeEqualsZero() {
+    public void add_nullToEmptySet_sizeEqualsZero() {
         SetInterface testSet = GetSet();
         testSet.add(null);
         assertEquals(0, testSet.size());
     }
 
     @Test
-    void add_duplicateEntry_returnsFalse() {
+    public void add_duplicateEntry_returnsFalse() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -217,7 +209,7 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void remove_oneEntry_sizeIsZero() {
+    public void remove_oneEntry_sizeIsZero() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -226,7 +218,7 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void remove_oneEntry_isEmpty() {
+    public void remove_oneEntry_isEmpty() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -235,36 +227,36 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void remove_emptyBag_isEmpty() {
+    public void remove_emptySet_isEmpty() {
         SetInterface testSet = GetSet();
         testSet.remove();
         assertTrue(testSet.isEmpty());
     }
 
     @Test
-    void remove_emptyBag_sizeIsZero() {
+    public void remove_emptySet_sizeIsZero() {
         SetInterface testSet = GetSet();
         testSet.remove();
         assertEquals(0, testSet.size());
     }
 
     @Test
-    void remove_emptyBag_returnsNull() {
+    public void remove_emptySet_returnsNull() {
         SetInterface testSet = GetSet();
         Object result = testSet.remove();
         assertNull(result);
     }
 
     @Test
-    void removeEntry_nullEntry_returnNull() {
+    public void removeEntry_nullEntry_returnsFalse() {
         SetInterface testSet = GetSet();
         // String string1 = "ABC";
-        Object result = testSet.remove(null);
-        assertNull(result);
+        boolean result = testSet.remove(null);
+        assertFalse(result);
     }
 
     @Test
-    void removeEntry_nullEntry_sizeDoesNotChange() {
+    public void removeEntry_nullEntry_sizeDoesNotChange() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -275,28 +267,28 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void removeEntry_emptyBag_sizeIsZero() {
+    public void removeEntry_emptySet_sizeIsZero() {
         SetInterface testSet = GetSet();
         testSet.remove("ABC");
         assertEquals(0, testSet.size());
     }
 
     @Test
-    void removeEntry_emptyBag_isEmpty() {
+    public void removeEntry_emptySet_isEmpty() {
         SetInterface testSet = GetSet();
         testSet.remove("ABC");
         assertTrue(testSet.isEmpty());
     }
 
     @Test
-    void removeEntry_emptyBag_returnsNull() {
+    public void removeEntry_emptySet_returnsFalse() {
         SetInterface testSet = GetSet();
-        Object result = testSet.remove("ABC");
-        assertNull(result);
+        boolean result = testSet.remove("ABC");
+        assertFalse(result);
     }
 
     @Test
-    void clear_contents_bagIsEmpty() {
+    public void clear_contents_setIsEmpty() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
@@ -305,19 +297,11 @@ public abstract class Set_Base_Tests {
     }
 
     @Test
-    void clear_contents_sizeIsZero() {
+    public void clear_contents_sizeIsZero() {
         SetInterface testSet = GetSet();
         String string1 = "ABC";
         testSet.add(string1);
         testSet.clear();
         assertEquals(0, testSet.size());
     }
-
-    
-    // Test Union: combines all elements, no duplicates allowed.
-    // Set union(Set x): must be a valid set, size 1+ and non-null.
-    
-    
-    
-    
 }

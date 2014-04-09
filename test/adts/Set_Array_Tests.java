@@ -25,20 +25,26 @@ public class Set_Array_Tests extends Set_Base_Tests {
     // throw an exception.
     @Test(expected = IllegalArgumentException.class)
     public void newSet_zeroCapacity_throwException() {
-        Set_Array<String> testSet = (Set_Array) GetSet(0);
+//        Set_Array<String> testSet = (Set_Array) GetSet(0);
+        SetInterface testSet = GetSet(0);
+
     }
 
     // If a resizeable bag is passed a negative capacity argument,
     // throw an exception.
     @Test(expected = IllegalArgumentException.class)
     public void newSet_negativeCapacity_throwException() {
-        Set_Array<String> testSet = (Set_Array) GetSet(-1);
+//        Set_Array<String> testSet = (Set_Array) GetSet(-1);
+        SetInterface testSet = GetSet(-1);
+
     }
 
     @Test
     public void isFull_usingFullSet_returnsTrue() {
         // Here we set a custom capacity
-        Set_Array<String> testSet = (Set_Array) GetSet(3);
+//        Set_Array<String> testSet = (Set_Array) GetSet(3);
+        SetInterface testSet = GetSet(3);
+
         testSet.add("A");
         testSet.add("B");
         testSet.add("C");
@@ -46,23 +52,10 @@ public class Set_Array_Tests extends Set_Base_Tests {
     }
 
     @Test
-    public void isFull_fullSet_returnsTrue() {
-        // Here we use default capacity
-        SetInterface testSet = GetSet();
-        // Reason for using loop: Make sure we fill the bag.
-        for (int i = 0; i < SetInterface.DEFAULT_CAPACITY; i++) {
-            testSet.add("testSet");
-        }
-        assertTrue(testSet.isFull());
-    }
-
-
-    @Test
     public void isFull_setNotFull_returnsFalse() {
         SetInterface testSet = GetSet();
         testSet.add("testSet");
         assertFalse(testSet.isFull());
     }
-    
-    
+
 }

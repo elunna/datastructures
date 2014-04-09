@@ -8,13 +8,13 @@ import java.util.Vector;
  * @author lunatunez
  * @param <T>
  */
-public class Set_Vector<T extends Comparable<? super T>>
-        implements SetInterface<T> {
+public class Set_Vector<T> implements SetInterface<T> {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private Vector<T> vector;
 
-    public Set_Vector(Vector<T> vector) {
-        this.vector = vector;
+    public Set_Vector() {
+        this.vector = new Vector<>();
     }
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
@@ -64,7 +64,6 @@ public class Set_Vector<T extends Comparable<? super T>>
         return this.toArray();
     }
 
-    @Override
     public T getMin() {
         if (vector.isEmpty()) {
             return null;
@@ -79,7 +78,6 @@ public class Set_Vector<T extends Comparable<? super T>>
         }
     }
 
-    @Override
     public T getMax() {
         if (vector.isEmpty()) {
             return null;
@@ -172,6 +170,17 @@ public class Set_Vector<T extends Comparable<? super T>>
     @Override
     public void clear() {
         vector.clear();
+    }
+
+    @Override
+    public T remove(int index) {
+        if (this.isEmpty() || index < 0 || index > vector.size() - 1) {
+            return null;
+        } else {
+            Object result = vector.remove(index);
+            return (T) result;
+        }
+
     }
 
 }
