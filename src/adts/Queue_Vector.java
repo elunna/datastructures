@@ -42,10 +42,12 @@ class Queue_Vector<T> implements QueueInterface {
     // *************************************************************************
     // *** MUTATOR METHODS ******************************************************
     @Override
-    public void enqueue(Object newEntry) {
+    public boolean enqueue(Object newEntry) {
         if (newEntry != null) {
             vector.addElement((T) newEntry);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -63,5 +65,11 @@ class Queue_Vector<T> implements QueueInterface {
     public void clear() {
         // vector.removeAllElements();
         vector.clear();
+    }
+
+    @Override
+    public boolean isFull() {
+        return false; // Linked Queue is never full.
+
     }
 }

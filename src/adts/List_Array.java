@@ -9,9 +9,8 @@ import java.util.Arrays;
  * @param <T>
  */
 public class List_Array<T> implements ListInterface<T> {
-
-    private T[] array;
-    private int numberOfEntries;
+    protected T[] array;
+    protected int numberOfEntries;
 
     public List_Array() {
         this(DEFAULT_CAPACITY);
@@ -30,22 +29,88 @@ public class List_Array<T> implements ListInterface<T> {
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
     @Override
+    public T get(int index) {
+        if (!isEmpty()
+                && index >= 0
+                && index < array.length) {
+            return array[index];
+        } else {
+            return null;
+        }
+    }
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+    @Override
+    public boolean insert(int index, T newEntry) {
+        if (newEntry == null
+                || index < 0
+                || index > numberOfEntries) {
+            return false;
+        } else {
+            ensureCapacity();
+            array[numberOfEntries] = newEntry;
+            numberOfEntries++;
+            return true;
+        }
+    }
+
+    @Override
+    public boolean replace(int index, T newEntry) {
+        if (isEmpty()
+                || index < 0
+                || index > numberOfEntries - 1
+                || newEntry == null) {
+            return false;
+        } else {
+            array[index] = newEntry;
+            return true;
+        }
+    }
+
+    /**
+     * Doubles the size of the array bag if it is full. If user specified zero
+     * capacity Ensure capacity of at least 1. (minimum required)
+     */
+    private void ensureCapacity() {
+        if (numberOfEntries == array.length) {
+            array = Arrays.copyOf(array, 2 * array.length);
+        } else if (array.length == 0) {
+
+            array = Arrays.copyOf(array, 1);
+        }
+    }
+
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    /**
+     * Gets the current number of entries in this bag.
+     *
+     * @return the integer number of entries currently in the bag
+     */
+    @Override
     public int size() {
         return numberOfEntries;
     }
 
+    /**
+     * Sees whether this bag is empty.
+     *
+     * @return true if the bag is empty, or false if not
+     */
     @Override
     public boolean isEmpty() {
         return numberOfEntries == 0;
     }
 
+    /**
+     * Sees whether this bag is full.
+     *
+     * @return true if the bag is full, or false if not
+     */
+    @Override
     public boolean isFull() {
         return numberOfEntries == array.length;
-    }
-
-    @Override
-    public T get(int index) {
-        return array[index];
     }
 
     /**
@@ -75,12 +140,45 @@ public class List_Array<T> implements ListInterface<T> {
      */
     @Override
     public T[] toArray() {
-        // the cast is safe because the new array contains null entries
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings(value = "unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
         System.arraycopy(array, 0, result, 0, numberOfEntries);
-
         return result;
+    }
+
+    /**
+     * Searches the bag for anEntry and if found, returns its location index. If
+     * not found, return null.
+     *
+     * @param anEntry
+     * @return
+     */
+    public int getIndexOf(T anEntry) {
+        int where = -1;
+        boolean stillLooking = true;
+        for (int index = 0; stillLooking && (index < numberOfEntries); index++) {
+            if (anEntry.equals(array[index])) {
+                stillLooking = false;
+                where = index;
+            }
+        }
+        return where;
+    }
+
+    /**
+     * Counts the number of times a given entry appears in this bag.
+     *
+     * @param anEntry the entry to be counted
+     * @return the number of times anEntry appears in the bag
+     */
+    public int getFrequencyOf(T anEntry) {
+        int counter = 0;
+        for (int i = 0; i < numberOfEntries; i++) {
+            if (anEntry.equals(array[i])) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     // *************************************************************************
@@ -93,98 +191,66 @@ public class List_Array<T> implements ListInterface<T> {
      */
     @Override
     public boolean add(T newEntry) {
-        if (newEntry == null) {
-            return false;
+        boolean result = true;
+        if (isFull()) {
+            result = false;
+        } else if (newEntry == null) {
+            result = false;
         } else {
-            ensureCapacity();
             array[numberOfEntries] = newEntry;
             numberOfEntries++;
-            return true;
         }
-    }
-
-    @Override
-    public boolean insert(int index, T newEntry) {
-        if (newEntry == null
-                || index < 0
-                || index > numberOfEntries) {
-            return false;
-        } else {
-            ensureCapacity();
-            array[numberOfEntries] = newEntry;
-            numberOfEntries++;
-            return true;
-        }
+        return result;
     }
 
     /**
-     * Removes one unspecified entry from this bag, if possible.
+     * Removes the last entry from this bag, if possible.
      *
      * @return either the removed entry, if the removal was successful, or null
      * otherwise
      */
     @Override
     public T remove() {
-        if (size() > 0) {
-            T result = remove(numberOfEntries - 1);
-            if (result != null) {
-                numberOfEntries--;
-                return result;
-            }
+        T result = null;
+        if (isEmpty()) {
+            return result;
         }
-        return null;
+        numberOfEntries--;
+        result = array[numberOfEntries];
+        array[numberOfEntries] = null;
+        return result;
     }
 
     /**
-     * Removes and returns the entry at a given index within the arraybag. If
-     * the entry doesn't exist, returns null.
+     * Removes and returns the entry at a given index within the arraybag.
      *
      * @param index
-     * @return
+     * @return If no such entry exists, returns null.
      */
     @Override
     public T remove(int index) {
         T result = null;
-        if (!isEmpty() && (index >= 0)) {
-            result = array[index]; // entry to remove
-            numberOfEntries--;
-            array[index] = array[numberOfEntries]; // replace entry with last entry
-            array[numberOfEntries] = null; // remove last entry
+        if (index < 0 || index > numberOfEntries - 1 || isEmpty()) {
+            return result;
+        }
+        result = array[index];
+        numberOfEntries--;
+        if (index != numberOfEntries) {
+            // Fill removed entry with last entry
+            array[index] = array[numberOfEntries];
+            // Erase last entry
+            array[numberOfEntries] = null;
         }
         return result;
     }
 
-    @Override
-    public boolean replace(int index, T newEntry) {
-        if (isEmpty()
-                || index < 0
-                || index > numberOfEntries - 1
-                || newEntry == null) {
-            return false;
-        } else {
-            array[index] = newEntry;
-            return true;
-        }
-    }
-
+    /**
+     * Removes all entries from this bag.
+     */
     @Override
     public void clear() {
         while (!isEmpty()) {
             remove();
         }
     }
-
-    /**
-     * Doubles the size of the array bag if it is full. If user specified zero
-     * capacity Ensure capacity of at least 1. (minimum required)
-     */
-    private void ensureCapacity() {
-        if (numberOfEntries == array.length) {
-            array = Arrays.copyOf(array, 2 * array.length);
-        } else if (array.length == 0) {
-
-            array = Arrays.copyOf(array, 1);
-        }
-    }
-
 }

@@ -3,18 +3,22 @@ package adts;
 import java.util.ArrayList;
 
 /**
- * File:        
- * Description: 
+ * File: Description:
+ *
  * @author lunatunez
  * @param <T>
  */
-
 public class List_ArrayList<T> implements ListInterface<T> {
+
+    @SuppressWarnings("FieldMayBeFinal")
     private ArrayList<T> arrayList;
+
+    public List_ArrayList() {
+        this.arrayList = new ArrayList<>();
+    }
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-
     @Override
     public int size() {
         return arrayList.size();
@@ -26,8 +30,17 @@ public class List_ArrayList<T> implements ListInterface<T> {
     }
 
     @Override
+    public boolean isFull() {
+        return false;
+    }
+
+    @Override
     public T get(int index) {
-        return arrayList.get(index);
+        if (!isEmpty()) {
+            return arrayList.get(index);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -39,46 +52,74 @@ public class List_ArrayList<T> implements ListInterface<T> {
     public T[] toArray() {
         return (T[]) arrayList.toArray();
     }
-    
+
     // *************************************************************************
     // *** MUTATOR METHODS ******************************************************
-
-
     @Override
     public boolean add(T newEntry) {
-        return arrayList.add(newEntry);
+        if (newEntry != null) {
+            return arrayList.add(newEntry);
+        } else {
+            return false;
+        }
     }
-    
- 
 
     @Override
     public boolean insert(int index, T newEntry) {
-        arrayList.add(index, newEntry);
-        return true;
+        // Preconditions: Valid index, valid entry
+        // If the bag is empty, insert simply calls add.
+        if (index < 0
+                || index > arrayList.size()
+                || newEntry == null) {
+            return false;
+        } else if (isEmpty()) {
+            return arrayList.add(newEntry);
+        } else {
+            arrayList.add(index, newEntry);
+            return true;
+        }
+
     }
 
     @Override
     public T remove() {
-        T temp = arrayList.remove(arrayList.size()-1);
+        T temp = null;
+        if (isEmpty()) {
+            return temp;
+        }
+        temp = arrayList.remove(arrayList.size() - 1);
         return temp;
-        
+
     }
 
     @Override
     public T remove(int index) {
-        return arrayList.remove(index);
+        if (!isEmpty() && index >= 0 && index < arrayList.size()) {
+            return arrayList.remove(index);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean replace(int index, T newEntry) {
-        if (arrayList.set(index, newEntry) != null) {
-            return true;
+        boolean result = false;
+        if (isEmpty()
+                || index < 0
+                || index > arrayList.size() - 1
+                || newEntry == null) {
+            return result;
+        } else {
+            arrayList.set(index, newEntry);
+            result = true;
         }
-        return false;
+
+        return result;
     }
 
     @Override
     public void clear() {
         arrayList.clear();
-    }    
+    }
+
 }

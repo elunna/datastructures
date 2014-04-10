@@ -26,6 +26,14 @@ public interface QueueInterface<T> {
 
     
     /**
+     * Detects whether this queue is full.
+     *
+     * @return true if the queue is full, or false otherwise
+     */
+    public boolean isFull();
+
+    
+    /**
      * Retrieves the entry at the front of this queue.
      *
      * @return either the object at the front or, if the queue is
@@ -43,9 +51,9 @@ public interface QueueInterface<T> {
      * Adds a new entry to the back of the queue.
      *
      * @param newEntry an object to be added
+     * @return 
      */
-    public void enqueue(T newEntry);
-    //public boolean enqueue(T newEntry);
+    public boolean enqueue(T newEntry);
 
     /**
      * AKA: 'Poll'

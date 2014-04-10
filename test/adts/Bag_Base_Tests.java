@@ -319,116 +319,116 @@ public abstract class Bag_Base_Tests {
         int newSize = testBag.size();
         assertEquals(oldSize, newSize);
     }
-
-    // remove(int index)
-    @Test
-    public void remove_validIndex_returnsEntry() {
-        BagInterface testBag = GetBag();
-        String string = "ABC";
-        testBag.add(string);
+//
+//    // remove(int index)
+//    @Test
+//    public void remove_validIndex_returnsEntry() {
+//        BagInterface testBag = GetBag();
+//        String string = "ABC";
+//        testBag.add(string);
+////        Object result = testBag.remove(0);
+//        String result = (String) testBag.remove(0);
+//
+//        assertEquals(string, result);
+//    }
+//
+//    @Test
+//    public void remove_sandwichedIndex_returnsEntry() {
+//        BagInterface testBag = GetBag();
+//
+//        testBag.add("ABC");
+//        testBag.add("DEF");
+//        testBag.add("HIJ");
+//        Object result = testBag.remove(1);
+//        assertEquals("DEF", result);
+//    }
+//
+//    @Test
+//    public void remove_sandwichedIndex_sizeDecrements() {
+//        BagInterface testBag = GetBag();
+//
+//        testBag.add("ABC");
+//        testBag.add("DEF");
+//        testBag.add("HIJ");
+//        int oldSize = testBag.size();
+//        Object result = testBag.remove(1);
+//        int newSize = testBag.size();
+//        assertEquals(oldSize - 1, newSize);
+//    }
+//
+//    @Test
+//    public void remove_validIndex_sizeDecrements() {
+//        BagInterface testBag = GetBag();
+//        String string1 = "ABC";
+//
+//        testBag.add(string1);
+//        int oldSize = testBag.size();
+//
+//        testBag.remove(0);
+//        int newSize = testBag.size();
+//
+//        assertEquals(oldSize - 1, newSize);
+//    }
+//
+//    @Test
+//    public void remove_validIndexSingleElement_isEmpty() {
+//        BagInterface testBag = GetBag();
+//        String string1 = "ABC";
+//        testBag.add(string1);
+//        testBag.remove(0);
+//        assertTrue(testBag.isEmpty());
+//
+//    }
+//
+//    @Test
+//    public void remove_emptyBagPassedIndex_returnsNull() {
+//        BagInterface testBag = GetBag();
 //        Object result = testBag.remove(0);
-        String result = (String) testBag.remove(0);
-
-        assertEquals(string, result);
-    }
-
-    @Test
-    public void remove_sandwichedIndex_returnsEntry() {
-        BagInterface testBag = GetBag();
-
-        testBag.add("ABC");
-        testBag.add("DEF");
-        testBag.add("HIJ");
-        Object result = testBag.remove(1);
-        assertEquals("DEF", result);
-    }
-
-    @Test
-    public void remove_sandwichedIndex_sizeDecrements() {
-        BagInterface testBag = GetBag();
-
-        testBag.add("ABC");
-        testBag.add("DEF");
-        testBag.add("HIJ");
-        int oldSize = testBag.size();
-        Object result = testBag.remove(1);
-        int newSize = testBag.size();
-        assertEquals(oldSize - 1, newSize);
-    }
-
-    @Test
-    public void remove_validIndex_sizeDecrements() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABC";
-
-        testBag.add(string1);
-        int oldSize = testBag.size();
-
-        testBag.remove(0);
-        int newSize = testBag.size();
-
-        assertEquals(oldSize - 1, newSize);
-    }
-
-    @Test
-    public void remove_validIndexSingleElement_isEmpty() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABC";
-        testBag.add(string1);
-        testBag.remove(0);
-        assertTrue(testBag.isEmpty());
-
-    }
-
-    @Test
-    public void remove_emptyBagPassedIndex_returnsNull() {
-        BagInterface testBag = GetBag();
-        Object result = testBag.remove(0);
-        assertNull(result);
-
-    }
-
-    @Test
-    public void remove_outOfBoundsIndex_returnNull() {
-        BagInterface testBag = GetBag();
-        int badIndex = BagInterface.DEFAULT_CAPACITY + 1;
-        String string1 = "ABC";
-        testBag.add(string1);
-        Object result = testBag.remove(badIndex);
-        assertNull(result);
-    }
-
-    @Test
-    public void remove_outOfBoundsIndex_sameSize() {
-        BagInterface testBag = GetBag();
-        int badIndex = BagInterface.DEFAULT_CAPACITY + 1;
-        String string1 = "ABC";
-        testBag.add(string1);
-        int oldSize = testBag.size();
-        testBag.remove(badIndex);
-        int newSize = testBag.size();
-        assertEquals(oldSize, newSize);
-    }
-
-    @Test
-    public void remove_negativeIndex_returnNull() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABC";
-        testBag.add(string1);
-        Object result = testBag.remove(-1);
-        assertNull(result);
-    }
-
-    @Test
-    public void remove_negativeIndex_sameSize() {
-        BagInterface testBag = GetBag();
-        String string1 = "ABC";
-        testBag.add(string1);
-        int oldSize = testBag.size();
-        testBag.remove(-1);
-        int newSize = testBag.size();
-        assertEquals(oldSize, newSize);
-    }
+//        assertNull(result);
+//
+//    }
+//
+//    @Test
+//    public void remove_outOfBoundsIndex_returnNull() {
+//        BagInterface testBag = GetBag();
+//        int badIndex = BagInterface.DEFAULT_CAPACITY + 1;
+//        String string1 = "ABC";
+//        testBag.add(string1);
+//        Object result = testBag.remove(badIndex);
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void remove_outOfBoundsIndex_sameSize() {
+//        BagInterface testBag = GetBag();
+//        int badIndex = BagInterface.DEFAULT_CAPACITY + 1;
+//        String string1 = "ABC";
+//        testBag.add(string1);
+//        int oldSize = testBag.size();
+//        testBag.remove(badIndex);
+//        int newSize = testBag.size();
+//        assertEquals(oldSize, newSize);
+//    }
+//
+//    @Test
+//    public void remove_negativeIndex_returnNull() {
+//        BagInterface testBag = GetBag();
+//        String string1 = "ABC";
+//        testBag.add(string1);
+//        Object result = testBag.remove(-1);
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void remove_negativeIndex_sameSize() {
+//        BagInterface testBag = GetBag();
+//        String string1 = "ABC";
+//        testBag.add(string1);
+//        int oldSize = testBag.size();
+//        testBag.remove(-1);
+//        int newSize = testBag.size();
+//        assertEquals(oldSize, newSize);
+//    }
 
     @Test
     public void clear_contents_bagIsEmpty() {

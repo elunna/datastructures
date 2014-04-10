@@ -91,10 +91,25 @@ public abstract class Queue_Base_Tests {
     public void enqueue_validEntry_sizeIncrements() {
         QueueInterface testQueue = GetQueue();
         int oldSize = testQueue.size();
+        
         String string = "ABCDE";
         testQueue.enqueue(string);
+        
         int newSize = testQueue.size();
         assertEquals(oldSize + 1, newSize);
+    }
+
+    // ************************************************************************
+    // *** MUTATOR TESTS *******************************************************
+    /**
+     * Test of enqueue method, test adding a valid element to an empty queue.
+     */
+    @Test
+    public void enqueue_validEntry_returnsTrue() {
+        QueueInterface testQueue = GetQueue();
+        String string = "ABCDE";
+        boolean result = testQueue.enqueue(string);
+        assertTrue(result);
     }
 
     /**
@@ -136,11 +151,14 @@ public abstract class Queue_Base_Tests {
     @Test
     public void dequeue_validEntry_sizeDecrements() {
         QueueInterface testQueue = GetQueue();
+        
         String string = "ABCDE";
         testQueue.enqueue(string);
         int oldSize = testQueue.size();
+
         testQueue.dequeue();
         int newSize = testQueue.size();
+        
         assertEquals(oldSize - 1, newSize);
     }
 
@@ -187,7 +205,7 @@ public abstract class Queue_Base_Tests {
         assertTrue(testQueue.isEmpty());
     }
 
-        @Test
+    @Test
     public void clear_contents_sizeEqualsZero() {
         QueueInterface testQueue = GetQueue();
         String string1 = "ABCDE";
@@ -198,5 +216,4 @@ public abstract class Queue_Base_Tests {
         assertEquals(0, testQueue.size());
     }
 
-    
 }

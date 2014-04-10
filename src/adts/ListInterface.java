@@ -16,7 +16,7 @@ public interface ListInterface<T> {
 
     public boolean isEmpty();
 
-    // public boolean isFull();
+    public boolean isFull();
     
     public T get(int index);
 
@@ -34,8 +34,6 @@ public interface ListInterface<T> {
 
     public T remove(int index);
     
-    // public T remove(T anEntry);
-
     public boolean replace(int index, T newEntry);
 
     public void clear();

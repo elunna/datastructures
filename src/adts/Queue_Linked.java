@@ -1,7 +1,8 @@
 package adts;
 
 /**
- * File: Queue_Linked Description: This is a linked chain implementation using
+ * File: Queue_Linked.
+ * Description: This is a linked chain implementation using
  * nodes. The chain can grow to any size.
  *
  * @author lunatunez
@@ -9,15 +10,15 @@ package adts;
  */
 public class Queue_Linked<T> implements QueueInterface<T> {
 
-    private Node<T> firstNode;
-    private Node<T> lastNode;
+    private Node<T> frontNode;
+    private Node<T> backNode;
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
     @Override
     public int size() {
         int length = 0;
-        Node node = firstNode;
+        Node node = frontNode;
         if (node == null) {
             return length;
         } else {
@@ -31,16 +32,37 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         return length;
     }
 
+//    @Override
+//    public boolean isEmpty() {
+//        return frontNode == null && backNode == null;
+//    }
+    /*
+     * Sees whether this bag is empty.
+     */
     @Override
     public boolean isEmpty() {
-        return firstNode == null && lastNode == null;
+        boolean result;
+        if (size() == 0) {
+            assert frontNode == null && backNode == null;
+            result = true;
+        } else {
+            assert frontNode != null : "numberOfEntries is not 0 but frontNode is null";
+            assert backNode != null : "numberOfEntries is not 0 but backNode is null";
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isFull() {
+        return false; // Linked Queue is never full.
     }
 
     @Override
     public T getFront() {
         T front = null;
         if (!isEmpty()) {
-            front = firstNode.getData();
+            front = frontNode.getData();
         }
         return front;
     }
@@ -48,28 +70,29 @@ public class Queue_Linked<T> implements QueueInterface<T> {
     // *************************************************************************
     // *** MUTATOR METHODS ******************************************************
     @Override
-    public void enqueue(Object newEntry) {
+    public boolean enqueue(Object newEntry) {
         if (newEntry == null) {
-            return;
+            return false;
         }
         Node newNode = new Node(newEntry, null);
 
         if (isEmpty()) {
-            firstNode = newNode;
+            frontNode = newNode;
         } else {
-            lastNode.setNext(newNode);
+            backNode.setNext(newNode);
         }
-        lastNode = newNode;
+        backNode = newNode;
+        return true;
     }
 
     @Override
     public T dequeue() {
         T front = null;
         if (!isEmpty()) {
-            front = firstNode.getData();
-            firstNode = firstNode.getNext();
-            if (firstNode == null) {
-                lastNode = null;
+            front = frontNode.getData();
+            frontNode = frontNode.getNext();
+            if (frontNode == null) {
+                backNode = null;
             }
         }
         return front;
@@ -81,4 +104,5 @@ public class Queue_Linked<T> implements QueueInterface<T> {
             dequeue();
         }
     }
+
 }

@@ -2,15 +2,17 @@ package adts;
 
 /**
  * File:
- * <p>
+ *
  * Description:
  *
  * @author lunatunez
+ * @param <T>
  */
 public class Queue_2PartCircular<T> implements QueueInterface<T> {
 
-    private Node queueNode;
-    private Node freeNode;
+    private Node queueNode;     // Also represents the front
+    private Node freeNode;      // The Node before freeNode is the back.
+    private int numberOfNodes;
 
     public Queue_2PartCircular() {
         freeNode = new Node(null, null);
@@ -20,28 +22,36 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-    
     @Override
     public int size() {
-        int count = 0;
-        if (isEmpty()) {
-            return count;
-        } else {
-            count++;
-            Node scanner = queueNode;
-            while (scanner.getNext() != freeNode) {
-                count++;
-                scanner = scanner.getNext();
-            }
-            return count;
-        }
+        return numberOfNodes;
+
     }
+
+    /**
+     * Sees whether this bag is empty.
+     *
+     * @return
+     */
+//    @Override
+//    public boolean isEmpty() {
+//        return queueNode == freeNode;
+//    }
 
     @Override
     public boolean isEmpty() {
-        return queueNode == freeNode;
+        boolean result;
+        if (size() == 0) {
+            assert queueNode == freeNode;
+            result = true;
+        } else {
+            // extra precaution?
+            assert queueNode != freeNode : "size() is not 0 but frontNode doesn't equals queueNode";
+            result = false;
+        }
+        return result;
     }
-
+    
     @Override
     public T getFront() {
         T front = null;
@@ -49,7 +59,6 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
             front = (T) queueNode.getData();
         }
         return front;
-
     }
 
     private boolean isChainFull() {
@@ -60,15 +69,24 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override
-    public void enqueue(T newEntry) {
+    public boolean enqueue(T newEntry) {
+        boolean success = false;
         if (newEntry != null) {
+
             freeNode.setData(newEntry);
+
             if (isChainFull()) {
+                // Allocate a new node
                 Node newNode = new Node(null, freeNode.getNext());
                 freeNode.setNext(newNode);
             }
+            // Add newEntry to the back
             freeNode = freeNode.getNext();
+            numberOfNodes++;
+            success = true;
         }
+        return success;
+
     }
 
     @Override
@@ -78,6 +96,7 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
             front = (T) queueNode.getData();
             queueNode.setData(null);
             queueNode = queueNode.getNext();
+            numberOfNodes--;
         }
         return front;
     }
@@ -87,5 +106,10 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         while (!isEmpty()) {
             dequeue();
         }
+    }
+
+    @Override
+    public boolean isFull() {
+        return false; // Linked Queue is never full.
     }
 }

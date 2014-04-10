@@ -1,5 +1,6 @@
 package adts;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public abstract class Set_Base_Tests {
 
     /**
      *
-     * @return a List extending the ListInterface of initialized capacity
+     * @return a Set extending the SetInterface of initialized capacity
      */
     // protected abstract SetInterface GetSet(int capacity);
     protected abstract SetInterface GetSet(); // empty set
@@ -95,7 +96,7 @@ public abstract class Set_Base_Tests {
     
     
     @Test
-    public void toArray_validList_elementsMatch() {
+    public void toArray_validSet_elementsMatch() {
         SetInterface testSet = GetSet();
         testSet.add("A");
         testSet.add("B");
@@ -245,6 +246,87 @@ public abstract class Set_Base_Tests {
         SetInterface testSet = GetSet();
         Object result = testSet.remove();
         assertNull(result);
+    }
+
+    // remove(int index)
+    @Test
+    public void remove_validIndex_returnsEntry() {
+        SetInterface testSet = GetSet();
+        String string1 = "ABC";
+        testSet.add(string1);
+        Object result = testSet.remove(0);
+        assertEquals(string1, result);
+    }
+
+    @Test
+    public void remove_validIndex_sizeDecrements() {
+        SetInterface testSet = GetSet();
+        String string1 = "ABC";
+        testSet.add(string1);
+        int oldSize = testSet.size();
+        testSet.remove(0);
+        int newSize = testSet.size();
+        assertEquals(oldSize - 1, newSize);
+
+    }
+
+    @Test
+    public void remove_validIndexSizeOne_isEmpty() {
+        SetInterface testSet = GetSet();
+        String string1 = "ABC";
+        testSet.add(string1);
+        testSet.remove(0);
+        assertTrue(testSet.isEmpty());
+    }
+
+    @Test
+    public void remove_emptySetPassedIndex_returnsNull() {
+        SetInterface testSet = GetSet();
+        Object result = testSet.remove(0);
+        assertNull(result);
+
+    }
+
+    @Test
+    public void remove_outOfBoundsIndex_returnNull() {
+        SetInterface testSet = GetSet();
+        int badIndex = SetInterface.DEFAULT_CAPACITY + 1;
+        String string1 = "ABC";
+        testSet.add(string1);
+        Object result = testSet.remove(badIndex);
+        assertNull(result);
+    }
+
+    @Test
+    public void remove_outOfBoundsIndex_sameSize() {
+        SetInterface testSet = GetSet();
+        int badIndex = SetInterface.DEFAULT_CAPACITY + 1;
+        String string1 = "ABC";
+        testSet.add(string1);
+        int oldSize = testSet.size();
+        testSet.remove(badIndex);
+        int newSize = testSet.size();
+        assertEquals(oldSize, newSize);
+    }
+
+    @Test
+    public void remove_negativeIndex_returnNull() {
+        SetInterface testSet = GetSet();
+        String string1 = "ABC";
+        testSet.add(string1);
+        Object result = testSet.remove(-1);
+        assertNull(result);
+    }
+
+    @Test
+    public void remove_negativeIndex_sameSize() {
+        SetInterface testSet = GetSet();
+        String string1 = "ABC";
+        testSet.add(string1);
+        int oldSize = testSet.size();
+        testSet.remove(-1);
+        int newSize = testSet.size();
+        assertEquals(oldSize, newSize);
     }
 
     @Test

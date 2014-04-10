@@ -11,24 +11,73 @@ import java.util.Random;
  *
  * @param <T>
  */
-public class Bag_Array<T> implements BagInterface<T> {
-
-    private final T[] array;
-    private int numberOfEntries;
+public class Bag_Array<T>  implements BagInterface<T> {
+    protected T[] array;
+    protected int numberOfEntries;
 
     public Bag_Array() {
         this(DEFAULT_CAPACITY);
+
     }
 
     public Bag_Array(int capacity) throws IllegalArgumentException {
-        numberOfEntries = 0;
         if (capacity <= 0) {
             throw new IllegalArgumentException("Bad constructor arg");
         }
-        // the cast is safe because the new array contains null entries
         @SuppressWarnings("unchecked")
         T[] tempBag = (T[]) new Object[capacity]; // unchecked cast
         array = tempBag;
+
+    }
+
+
+
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+    
+    /**
+     * Removes a specific entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+
+        return result != null;
+    }
+
+    /**
+     * Removes a random entry from this bag.
+     *
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    public T removeRandom() {
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        } else {
+            Random randomNumbers = new Random();
+            int randomIndex = randomNumbers.nextInt(numberOfEntries);
+            result = (T) array[randomIndex];
+            numberOfEntries--;  // decrease size
+
+            if (randomIndex != numberOfEntries) {
+                // Move the end to the empty space
+                array[randomIndex] = array[numberOfEntries];
+            }
+            // Delete last entry
+            array[numberOfEntries] = null;
+            return result;
+        }
     }
 
     // *************************************************************************
@@ -90,30 +139,10 @@ public class Bag_Array<T> implements BagInterface<T> {
      */
     @Override
     public T[] toArray() {
-        // the cast is safe because the new array contains null entries
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings(value = "unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
         System.arraycopy(array, 0, result, 0, numberOfEntries);
-
         return result;
-    }
-
-    /**
-     * Counts the number of times a given entry appears in this bag.
-     *
-     * @param anEntry the entry to be counted
-     * @return the number of times anEntry appears in the bag
-     */
-    @Override
-    public int getFrequencyOf(T anEntry) {
-        int counter = 0;
-
-        for (int i = 0; i < numberOfEntries; i++) {
-            if (anEntry.equals(array[i])) {
-                counter++;
-            }
-        }
-        return counter;
     }
 
     /**
@@ -133,6 +162,23 @@ public class Bag_Array<T> implements BagInterface<T> {
             }
         }
         return where;
+    }
+
+    /**
+     * Counts the number of times a given entry appears in this bag.
+     *
+     * @param anEntry the entry to be counted
+     * @return the number of times anEntry appears in the bag
+     */
+    @Override
+    public int getFrequencyOf(T anEntry) {
+        int counter = 0;
+        for (int i = 0; i < numberOfEntries; i++) {
+            if (anEntry.equals(array[i])) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     // *************************************************************************
@@ -158,14 +204,21 @@ public class Bag_Array<T> implements BagInterface<T> {
     }
 
     /**
-     * Removes one unspecified entry from this bag, if possible.
+     * Removes the last entry from this bag, if possible.
      *
      * @return either the removed entry, if the removal was successful, or null
      * otherwise
      */
     @Override
     public T remove() {
-        return remove(numberOfEntries - 1);
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        }
+        numberOfEntries--;
+        result = array[numberOfEntries];
+        array[numberOfEntries] = null;
+        return result;
     }
 
     /**
@@ -174,10 +227,9 @@ public class Bag_Array<T> implements BagInterface<T> {
      * @param index
      * @return If no such entry exists, returns null.
      */
-    @Override
     public T remove(int index) {
         T result = null;
-        if (index > array.length || index < 0 || index > numberOfEntries - 1) {
+        if (index < 0 || index > numberOfEntries - 1 || isEmpty()) {
             return result;
         }
         result = array[index];
@@ -188,47 +240,7 @@ public class Bag_Array<T> implements BagInterface<T> {
             // Erase last entry
             array[numberOfEntries] = null;
         }
-
         return result;
-    }
-
-    /**
-     * Removes one occurrence of a given entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || size() == 0) {
-            return false;
-        }
-
-        int index = getIndexOf(anEntry);
-        T result = remove(index);
-
-        return result != null;
-    }
-
-    public T removeRandom() {
-        T result = null;
-        if (isEmpty()) {
-            return result;
-        } else {
-            Random randomNumbers = new Random();
-            int randomIndex = randomNumbers.nextInt(numberOfEntries);
-            result = array[randomIndex];
-            numberOfEntries--;  // decrease size
-
-            if (randomIndex != numberOfEntries) {
-                // Move the end to the empty space
-                array[randomIndex] = array[numberOfEntries];
-            }
-            // Delete last entry
-            array[numberOfEntries] = null;
-            return result;
-        }
     }
 
     /**
@@ -240,5 +252,4 @@ public class Bag_Array<T> implements BagInterface<T> {
             remove();
         }
     }
-
 }

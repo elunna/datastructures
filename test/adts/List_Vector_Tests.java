@@ -1,11 +1,15 @@
 package adts;
 
 /**
- * File:        
- * Description: 
+ * File: Description:
+ *
  * @author lunatunez
  */
+public class List_Vector_Tests extends List_Base_Tests {
 
-public class List_Vector_Tests {
+    @Override
+    protected ListInterface GetList() {
+        return new List_Vector<>();
+    }
 
 }

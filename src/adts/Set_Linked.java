@@ -6,98 +6,44 @@ package adts;
  * @author lunatunez
  * @param <T>
  */
-public class Set_Linked<T extends Comparable<? super T>>
-        implements SetInterface<T> {
+public class Set_Linked<T> implements SetInterface<T> {
 
     private Node firstNode;
-    private int numberOfEntries;
+    private int numberOfNodes;
 
     public Set_Linked() {
-        this.firstNode = null;
-        this.numberOfEntries = 0;
+        firstNode = null;
+        this.numberOfNodes = 0;
     }
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
 
     @Override
-    public int size() {
-        return numberOfEntries;
-    }
-
-    @Override
     public int cardinality() {
-        return numberOfEntries;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstNode == null;
-    }
-
-    @Override
-    public boolean isFull() {
-        return false;
-    }
-
-    /*
-     * Tests whether this bag contains a given entry.
-     */
-    @Override
-    public boolean contains(T anEntry) {
-        if (anEntry == null) {
-            return false;
-        }
-        boolean found = false;
-        Node currentNode = firstNode;
-        while (!found && (currentNode != null)) {
-            if (anEntry.equals(currentNode.getData())) {
-                found = true;
-            } else {
-                currentNode = currentNode.getNext();
-            }
-        }
-        return found;
+        return size();
     }
 
     @Override
     public boolean isElement(T anEntry) {
-        return this.contains(anEntry);
-    }
-    /*
-     * Retrieves all entries that are in this bag.
-     */
-
-    @Override
-    public T[] toArray() {
-        // the cast is safe because the new array contains null entries
-        @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
-
-        int index = 0;
-        Node currentNode = firstNode;
-        while ((index < numberOfEntries) && (currentNode != null)) {
-            result[index] = (T) currentNode.getData();
-            index++;
-            currentNode = currentNode.getNext();
-        }
-        return result;
+        return contains(anEntry);
     }
 
     @Override
     public T[] enumerate() {
-        return this.toArray();
+        return toArray();
     }
 
     /**
      * Locate the reference to a particular item. Set the beginning ref to the
      * first node, then traverse with a while loop until we find the value or
      * return null.
+     *
+     * @param entry
+     * @return
      */
     private Node getReferenceTo(T entry) {
         boolean found = false;
         Node currentNode = firstNode;
-
-        // while loop to traverse the list
         while (!found && (currentNode != null)) {
             if (entry.equals(currentNode.getData())) {
                 found = true;
@@ -108,16 +54,22 @@ public class Set_Linked<T extends Comparable<? super T>>
         return currentNode;
     }
 
+    /**
+     * Returns a reference to the node at the given index. (Future revision:
+     * make this return a clone. To avoid exporting a private type.)
+     *
+     * @param index An integer, index >= 0, index less than numberOfEntries
+     * @return The reference to the node if it
+     */
     private Node getNodeAt(int index) {
-//        assert (firstNode != null)
-//                && (1 <= givenPosition) && (givenPosition <= numberOfEntries);
+        if (firstNode == null || index < 0 || index >= numberOfNodes) {
+            return null;
+        }
         Node currentNode = firstNode;
-        // traverse the chain to locate the desired node
-        for (int counter = 1; counter < index; counter++) {
+        for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
-        // assert currentNode != null;
-        return currentNode;
+        return new Node(currentNode.getData(), currentNode.getNext());
     }
 
     public T getMin() {
@@ -152,56 +104,37 @@ public class Set_Linked<T extends Comparable<? super T>>
         } else {
             Node newNode = new Node(newEntry);
             newNode.setNext(firstNode);
-            // make new node reference rest of chain 
-            // (firstNode is null if chain is empty)        
             firstNode = newNode;
-            // new node is at beginning of chain
-            numberOfEntries++;
+            numberOfNodes++;
             return true;
         }
     }
 
-    /*
-     * Removes one unspecified entry
-     * It is always the node pointed to by the variable firstNode.
+    
+    /**
+     *
+     * @param index
+     * @return
      */
     @Override
-    public T remove() {
-        T result = null;
-
-        if (firstNode != null) {
-            result = (T) firstNode.getData();
-            firstNode = firstNode.getNext();
-            numberOfEntries--;
-        }
-        return result;
-    }
-
-    
-    @Override
     public T remove(int index) {
-        if (isEmpty() || index < 0 || index > numberOfEntries - 1) {
-            return null;
-        }
-        T result;
-
-        if (index == 0) {
-            result = (T) firstNode.getData();
-            firstNode = firstNode.getNext();
-        } else {
+        T result = null;
+        if (isEmpty() || index < 0 || index >= numberOfNodes) {
+            return result;
+        } else if (index == 0) {
+            result = remove();
+        } else if ((index >= 1) && (index <= numberOfNodes)) {
             Node nodeBefore = getNodeAt(index);
             Node nodeToRemove = nodeBefore.getNext();
             Node nodeAfter = nodeToRemove.getNext();
-            nodeBefore.setNext(nodeAfter);
 
+            nodeBefore.setNext(nodeAfter);
             result = (T) nodeToRemove.getData();
+            numberOfNodes--;
         }
-        numberOfEntries--;
         return result;
     }
 
-    
-    
     /**
      * Remove one occurrence of an entry. Needs to locate the reference then
      * delete. Uses getReferenceTo(), remove()
@@ -211,8 +144,10 @@ public class Set_Linked<T extends Comparable<? super T>>
      */
     @Override
     public boolean remove(T entry) {
+        if (entry == null) {
+            return false;
+        }
         Node removeThis = getReferenceTo(entry);
-
         if (removeThis != null) {
             removeThis.setData(firstNode.getData());
             remove();
@@ -222,9 +157,131 @@ public class Set_Linked<T extends Comparable<? super T>>
         }
     }
 
+    /**
+     * Gets the number of entries currently in this bag.
+     *
+     * @return
+     */
+    @Override
+    public int size() {
+        return numberOfNodes;
+    }
+
+    /**
+     * Sees whether this bag is empty.
+     *
+     * @return
+     */
+    @Override
+    public boolean isEmpty() {
+        boolean result;
+        if (numberOfNodes == 0) {
+            assert firstNode == null;
+            result = true;
+        } else {
+            // extra precaution?
+            assert firstNode != null : "numberOfEntries is not 0 but firstNode is null";
+            result = false;
+        }
+        return result;
+    }
+
+    /**
+     * Sees whether this bag is full.
+     *
+     * @return Linked chain is never full, always returns false.
+     */
+    @Override
+    public boolean isFull() {
+        return false;
+    }
+
+    /**
+     * Tests whether this bag contains a given entry.
+     *
+     * @param anEntry
+     * @return
+     */
+    @Override
+    public boolean contains(T anEntry) {
+        if (anEntry == null) {
+            return false;
+        }
+        boolean found = false;
+        Node currentNode = firstNode;
+        while (!found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.getData())) {
+                found = true;
+            } else {
+                currentNode = currentNode.getNext();
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Retrieves all entries that are in this bag.
+     *
+     * @return
+     */
+    @Override
+    public T[] toArray() {
+        // the cast is safe because the new array contains null entries
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[numberOfNodes]; // unchecked cast
+        int index = numberOfNodes - 1;
+        Node currentNode = firstNode;
+        while ((index < numberOfNodes) && (currentNode != null)) {
+            result[index] = (T) currentNode.getData();
+            index--;
+            currentNode = currentNode.getNext();
+        }
+        return result;
+    }
+
+    /**
+     * Counts the number of times a given entry appears in this bag.
+     *
+     * @param anEntry the entry to be counted
+     * @return the number of times anEntry appears in the bag
+     */
+    public int getFrequencyOf(T anEntry) {
+        int frequency = 0;
+        int counter = 0;
+        Node currentNode = firstNode;
+        while ((counter < numberOfNodes) && (currentNode != null)) {
+            if (anEntry.equals(currentNode.getData())) {
+                frequency++;
+            }
+            counter++;
+            currentNode = currentNode.getNext();
+        }
+        return frequency;
+    }
+
+    /**
+     * Remove the first node from the chain.
+     *
+     * @return The node (if it exists) or null if it doesn't.
+     */
+    @Override
+    public T remove() {
+        T result = null;
+        if (firstNode != null && !isEmpty()) {
+            result = (T) firstNode.getData();
+            firstNode = firstNode.getNext(); // remove first node from chain
+            numberOfNodes--;
+        }
+        return result;
+    }
+
+
+    /*
+     * Removes all entries from this bag.
+     */
     @Override
     public void clear() {
-        numberOfEntries = 0;
+        numberOfNodes = 0;
         firstNode = null;
     }
 

@@ -9,7 +9,6 @@ import java.util.Vector;
  * @param <T>
  */
 public class Set_Vector<T> implements SetInterface<T> {
-
     @SuppressWarnings("FieldMayBeFinal")
     private Vector<T> vector;
 
@@ -172,7 +171,11 @@ public class Set_Vector<T> implements SetInterface<T> {
         vector.clear();
     }
 
-    @Override
+    /**
+     *
+     * @param index
+     * @return
+     */
     public T remove(int index) {
         if (this.isEmpty() || index < 0 || index > vector.size() - 1) {
             return null;
@@ -182,5 +185,4 @@ public class Set_Vector<T> implements SetInterface<T> {
         }
 
     }
-
 }

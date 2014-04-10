@@ -11,8 +11,8 @@ import java.util.Random;
  */
 public class Set_Array<T> implements SetInterface<T> {
 
-    private T[] array;
-    private int numberOfEntries;
+    protected T[] array;
+    protected int numberOfEntries;
 
     public Set_Array() {
         this(DEFAULT_CAPACITY);
@@ -27,32 +27,37 @@ public class Set_Array<T> implements SetInterface<T> {
         T[] tempSet = (T[]) new Object[capacity]; // unchecked cast
         array = tempSet;
     }
+
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-
+    /**
+     * Gets the current number of entries in this bag.
+     *
+     * @return the integer number of entries currently in the bag
+     */
     @Override
     public int size() {
         return numberOfEntries;
     }
 
-    @Override
-    public int cardinality() {
-        return numberOfEntries;
-    }
-
+    /**
+     * Sees whether this bag is empty.
+     *
+     * @return true if the bag is empty, or false if not
+     */
     @Override
     public boolean isEmpty() {
-
-        return size() == 0;
+        return numberOfEntries == 0;
     }
 
+    /**
+     * Sees whether this bag is full.
+     *
+     * @return true if the bag is full, or false if not
+     */
     @Override
     public boolean isFull() {
         return numberOfEntries == array.length;
-    }
-
-    public int capacity() {
-        return array.length;
     }
 
     /**
@@ -75,19 +80,6 @@ public class Set_Array<T> implements SetInterface<T> {
         return found;
     }
 
-    @Override
-    public boolean isElement(T anEntry) {
-        return contains(anEntry);
-    }
-
-    public T getMin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public T getMax() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * Retrieves all entries that are in this bag.
      *
@@ -95,15 +87,10 @@ public class Set_Array<T> implements SetInterface<T> {
      */
     @Override
     public T[] toArray() {
-        @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[numberOfEntries];
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
         System.arraycopy(array, 0, result, 0, numberOfEntries);
         return result;
-    }
-
-    @Override
-    public T[] enumerate() {
-        return toArray();
     }
 
     /**
@@ -124,6 +111,65 @@ public class Set_Array<T> implements SetInterface<T> {
         }
         return where;
     }
+
+    /**
+     * Counts the number of times a given entry appears in this bag.
+     *
+     * @param anEntry the entry to be counted
+     * @return the number of times anEntry appears in the bag
+     */
+    public int getFrequencyOf(T anEntry) {
+        int counter = 0;
+        for (int i = 0; i < numberOfEntries; i++) {
+            if (anEntry.equals(array[i])) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    @Override
+    public int cardinality() {
+        return size();
+    }
+
+    public int capacity() {
+        return array.length;
+    }
+
+    @Override
+    public boolean isElement(T anEntry) {
+        return contains(anEntry);
+    }
+
+    public T getMin() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public T getMax() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public T[] enumerate() {
+        return toArray();
+    }
+
+    @Override
+    public SetInterface union(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public SetInterface intersection(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public SetInterface difference(SetInterface anotherSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 //
 //    @Override
 //    public SetInterface union(SetInterface anotherSet) {
@@ -166,7 +212,6 @@ public class Set_Array<T> implements SetInterface<T> {
 //        }
 //        return difference;
 //    }
-
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**
@@ -191,20 +236,33 @@ public class Set_Array<T> implements SetInterface<T> {
     }
 
     /**
-     * Removes one unspecified entry from this bag, if possible.
+     * Removes the last entry from this bag, if possible.
      *
      * @return either the removed entry, if the removal was successful, or null
      * otherwise
      */
     @Override
     public T remove() {
-        if (size() > 0) {
-            T result = remove(numberOfEntries - 1);
-            if (result != null) {
-                return result;
-            }
+        T result = null;
+        if (isEmpty()) {
+            return result;
         }
-        return null;
+        numberOfEntries--;
+        result = array[numberOfEntries];
+        array[numberOfEntries] = null;
+        return result;
+    }
+
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+
+        return result != null;
     }
 
     /**
@@ -213,43 +271,20 @@ public class Set_Array<T> implements SetInterface<T> {
      * @param index
      * @return If no such entry exists, returns null.
      */
-    @Override
     public T remove(int index) {
         T result = null;
-        if (index > array.length || index < 0) {
-            return null;
+        if (index < 0 || index > numberOfEntries - 1 || isEmpty()) {
+            return result;
         }
-
-        if (!isEmpty()) {
-            result = array[index];
-            numberOfEntries--;
+        result = array[index];
+        numberOfEntries--;
+        if (index != numberOfEntries) {
+            // Fill removed entry with last entry
             array[index] = array[numberOfEntries];
+            // Erase last entry
             array[numberOfEntries] = null;
         }
         return result;
-    }
-
-    /**
-     * Removes one occurrence of a given entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || size() == 0) {
-            return false;
-        }
-        T result;
-        int index = getIndexOf(anEntry);
-        if (index == -1) {
-            return false;
-        } else {
-            result = remove(index);
-        }
-
-        return anEntry.equals(result);
     }
 
     public T removeRandom() {
@@ -264,6 +299,9 @@ public class Set_Array<T> implements SetInterface<T> {
         }
     }
 
+    /**
+     * Removes all entries from this bag.
+     */
     @Override
     public void clear() {
         while (!isEmpty()) {
@@ -282,20 +320,5 @@ public class Set_Array<T> implements SetInterface<T> {
 
             array = Arrays.copyOf(array, 1);
         }
-    }
-
-    @Override
-    public SetInterface union(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SetInterface intersection(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SetInterface difference(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

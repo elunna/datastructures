@@ -4,23 +4,22 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- * File:        
- * Description: 
+ * File: Description:
+ *
  * @author lunatunez
  */
-
 public class List_Array_Tests extends List_Base_Tests {
 
     @Override
     protected ListInterface GetList() {
         return new List_Array<>();
     }
-    
+
     protected ListInterface GetList(int capacity) {
         return new List_Array<>(capacity);
     }
 
-// If a resizeable bag is passed a zero capacity argument,
+    // If a resizeable bag is passed a zero capacity argument,
     // throw an exception.
     @Test(expected = IllegalArgumentException.class)
     public void newList_zeroCapacity_throwException() {

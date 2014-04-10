@@ -8,12 +8,13 @@ package adts;
  */
 public class Deque_DoublyLinked<T> implements DequeInterface<T> {
 
-    private DLNode firstNode;
-    private DLNode lastNode;
+    private DLNode frontNode;
+    private DLNode backNode;
+    // private int numberOfNodes;
 
     public Deque_DoublyLinked() {
-        this.firstNode = null;
-        this.lastNode = null;
+        this.frontNode = null;
+        this.backNode = null;
     }
 
     // *************************************************************************

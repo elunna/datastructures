@@ -22,7 +22,7 @@ public interface SetInterface<T> {
     public boolean isEmpty();
 
     public boolean isFull();
-        // only needed for arrays
+    // only needed for arrays
     //public int capacity(); // get capacity, max space.
     // we don't need this for chains, only arrays
 
@@ -30,14 +30,14 @@ public interface SetInterface<T> {
 
     public boolean isElement(T anEntry); // same as contains
 
+    public T[] toArray();
+
+    public T[] enumerate();
+
 //    public T getMin();
 //
 //    public T getMax();
-
-    public T[] toArray();
-
-    public T[] enumerate(); // is the same as toArray???
-
+    
     public SetInterface union(SetInterface anotherSet);
 
     public SetInterface intersection(SetInterface anotherSet);
@@ -50,11 +50,12 @@ public interface SetInterface<T> {
 
     public T remove();
 
+    public T remove(int index);
+    
     public boolean remove(T anEntry);
+    
+    
 
-    public T remove(int index);  // this is private
-    // public T removeRandom();     // this isn't available for linked chains
     public void clear();
-
 
 }

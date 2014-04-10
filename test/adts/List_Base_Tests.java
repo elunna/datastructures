@@ -78,7 +78,7 @@ public abstract class List_Base_Tests {
     }
 
     @Test
-    public void get_validIndex_returnElement() {
+    public void get_validIndex_returnsElement() {
         ListInterface testList = GetList();
         String string = "ABC";
         testList.add(string);
@@ -119,6 +119,9 @@ public abstract class List_Base_Tests {
         testList.add("B");
         testList.add("C");
         Object[] resultingArray = testList.toArray();
+        // the linked array will be in reverse order
+        // however, order doesn't matter with this adt.
+        
         boolean elementsMatch = (resultingArray[0] == "A"
                 && resultingArray[1] == "B"
                 && resultingArray[2] == "C");
@@ -337,7 +340,6 @@ public abstract class List_Base_Tests {
         testList.add(string1);
         testList.remove(0);
         assertTrue(testList.isEmpty());
-
     }
 
     @Test

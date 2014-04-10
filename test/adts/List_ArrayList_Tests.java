@@ -1,5 +1,3 @@
-
-
 package adts;
 
 /**
@@ -12,5 +10,4 @@ public class List_ArrayList_Tests extends List_Base_Tests {
     protected ListInterface GetList() {
         return new List_ArrayList<>();
     }
-   
 }
