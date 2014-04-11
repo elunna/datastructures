@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File: Description: Doubly linked chain. The first and last nodes contain one
  * null reference, First node has no previous node and last node has no node
@@ -66,7 +69,51 @@ public class Deque_DoublyLinked<T> implements DequeInterface<T> {
         return back;
 
     }
+    /**
+     * Retrieves all entries that are in this queue.
+     *
+     * @return
+     */
+    @Override
+    public T[] toArray() {
+        // the cast is safe because the new array contains null entries
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[size()]; // unchecked cast
+        int index = size()- 1;
 
+        NodeDL currentNode = backNode.getNext();
+        while ((index < size()) && (currentNode != null)) {
+            result[index] = (T) currentNode.getData();
+            index--;
+            currentNode = currentNode.getNext();
+        }
+        return result;
+    }
+
+
+        
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Deque_DoublyLinked)) {
+            return false;
+        }
+        Deque_DoublyLinked that = (Deque_DoublyLinked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.frontNode);
+        hash = 97 * hash + Objects.hashCode(this.backNode);
+        return hash;
+    }
+
+
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

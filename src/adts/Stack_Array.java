@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+
 /**
  * A class of stacks whose entries are stored in an array.
  *
@@ -87,6 +89,7 @@ public class Stack_Array<T> implements StackInterface<T> {
      *
      * @return a newly allocated array of all the entries in the bag
      */
+    @Override
     public T[] toArray() {
         @SuppressWarnings(value = "unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
@@ -146,6 +149,28 @@ public class Stack_Array<T> implements StackInterface<T> {
             return null;
         }
     }
+    
+    
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Stack_Array)) {
+            return false;
+        }
+        Stack_Array that = (Stack_Array) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Arrays.deepHashCode(this.array);
+        hash = 59 * hash + this.numberOfEntries;
+        return hash;
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
 

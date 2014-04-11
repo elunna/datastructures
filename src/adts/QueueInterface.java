@@ -41,7 +41,11 @@ public interface QueueInterface<T> {
      */
     public T getFront();
 
-    
+    /**
+     * Retrieves an array of all the entries in the queue.
+     * @return 
+     */
+    public T[] toArray();
     
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File:
  *
@@ -37,7 +40,6 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
 //    public boolean isEmpty() {
 //        return queueNode == freeNode;
 //    }
-
     @Override
     public boolean isEmpty() {
         boolean result;
@@ -51,7 +53,7 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         }
         return result;
     }
-    
+
     @Override
     public T getFront() {
         T front = null;
@@ -61,9 +63,60 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         return front;
     }
 
+    @Override
+    public boolean isFull() {
+        return false; // Linked Queue is never full.
+    }
+
     private boolean isChainFull() {
         return queueNode == freeNode.getNext();
+    }
 
+    /**
+     * Retrieves all entries that are in this queue.
+     *
+     * @return
+     */
+    @Override
+    public T[] toArray() {
+        // the cast is safe because the new array contains null entries
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[numberOfNodes]; // unchecked cast
+        int index;
+        if (isEmpty()) {
+            return result;
+        }
+        index = numberOfNodes - 1;
+
+        Node currentNode = queueNode;
+        while (index < numberOfNodes
+                && currentNode.getNext() != freeNode) {
+            result[index] = (T) currentNode.getData();
+            index--;
+            currentNode = currentNode.getNext();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Queue_2PartCircular)) {
+            return false;
+        }
+        Queue_2PartCircular that = (Queue_2PartCircular) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.queueNode);
+        hash = 41 * hash + Objects.hashCode(this.freeNode);
+        hash = 41 * hash + this.numberOfNodes;
+        return hash;
     }
 
     // *************************************************************************
@@ -108,8 +161,4 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         }
     }
 
-    @Override
-    public boolean isFull() {
-        return false; // Linked Queue is never full.
-    }
 }

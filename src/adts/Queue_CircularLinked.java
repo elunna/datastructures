@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File: A circular linked chain queue. Contains only one external reference to
  * the chain; lastNode lastNode contains a reference to the first Node. If
@@ -74,6 +77,52 @@ class Queue_CircularLinked<T> implements QueueInterface {
             result = false;
         }
         return result;
+    }
+
+    /**
+     * Retrieves all entries that are in this queue.
+     *
+     * @return
+     */
+    @Override
+    public T[] toArray() {
+        // the cast is safe because the new array contains null entries
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[numberOfNodes]; // unchecked cast
+        int index;
+        if (isEmpty()) {
+            return result;
+        }
+        index = numberOfNodes - 1;
+
+        Node currentNode = backNode.getNext();
+        while (index < numberOfNodes
+                && currentNode.getNext() != backNode) {
+            result[index] = (T) currentNode.getData();
+            index--;
+            currentNode = currentNode.getNext();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Queue_CircularLinked)) {
+            return false;
+        }
+        Queue_CircularLinked that = (Queue_CircularLinked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.backNode);
+        hash = 17 * hash + this.numberOfNodes;
+        return hash;
     }
 
     // *************************************************************************

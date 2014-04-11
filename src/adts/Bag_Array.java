@@ -1,5 +1,6 @@
 package adts;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Random;
  *
  * @param <T>
  */
-public class Bag_Array<T>  implements BagInterface<T> {
+public class Bag_Array<T> implements BagInterface<T> {
+
     protected T[] array;
     protected int numberOfEntries;
 
@@ -29,59 +31,9 @@ public class Bag_Array<T>  implements BagInterface<T> {
         array = tempBag;
 
     }
-
-
-
-    // *************************************************************************
-    // *** MUTATOR METHODS *****************************************************
-    
-    /**
-     * Removes a specific entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || size() == 0) {
-            return false;
-        }
-
-        int index = getIndexOf(anEntry);
-        T result = remove(index);
-
-        return result != null;
-    }
-
-    /**
-     * Removes a random entry from this bag.
-     *
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    public T removeRandom() {
-        T result = null;
-        if (isEmpty()) {
-            return result;
-        } else {
-            Random randomNumbers = new Random();
-            int randomIndex = randomNumbers.nextInt(numberOfEntries);
-            result = (T) array[randomIndex];
-            numberOfEntries--;  // decrease size
-
-            if (randomIndex != numberOfEntries) {
-                // Move the end to the empty space
-                array[randomIndex] = array[numberOfEntries];
-            }
-            // Delete last entry
-            array[numberOfEntries] = null;
-            return result;
-        }
-    }
-
-    // *************************************************************************
+// *************************************************************************
     // *** STATIC METHODS ******************************************************
+
     /**
      * Gets the current number of entries in this bag.
      *
@@ -181,8 +133,73 @@ public class Bag_Array<T>  implements BagInterface<T> {
         return counter;
     }
 
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Bag_Array)) {
+            return false;
+        }
+        Bag_Array that = (Bag_Array) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Arrays.deepHashCode(this.array);
+        hash = 67 * hash + this.numberOfEntries;
+        return hash;
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
+    /**
+     * Removes a specific entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+
+        return result != null;
+    }
+
+    /**
+     * Removes a random entry from this bag.
+     *
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    public T removeRandom() {
+        T result = null;
+        if (isEmpty()) {
+            return result;
+        } else {
+            Random randomNumbers = new Random();
+            int randomIndex = randomNumbers.nextInt(numberOfEntries);
+            result = (T) array[randomIndex];
+            numberOfEntries--;  // decrease size
+
+            if (randomIndex != numberOfEntries) {
+                // Move the end to the empty space
+                array[randomIndex] = array[numberOfEntries];
+            }
+            // Delete last entry
+            array[numberOfEntries] = null;
+            return result;
+        }
+    }
+
     /**
      * Adds a new entry to this bag.
      *

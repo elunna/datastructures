@@ -1,6 +1,7 @@
 package adts;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -151,6 +152,29 @@ public abstract class Set_Base_Tests {
 //
 //    
     
+    
+    @Test
+    public void equals_matchingSet_returnsTrue() {
+        SetInterface testSet = GetSet();
+        testSet.add("ABC");
+        testSet.add("XYZ");
+        SetInterface matchingSet = GetSet();
+        matchingSet.add("ABC");
+        matchingSet.add("XYZ");
+        assertEquals(testSet, matchingSet);
+    }
+
+    @Test
+    public void equals_differentSet_returnsFalse() {
+        SetInterface testSet = GetSet();
+        testSet.add("ABC");
+        testSet.add("XYZ");
+        SetInterface differentSet = GetSet();
+        differentSet.add("123");
+        differentSet.add("456");
+        assertNotSame(testSet, differentSet);
+    }
+
     
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************

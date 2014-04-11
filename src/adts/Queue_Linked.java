@@ -1,8 +1,10 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
- * File: Queue_Linked.
- * Description: This is a linked chain implementation using
+ * File: Queue_Linked. Description: This is a linked chain implementation using
  * nodes. The chain can grow to any size.
  *
  * @author lunatunez
@@ -65,6 +67,49 @@ public class Queue_Linked<T> implements QueueInterface<T> {
             front = frontNode.getData();
         }
         return front;
+    }
+
+    
+    /**
+     * Retrieves all entries that are in this queue.
+     *
+     * @return
+     */
+    @Override
+    public T[] toArray() {
+        // the cast is safe because the new array contains null entries
+        @SuppressWarnings(value = "unchecked")
+        T[] result = (T[]) new Object[size()]; // unchecked cast
+        int index = size()- 1;
+
+        Node currentNode = backNode.getNext();
+        while ((index < size()) && (currentNode != null)) {
+            result[index] = (T) currentNode.getData();
+            index--;
+            currentNode = currentNode.getNext();
+        }
+        return result;
+    }
+
+    
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Queue_Linked)) {
+            return false;
+        }
+        Queue_Linked that = (Queue_Linked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.frontNode);
+        hash = 19 * hash + Objects.hashCode(this.backNode);
+        return hash;
     }
 
     // *************************************************************************

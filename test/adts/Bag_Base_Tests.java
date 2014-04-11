@@ -2,6 +2,7 @@ package adts;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -142,6 +143,28 @@ public abstract class Bag_Base_Tests {
         String string = "B";
         int count = testBag.getFrequencyOf(string);
         assertEquals(0, count);
+    }
+    
+    @Test
+    public void equals_matchingBag_returnsTrue() {
+        BagInterface testBag = GetBag();
+        testBag.add("ABC");
+        testBag.add("XYZ");
+        BagInterface matchingBag = GetBag();
+        matchingBag.add("ABC");
+        matchingBag.add("XYZ");
+        assertEquals(testBag, matchingBag);
+    }
+
+    @Test
+    public void equals_differentBag_returnsFalse() {
+        BagInterface testBag = GetBag();
+        testBag.add("ABC");
+        testBag.add("XYZ");
+        BagInterface differentBag = GetBag();
+        differentBag.add("123");
+        differentBag.add("456");
+        assertNotSame(testBag, differentBag);
     }
 
     // *************************************************************************

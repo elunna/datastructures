@@ -1,11 +1,15 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * @author Erik Lunna<eslunna@gmail.com>
  * Date: 10/22/13 Purpose:
  * @param <T>
  */
 public class Stack_Linked<T> implements StackInterface<T> {
+
     private Node topNode;
     private int numberOfNodes;
 
@@ -41,6 +45,26 @@ public class Stack_Linked<T> implements StackInterface<T> {
         } else {
             return (T) topNode.getNext().getData();
         }
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Stack_Linked)) {
+            return false;
+        }
+        Stack_Linked that = (Stack_Linked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.topNode);
+        hash = 89 * hash + this.numberOfNodes;
+        return hash;
     }
 
     // *************************************************************************

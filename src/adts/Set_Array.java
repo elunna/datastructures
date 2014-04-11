@@ -212,6 +212,27 @@ public class Set_Array<T> implements SetInterface<T> {
 //        }
 //        return difference;
 //    }
+    
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Set_Array)) {
+            return false;
+        }
+        Set_Array that = (Set_Array) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Arrays.deepHashCode(this.array);
+        hash = 59 * hash + this.numberOfEntries;
+        return hash;
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**

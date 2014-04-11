@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File: Description:
  *
@@ -105,8 +108,7 @@ public class List_Linked<T> implements ListInterface<T> {
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
         int index = 0;
         Node currentNode = firstNode;
-        
-        
+
         while ((index < numberOfEntries) && (currentNode != null)) {
             result[index] = (T) currentNode.getData();
             index++;
@@ -172,6 +174,26 @@ public class List_Linked<T> implements ListInterface<T> {
             currentNode = currentNode.getNext();
         }
         return currentNode;
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof List_Linked)) {
+            return false;
+        }
+        List_Linked that = (List_Linked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.firstNode);
+        hash = 79 * hash + this.numberOfEntries;
+        return hash;
     }
 
     // *************************************************************************

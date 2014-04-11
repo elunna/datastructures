@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -37,6 +39,30 @@ class Queue_Vector<T> implements QueueInterface {
             front = vector.firstElement();
         }
         return front;
+    }
+
+    @Override
+    public T[] toArray() {
+        return (T[]) vector.toArray();
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Queue_Vector)) {
+            return false;
+        }
+        Queue_Vector that = (Queue_Vector) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.vector);
+        return hash;
     }
 
     // *************************************************************************

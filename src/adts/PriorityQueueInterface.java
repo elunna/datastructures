@@ -27,8 +27,8 @@ public interface PriorityQueueInterface<T extends Comparable<? super T>> {
     /**
      * Retrieves the item with the highest priority.
      *
-     * @return either the object with the highest priority or, if the priority
-     * queue is empty, null
+     * @return either the object with the highest priority or, 
+     * if the priority queue is empty, null
      */
     public T peek();
 

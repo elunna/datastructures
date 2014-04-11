@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -133,6 +135,26 @@ public class Set_Vector<T> implements SetInterface<T> {
         return difference;
     }
 
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Set_Vector)) {
+            return false;
+        }
+        Set_Vector that = (Set_Vector) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.vector);
+        return hash;
+    }
+
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

@@ -8,6 +8,7 @@ import java.util.Arrays;
  * @param <T>
  */
 public class Bag_ResizeableArray<T> implements BagInterface<T> {
+
     protected T[] array;
     protected int numberOfEntries;
 
@@ -23,73 +24,6 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         @SuppressWarnings("unchecked")
         T[] tempBag = (T[]) new Object[capacity]; // unchecked cast
         array = tempBag;
-    }
-
-
-
-    // *************************************************************************
-    // *** STATIC METHODS ******************************************************
-    /**
-     * Sees whether this bag is full.
-     *
-     * @return true if the bag is full, or false if not
-     */
-    @Override
-    public boolean isFull() {
-        return numberOfEntries == array.length;
-    }
-
-    // *************************************************************************
-    // *** MUTATOR METHODS *****************************************************
-    /**
-     * Adds a new entry to this bag. If the bag is full, the bag is doubled in
-     * size.
-     *
-     * @param newEntry the object to be added as a new entry
-     * @return true if the addition is successful, or false if not
-     */
-    @Override
-    public boolean add(T newEntry) {
-        if (newEntry == null) {
-            return false;
-        } else {
-            ensureCapacity();
-            array[numberOfEntries] = newEntry;
-            numberOfEntries++;
-            return true;
-        }
-    }
-
-    /**
-     * Removes a specific entry from this bag.
-     *
-     * @param anEntry the entry to be removed
-     * @return true if the removal was successful, or false if not
-     *
-     */
-    @Override
-    public boolean remove(T anEntry) {
-        if (anEntry == null || size() == 0) {
-            return false;
-        }
-
-        int index = getIndexOf(anEntry);
-        T result = remove(index);
-
-        return result != null;
-    }
-
-    /**
-     * Doubles the size of the array bag if it is full. If user specified zero
-     * capacity Ensure capacity of at least 1. (minimum required)
-     */
-    private void ensureCapacity() {
-        if (numberOfEntries == array.length) {
-            array = Arrays.copyOf(array, 2 * array.length);
-        } else if (array.length == 0) {
-
-            array = Arrays.copyOf(array, 1);
-        }
     }
 
     // *************************************************************************
@@ -114,6 +48,15 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         return numberOfEntries == 0;
     }
 
+    /**
+     * Sees whether this bag is full.
+     *
+     * @return true if the bag is full, or false if not
+     */
+    @Override
+    public boolean isFull() {
+        return numberOfEntries == array.length;
+    }
 
     /**
      * Tests whether this bag contains a given entry.
@@ -184,9 +127,78 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         return counter;
     }
 
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Bag_ResizeableArray)) {
+            return false;
+        }
+        Bag_ResizeableArray that = (Bag_ResizeableArray) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Arrays.deepHashCode(this.array);
+        hash = 71 * hash + this.numberOfEntries;
+        return hash;
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
- 
+    /**
+     * Adds a new entry to this bag. If the bag is full, the bag is doubled in
+     * size.
+     *
+     * @param newEntry the object to be added as a new entry
+     * @return true if the addition is successful, or false if not
+     */
+    @Override
+    public boolean add(T newEntry) {
+        if (newEntry == null) {
+            return false;
+        } else {
+            ensureCapacity();
+            array[numberOfEntries] = newEntry;
+            numberOfEntries++;
+            return true;
+        }
+    }
+
+    /**
+     * Removes a specific entry from this bag.
+     *
+     * @param anEntry the entry to be removed
+     * @return true if the removal was successful, or false if not
+     *
+     */
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+
+        return result != null;
+    }
+
+    /**
+     * Doubles the size of the array bag if it is full. If user specified zero
+     * capacity Ensure capacity of at least 1. (minimum required)
+     */
+    private void ensureCapacity() {
+        if (numberOfEntries == array.length) {
+            array = Arrays.copyOf(array, 2 * array.length);
+        } else if (array.length == 0) {
+
+            array = Arrays.copyOf(array, 1);
+        }
+    }
 
     /**
      * Removes the last entry from this bag, if possible.

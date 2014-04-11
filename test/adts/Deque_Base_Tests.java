@@ -91,6 +91,28 @@ public abstract class Deque_Base_Tests {
         Object result = testDeque.getFront();
         assertNull(result);
     }
+    
+    @Test
+    public void equals_matchingDeque_returnsTrue() {
+        DequeInterface testDeque = GetDeque();
+        testDeque.addToBack("ABC");
+        testDeque.addToBack("XYZ");
+        DequeInterface matchingDeque = GetDeque();
+        matchingDeque.addToBack("ABC");
+        matchingDeque.addToBack("XYZ");
+        assertEquals(testDeque, matchingDeque);
+    }
+
+    @Test
+    public void equals_differentDeque_returnsFalse() {
+        DequeInterface testDeque = GetDeque();
+        testDeque.addToBack("ABC");
+        testDeque.addToBack("XYZ");
+        DequeInterface differentDeque = GetDeque();
+        differentDeque.addToBack("123");
+        differentDeque.addToBack("456");
+        assertNotSame(testDeque, differentDeque);
+    }
 
     
     // *************************************************************************

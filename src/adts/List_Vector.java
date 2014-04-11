@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -49,6 +51,25 @@ public class List_Vector<T> implements ListInterface<T> {
     @Override
     public T[] toArray() {
         return (T[]) vector.toArray();
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof List_Vector)) {
+            return false;
+        }
+        List_Vector that = (List_Vector) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.vector);
+        return hash;
     }
 
     // *************************************************************************

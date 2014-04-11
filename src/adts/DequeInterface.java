@@ -42,6 +42,7 @@ public interface DequeInterface<T> {
      */
     public T getBack();
 
+    public T[] toArray();
     
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

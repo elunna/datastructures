@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -46,9 +48,33 @@ public class Stack_Vector<T> implements StackInterface<T> {
             return (T) stack.get(stack.size() - 2);
         }
     }
+
+    @Override
+    public T[] toArray() {
+        return (T[]) stack.toArray();
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Stack_Vector)) {
+            return false;
+        }
+        Stack_Vector that = (Stack_Vector) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.stack);
+        return hash;
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS ******************************************************
-
     @Override
     public boolean push(T newEntry) {
         if (newEntry != null) {

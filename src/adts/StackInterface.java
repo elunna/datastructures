@@ -37,6 +37,14 @@ public interface StackInterface<T> {
      */
     public int size();
 
+    
+    /**
+     * Retrieves an array of all the entries in the queue.
+     * @return 
+     */
+    public T[] toArray();
+    
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**

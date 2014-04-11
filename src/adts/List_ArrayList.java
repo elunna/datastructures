@@ -1,6 +1,8 @@
 package adts;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * File: Description:
@@ -51,6 +53,25 @@ public class List_ArrayList<T> implements ListInterface<T> {
     @Override
     public T[] toArray() {
         return (T[]) arrayList.toArray();
+    }
+    
+        @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof List_ArrayList)) {
+            return false;
+        }
+        List_ArrayList that = (List_ArrayList) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.arrayList);
+        return hash;
     }
 
     // *************************************************************************

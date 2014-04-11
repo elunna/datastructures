@@ -3,6 +3,7 @@ package adts;
 import junit.framework.Assert;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
 import org.junit.Test;
 
 /**
@@ -90,6 +91,30 @@ public abstract class Stack_Base_Tests {
         Object result = testStack.peek2();
         Assert.assertNull(result);
     }
+    
+    
+    @Test
+    public void equals_matchingStack_returnsTrue() {
+        StackInterface testStack = GetStack();
+        testStack.push("ABC");
+        testStack.push("XYZ");
+        StackInterface matchingStack = GetStack();
+        matchingStack.push("ABC");
+        matchingStack.push("XYZ");
+        assertEquals(testStack, matchingStack);
+    }
+
+    @Test
+    public void equals_differentStack_returnsFalse() {
+        StackInterface testStack = GetStack();
+        testStack.push("ABC");
+        testStack.push("XYZ");
+        StackInterface differentStack = GetStack();
+        differentStack.push("123");
+        differentStack.push("456");
+        assertNotSame(testStack, differentStack);
+    }
+
 
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************

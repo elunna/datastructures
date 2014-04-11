@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Arrays;
+
 /**
  * Description: This acts as a resizeable waiting line, or queue. Entries are
  * added to the back, and removed from the front.
@@ -70,7 +72,7 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
     public boolean isEmpty() {
         boolean result;
         if (size() == 0) {
-            assert frontIndex == (backIndex + 1) % array.length ;
+            assert frontIndex == (backIndex + 1) % array.length;
             result = true;
         } else {
             assert frontIndex != (backIndex + 1) % array.length : "isEmpty formula doesn't indicate empty, but numberOfNodes = null";
@@ -78,8 +80,7 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
         }
         return result;
     }
-    
-    
+
     @Override
     public boolean isFull() {
         return frontIndex == ((backIndex + 2) % array.length);
@@ -158,6 +159,28 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
             }
         }
         return counter;
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Queue_CircularArray)) {
+            return false;
+        }
+        Queue_CircularArray that = (Queue_CircularArray) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Arrays.deepHashCode(this.array);
+        hash = 71 * hash + this.numberOfEntries;
+        hash = 71 * hash + this.frontIndex;
+        hash = 71 * hash + this.backIndex;
+        return hash;
     }
 
     // *************************************************************************

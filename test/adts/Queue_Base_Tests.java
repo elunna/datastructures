@@ -1,5 +1,6 @@
 package adts;
 
+import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -40,7 +41,7 @@ public abstract class Queue_Base_Tests {
     }
 
     /**
-     * Test of getFront method, adding and removing one valid entry.
+     * Test of getFront method, enqueueing and removing one valid entry.
      */
     @Test
     public void getFront_oneEntry_resultMatches() {
@@ -54,20 +55,20 @@ public abstract class Queue_Base_Tests {
 
     /**
      * Test of getFront method, on queue containing multiple entries. Should
-     * return the first entry added.
+     * return the first entry enqueueed.
      */
     @Test
     public void getFront_multipleEntries_resultMatches() {
         QueueInterface testQueue = GetQueue();
-        String addedFirst = "ABC";
-        String addedLast = "DEF";
-        testQueue.enqueue(addedFirst);
-        testQueue.enqueue(addedLast);
+        String enqueueedFirst = "ABC";
+        String enqueueedLast = "DEF";
+        testQueue.enqueue(enqueueedFirst);
+        testQueue.enqueue(enqueueedLast);
 
         // Check for correct casting here.
 //        Object result = testQueue.getFront();
         String result = (String) testQueue.getFront();
-        assertEquals(addedFirst, result);
+        assertEquals(enqueueedFirst, result);
     }
 
     /**
@@ -85,7 +86,7 @@ public abstract class Queue_Base_Tests {
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
     /**
-     * Test of enqueue method, test adding a valid element to an empty queue.
+     * Test of enqueue method, test enqueueing a valid element to an empty queue.
      */
     @Test
     public void enqueue_validEntry_sizeIncrements() {
@@ -99,10 +100,34 @@ public abstract class Queue_Base_Tests {
         assertEquals(oldSize + 1, newSize);
     }
 
+    
+    @Test
+    public void equals_matchingQueue_returnsTrue() {
+        QueueInterface testQueue = GetQueue();
+        testQueue.enqueue("ABC");
+        testQueue.enqueue("XYZ");
+        QueueInterface matchingQueue = GetQueue();
+        matchingQueue.enqueue("ABC");
+        matchingQueue.enqueue("XYZ");
+        assertEquals(testQueue, matchingQueue);
+    }
+
+    @Test
+    public void equals_differentQueue_returnsFalse() {
+        QueueInterface testQueue = GetQueue();
+        testQueue.enqueue("ABC");
+        testQueue.enqueue("XYZ");
+        QueueInterface differentQueue = GetQueue();
+        differentQueue.enqueue("123");
+        differentQueue.enqueue("456");
+        assertNotSame(testQueue, differentQueue);
+    }
+
+    
     // ************************************************************************
     // *** MUTATOR TESTS *******************************************************
     /**
-     * Test of enqueue method, test adding a valid element to an empty queue.
+     * Test of enqueue method, test enqueueing a valid element to an empty queue.
      */
     @Test
     public void enqueue_validEntry_returnsTrue() {
@@ -113,7 +138,7 @@ public abstract class Queue_Base_Tests {
     }
 
     /**
-     * Test of enqueue method, adding a valid element to queue containing an
+     * Test of enqueue method, enqueueing a valid element to queue containing an
      * element. Size should equal two.
      */
     @Test
@@ -127,7 +152,7 @@ public abstract class Queue_Base_Tests {
     }
 
     /**
-     * Test of enqueue method, test adding null entry. Queue does not accept
+     * Test of enqueue method, test enqueueing null entry. Queue does not accept
      * null entries, so the queue should still be empty.
      */
     @Test
@@ -146,7 +171,7 @@ public abstract class Queue_Base_Tests {
     }
 
     /**
-     * Test of dequeue method, adding and removing one valid entry.
+     * Test of dequeue method, enqueueing and removing one valid entry.
      */
     @Test
     public void dequeue_validEntry_sizeDecrements() {
@@ -164,20 +189,20 @@ public abstract class Queue_Base_Tests {
 
     /**
      * Test of dequeue method, on queue containing multiple entries. Should
-     * return the first entry added.
+     * return the first entry enqueueed.
      */
     @Test
     public void dequeue_existingEntries_returnsFront() {
         QueueInterface testQueue = GetQueue();
-        String addedFirst = "ABC";
+        String enqueueedFirst = "ABC";
         String middle = "BBC";
-        String addedLast = "DEF";
-        testQueue.enqueue(addedFirst);
+        String enqueueedLast = "DEF";
+        testQueue.enqueue(enqueueedFirst);
         testQueue.enqueue(middle);
-        testQueue.enqueue(addedLast);
+        testQueue.enqueue(enqueueedLast);
 
         Object result = testQueue.dequeue();
-        assertEquals(addedFirst, result);
+        assertEquals(enqueueedFirst, result);
     }
 
     /**

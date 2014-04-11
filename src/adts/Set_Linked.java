@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File: Description:
  *
@@ -95,6 +98,28 @@ public class Set_Linked<T> implements SetInterface<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof Set_Linked)) {
+            return false;
+        }
+        Set_Linked that = (Set_Linked) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.firstNode);
+        hash = 83 * hash + this.numberOfNodes;
+        return hash;
+    }
+
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

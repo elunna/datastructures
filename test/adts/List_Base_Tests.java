@@ -128,6 +128,28 @@ public abstract class List_Base_Tests {
         assertTrue(elementsMatch);
     }
 
+    @Test
+    public void equals_matchingList_returnsTrue() {
+        ListInterface testList = GetList();
+        testList.add("ABC");
+        testList.add("XYZ");
+        ListInterface matchingList = GetList();
+        matchingList.add("ABC");
+        matchingList.add("XYZ");
+        assertEquals(testList, matchingList);
+    }
+
+    @Test
+    public void equals_differentList_returnsFalse() {
+        ListInterface testList = GetList();
+        testList.add("ABC");
+        testList.add("XYZ");
+        ListInterface differentList = GetList();
+        differentList.add("123");
+        differentList.add("456");
+        assertNotSame(testList, differentList);
+    }
+
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
     @Test

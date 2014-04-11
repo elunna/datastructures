@@ -1,5 +1,8 @@
 package adts;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * File: Description:
  *
@@ -163,6 +166,26 @@ public class List_LinkedTail<T> implements ListInterface<T> {
             currentNode = currentNode.getNext();
         }
         return currentNode;
+    }
+@Override
+    public boolean equals(Object aThat) { 
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof List_LinkedTail)) {
+            return false;
+        }
+        List_LinkedTail that = (List_LinkedTail) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.firstNode);
+        hash = 59 * hash + Objects.hashCode(this.lastNode);
+        hash = 59 * hash + this.numberOfNodes;
+        return hash;
     }
 
     // *************************************************************************

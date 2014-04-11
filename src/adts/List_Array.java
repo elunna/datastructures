@@ -22,8 +22,8 @@ public class List_Array<T> implements ListInterface<T> {
             throw new IllegalArgumentException("Bad constructor arg");
         }
         @SuppressWarnings("unchecked")
-        T[] tempBag = (T[]) new Object[capacity]; // unchecked cast
-        array = tempBag;
+        T[] tempList = (T[]) new Object[capacity]; // unchecked cast
+        array = tempList;
     }
 
     // *************************************************************************
@@ -37,6 +37,26 @@ public class List_Array<T> implements ListInterface<T> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) {
+            return true;
+        }
+        if (!(aThat instanceof List_Array)) {
+            return false;
+        }
+        List_Array that = (List_Array) aThat;
+        return Arrays.equals(this.toArray(), that.toArray()); //array!
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Arrays.deepHashCode(this.array);
+        hash = 59 * hash + this.numberOfEntries;
+        return hash;
     }
 
     // *************************************************************************
