@@ -38,7 +38,7 @@ import org.junit.runners.Suite;
     
     
 //    IN PROGRESS:
-    //    adts.Deque_DoublyLinked_Tests.class,
+        adts.Deque_DoublyLinked_Tests.class,
     
 //    
 

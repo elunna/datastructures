@@ -1,9 +1,6 @@
 package adts;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -59,12 +56,13 @@ public abstract class Deque_Base_Tests {
     @Test
     public void getFront_contents_returnsFront() {
         DequeInterface testDeque = GetDeque();
-        String addedFirst = "ABC";
-        String addedLast = "DEF";
-        testDeque.addToFront(addedFirst);
-        testDeque.addToFront(addedLast);
+        String string1 = "ABC";
+        String string2 = "DEF";
+        testDeque.addToFront(string1);
+        testDeque.addToFront(string2);
+        
         Object result = testDeque.getFront();
-        assertEquals(addedFirst, result);
+        assertEquals(string2, result);
     }
 
     @Test
@@ -77,14 +75,14 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    public void getBack_contents_resultsBack() {
+    public void getBack_contents_returnsBack() {
         DequeInterface testDeque = GetDeque();
-        String addedFirst = "ABC";
-        String addedLast = "DEF";
-        testDeque.addToFront(addedFirst);
-        testDeque.addToFront(addedLast);
+        String string1 = "ABC";
+        String string2 = "DEF";
+        testDeque.addToBack(string1);
+        testDeque.addToBack(string2);
         Object result = testDeque.getBack();
-        assertEquals(addedLast, result);
+        assertEquals(string2, result);
     }
 
     @Test
@@ -94,16 +92,11 @@ public abstract class Deque_Base_Tests {
         assertNull(result);
     }
 
-    @Test
-    public void getLength_newDeque_returnsZero() {
-        DequeInterface testDeque = GetDeque();
-        assertEquals(0, testDeque.size());
-    }
-
+    
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
     @Test
-    void addToFront_validEntry_sizeIncrements() {
+    public void addToFront_validEntry_sizeIncrements() {
         DequeInterface testDeque = GetDeque();
         int oldSize = testDeque.size();
         String string = "ABCDE";
@@ -114,7 +107,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToFront_validEntry_returnsTrue() {
+    public void addToFront_validEntry_returnsTrue() {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         boolean result = testDeque.addToFront(string);
@@ -122,7 +115,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToFront_validEntry_isNotEmpty() {
+    public void addToFront_validEntry_isNotEmpty() {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         testDeque.addToFront(string);
@@ -130,14 +123,14 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToFront_nullEntry_returnsFalse() {
+    public void addToFront_nullEntry_returnsFalse() {
         DequeInterface testDeque = GetDeque();
         boolean result = testDeque.addToFront(null);
         assertFalse(result);
     }
 
     @Test
-    void addToFront_nullEntry_sameSize() {
+    public void addToFront_nullEntry_sameSize() {
         DequeInterface testDeque = GetDeque();
         int oldSize = testDeque.size();
         testDeque.addToFront(null);
@@ -146,7 +139,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToBack_validEntry_sizeIncrements() {
+    public void addToBack_validEntry_sizeIncrements() {
         DequeInterface testDeque = GetDeque();
         int oldSize = testDeque.size();
         String string = "ABCDE";
@@ -156,7 +149,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToBack_validEntry_returnsTrue() {
+ public    void addToBack_validEntry_returnsTrue() {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         boolean result = testDeque.addToBack(string);
@@ -164,7 +157,7 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToBack_validEntry_isNotEmpty() {
+    public void addToBack_validEntry_isNotEmpty() {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
         testDeque.addToBack(string);
@@ -172,14 +165,14 @@ public abstract class Deque_Base_Tests {
     }
 
     @Test
-    void addToBack_nullEntry_returnsFalse() {
+    public void addToBack_nullEntry_returnsFalse() {
         DequeInterface testDeque = GetDeque();
         boolean result = testDeque.addToBack(null);
         assertFalse(result);
     }
 
     @Test
-    void addToBack_nullEntry_sameSize() {
+    public void addToBack_nullEntry_sameSize() {
         DequeInterface testDeque = GetDeque();
         int oldSize = testDeque.size();
         testDeque.addToBack(null);
@@ -207,11 +200,16 @@ public abstract class Deque_Base_Tests {
     public void removeFront_validEntry_sizeDecrements() {
         DequeInterface testDeque = GetDeque();
         String string = "ABCDE";
+        
         testDeque.addToFront(string);
+        
         int oldSize = testDeque.size();
+        
         testDeque.removeFront();
+        
         int newSize = testDeque.size();
-        assertEquals(oldSize, newSize);
+        
+        assertEquals(oldSize - 1, newSize);
     }
 
     @Test
@@ -220,12 +218,13 @@ public abstract class Deque_Base_Tests {
         String first = "ABC";
         String middle = "DEF";
         String last = "GHI";
+        
         testDeque.addToFront(first);
         testDeque.addToFront(middle);
         testDeque.addToFront(last);
 
         Object result = testDeque.removeFront();
-        assertEquals(first, result);
+        assertEquals(last, result);
     }
 
     @Test
@@ -261,9 +260,9 @@ public abstract class Deque_Base_Tests {
         String first = "ABC";
         String middle = "DEF";
         String last = "GHI";
-        testDeque.addToFront(first);
-        testDeque.addToFront(middle);
-        testDeque.addToFront(last);
+        testDeque.addToBack(first);
+        testDeque.addToBack(middle);
+        testDeque.addToBack(last);
 
         Object result = testDeque.removeBack();
         assertEquals(last, result);

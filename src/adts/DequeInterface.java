@@ -13,9 +13,9 @@ public interface DequeInterface<T> {
     // *** STATIC METHODS ******************************************************
     
     /**
-     * Gets the integer size of this queue.
+     * Gets the integer size of this deque.
      *
-     * @return an int indicating the length this queue
+     * @return an int indicating the length this deque
      */
     public int size();
     
