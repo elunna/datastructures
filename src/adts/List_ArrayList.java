@@ -2,6 +2,7 @@ package adts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -54,8 +55,8 @@ public class List_ArrayList<T> implements ListInterface<T> {
     public T[] toArray() {
         return (T[]) arrayList.toArray();
     }
-    
-        @Override
+
+    @Override
     public boolean equals(Object aThat) {
         if (this == aThat) {
             return true;
@@ -143,4 +144,28 @@ public class List_ArrayList<T> implements ListInterface<T> {
         arrayList.clear();
     }
 
+    // Displays all the elements of bag line by line.
+    @Override
+    public void display() {
+        displayArray(0, arrayList.size() - 1);
+    }
+
+    /**
+     * Does the work of recursively displaying the individual elements
+     *
+     * @param first
+     * @param last
+     */
+    private void displayArray(int first, int last) {
+        System.out.println(arrayList.get(first));
+        if (first < last) {
+            displayArray(first + 1, last);
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return arrayList.iterator();
+
+    }
 }

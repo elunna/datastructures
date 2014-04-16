@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -69,7 +70,6 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         return front;
     }
 
-    
     /**
      * Retrieves all entries that are in this queue.
      *
@@ -80,7 +80,7 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         // the cast is safe because the new array contains null entries
         @SuppressWarnings(value = "unchecked")
         T[] result = (T[]) new Object[size()]; // unchecked cast
-        int index = size()- 1;
+        int index = size() - 1;
 
         Node currentNode = backNode.getNext();
         while ((index < size()) && (currentNode != null)) {
@@ -91,7 +91,6 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         return result;
     }
 
-    
     @Override
     public boolean equals(Object aThat) {
         if (this == aThat) {
@@ -110,6 +109,23 @@ public class Queue_Linked<T> implements QueueInterface<T> {
         hash = 19 * hash + Objects.hashCode(this.frontNode);
         hash = 19 * hash + Objects.hashCode(this.backNode);
         return hash;
+    }
+
+    @Override
+    public void display() {
+        displayChain(frontNode);
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != null) {
+            System.out.println(nodeOne.getData()); // display first node
+            displayChain(nodeOne.getNext());
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ChainIterator(frontNode);
     }
 
     // *************************************************************************

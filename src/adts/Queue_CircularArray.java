@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Description: This acts as a resizeable waiting line, or queue. Entries are
@@ -119,6 +120,7 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
      *
      * @return a newly allocated array of all the entries in the bag
      */
+    @Override
     public T[] toArray() {
         @SuppressWarnings(value = "unchecked")
         T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
@@ -126,6 +128,31 @@ public class Queue_CircularArray<T> implements QueueInterface<T> {
         return result;
     }
 
+    
+    // Displays all the elements of bag line by line.
+    @Override
+    public void display() {
+        displayArray(0, numberOfEntries - 1);
+    }
+
+    /**
+     * Does the work of recursively displaying the individual elements 
+     * 
+     * @param first
+     * @param last 
+     */
+    private void displayArray(int first, int last) {
+        System.out.println(array[first]);
+        if (first < last) {
+            displayArray(first + 1, last);
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ArrayIterator(array);
+    }
+    
     /**
      * Searches the bag for anEntry and if found, returns its location index. If
      * not found, return null.

@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -110,6 +111,24 @@ public class Deque_DoublyLinked<T> implements DequeInterface<T> {
         hash = 97 * hash + Objects.hashCode(this.frontNode);
         hash = 97 * hash + Objects.hashCode(this.backNode);
         return hash;
+    }
+
+
+     @Override
+    public void display() {
+        displayChain(frontNode);
+    }
+
+    private void displayChain(NodeDL nodeOne) {
+        if (nodeOne != null) {
+            System.out.println(nodeOne.getData()); // display first node
+            displayChain(nodeOne.getNext());
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new DLChainIterator(frontNode);
     }
 
 

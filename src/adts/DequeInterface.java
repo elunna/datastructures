@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Erik Lunna
@@ -11,14 +13,13 @@ public interface DequeInterface<T> {
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
-    
     /**
      * Gets the integer size of this deque.
      *
      * @return an int indicating the length this deque
      */
     public int size();
-    
+
     /**
      * Check if the deque is empty
      *
@@ -27,7 +28,6 @@ public interface DequeInterface<T> {
     public boolean isEmpty();
 
     // public boolean isFull();
-
     /**
      * Look at the front entry
      *
@@ -43,7 +43,11 @@ public interface DequeInterface<T> {
     public T getBack();
 
     public T[] toArray();
-    
+
+    public Iterator getIterator();
+
+    public void display();
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**

@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Iterator;
+
 /**
  * An interface for the ADT list. Entries in the list have positions that begin
  * with 0.
@@ -24,6 +26,10 @@ public interface ListInterface<T> {
 
     public T[] toArray();
 
+    public void display();
+    
+    public Iterator getIterator();
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     public boolean add(T newEntry);

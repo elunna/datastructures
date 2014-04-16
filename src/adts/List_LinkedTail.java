@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -188,6 +189,25 @@ public class List_LinkedTail<T> implements ListInterface<T> {
         return hash;
     }
 
+      @Override
+    public void display() {
+        displayChain(firstNode);
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != null) {
+            System.out.println(nodeOne.getData()); // display first node
+            displayChain(nodeOne.getNext());
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ChainIterator(firstNode);
+    }
+
+    
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

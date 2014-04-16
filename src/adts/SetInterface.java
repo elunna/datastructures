@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Iterator;
+
 /**
  * File: SetInterface.java Description: Describes an ADT set. A set is a
  * collection that cannot contain more that one of any given object. It cannot
@@ -43,6 +45,9 @@ public interface SetInterface<T> {
     public SetInterface intersection(SetInterface anotherSet);
 
     public SetInterface difference(SetInterface anotherSet);
+    
+    public void display();
+    public Iterator getIterator();
 
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

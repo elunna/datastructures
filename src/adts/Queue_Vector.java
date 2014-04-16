@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ import java.util.Vector;
  * @author lunatunez
  */
 @SuppressWarnings("UseOfObsoleteCollectionType")
-class Queue_Vector<T> implements QueueInterface {
+class Queue_Vector<T> implements QueueInterface<T> {
 
     Vector<T> vector;
 
@@ -65,6 +66,30 @@ class Queue_Vector<T> implements QueueInterface {
         return hash;
     }
 
+    // Displays all the elements of bag line by line.
+    @Override
+    public void display() {
+        displayArray(0, vector.size() - 1);
+    }
+
+    /**
+     * Does the work of recursively displaying the individual elements
+     *
+     * @param first
+     * @param last
+     */
+    private void displayArray(int first, int last) {
+        System.out.println(vector.get(first));
+        if (first < last) {
+            displayArray(first + 1, last);
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return vector.iterator();
+
+    }
     // *************************************************************************
     // *** MUTATOR METHODS ******************************************************
     @Override

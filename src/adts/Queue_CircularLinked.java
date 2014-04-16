@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Objects;
  *
  * @author lunatunez
  */
-class Queue_CircularLinked<T> implements QueueInterface {
+class Queue_CircularLinked<T> implements QueueInterface<T> {
 
     private Node<T> backNode;
     private int numberOfNodes;
@@ -125,6 +126,29 @@ class Queue_CircularLinked<T> implements QueueInterface {
         return hash;
     }
 
+    
+       @Override
+    public void display() {
+        displayChain(backNode.getNext());
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != backNode) {
+            System.out.println(nodeOne.getData());
+            displayChain(nodeOne.getNext());
+        }
+        else if (nodeOne == backNode) {
+            System.out.println(nodeOne.getData()); // display first node
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ChainIterator(backNode.getNext());
+    }
+    
+    
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

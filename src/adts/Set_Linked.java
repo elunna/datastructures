@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -98,7 +99,6 @@ public class Set_Linked<T> implements SetInterface<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     @Override
     public boolean equals(Object aThat) {
         if (this == aThat) {
@@ -119,7 +119,23 @@ public class Set_Linked<T> implements SetInterface<T> {
         return hash;
     }
 
-    
+    @Override
+    public void display() {
+        displayChain(firstNode);
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != null) {
+            System.out.println(nodeOne.getData()); // display first node
+            displayChain(nodeOne.getNext());
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ChainIterator(firstNode);
+    }
+
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override
@@ -135,7 +151,6 @@ public class Set_Linked<T> implements SetInterface<T> {
         }
     }
 
-    
     /**
      *
      * @param index

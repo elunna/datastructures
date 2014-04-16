@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * @author Erik Lunna<eslunna@gmail.com>
@@ -147,6 +148,17 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         return hash;
     }
 
+    private void displayArray(int first, int last) {
+        System.out.println(array[first]);
+        if (first < last) {
+            displayArray(first + 1, last);
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ArrayIterator(array);
+    }
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**
@@ -250,4 +262,16 @@ public class Bag_ResizeableArray<T> implements BagInterface<T> {
         }
     }
 
+    // Displays all the elements of bag line by line.
+    @Override
+    public void display() {
+        displayArray(0, numberOfEntries - 1);
+    }
+
+    /**
+     * Does the work of recursively displaying the individual elements
+     *
+     * @param first
+     * @param last
+     */
 }

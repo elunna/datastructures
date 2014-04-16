@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Iterator;
+
 /**
  * @author Erik Lunna<eslunna@gmail.com>
  * @param <T>
@@ -46,6 +48,10 @@ public interface QueueInterface<T> {
      * @return 
      */
     public T[] toArray();
+    
+    public Iterator getIterator();
+    
+    public void display();
     
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

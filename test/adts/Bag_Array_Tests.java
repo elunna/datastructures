@@ -19,11 +19,10 @@ public class Bag_Array_Tests extends Bag_Base_Tests {
         return new Bag_Array<>(capacity);
     }
 
-// If a resizeable bag is passed a zero capacity argument,
+    // If a resizeable bag is passed a zero capacity argument,
     // throw an exception.
     @Test(expected = IllegalArgumentException.class)
     public void newBag_zeroCapacity_throwException() {
-//        Bag_Array<String> testBag = (Bag_Array) GetBag(0);
         BagInterface testBag = GetBag(0);
     }
 

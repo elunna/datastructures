@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -65,7 +66,26 @@ public class Stack_Linked<T> implements StackInterface<T> {
         hash = 89 * hash + Objects.hashCode(this.topNode);
         hash = 89 * hash + this.numberOfNodes;
         return hash;
+
     }
+
+     @Override
+    public void display() {
+        displayChain(topNode);
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != null) {
+            System.out.println(nodeOne.getData()); // display first node
+            displayChain(nodeOne.getNext());
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ChainIterator(topNode);
+    }
+
 
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************

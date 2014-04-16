@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -119,6 +120,31 @@ public class Queue_2PartCircular<T> implements QueueInterface<T> {
         return hash;
     }
 
+    
+
+    @Override
+    public void display() {
+        displayChain(queueNode);
+    }
+
+    private void displayChain(Node nodeOne) {
+        if (nodeOne != freeNode) {
+            System.out.println(nodeOne.getData());
+            displayChain(nodeOne.getNext());
+        }
+        else
+            System.out.println(nodeOne.getData()); // display first node
+    }
+
+    @Override
+    public Iterator getIterator() {
+        // may have to revise this
+        // along with circularIterator
+        return new ChainIterator(queueNode);
+    }
+
+    
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override

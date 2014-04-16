@@ -1,7 +1,6 @@
 package adts;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -73,7 +72,7 @@ public abstract class Set_Base_Tests {
         SetInterface testSet = GetSet();
         String goodString = "testSet";
         String missing = "missing string";
-        testSet.add(goodString);   
+        testSet.add(goodString);
         assertFalse(testSet.contains(missing));
     }
 
@@ -93,9 +92,6 @@ public abstract class Set_Base_Tests {
         assertEquals(0, testArray.length);
     }
 
-    
-    
-    
     @Test
     public void toArray_validSet_elementsMatch() {
         SetInterface testSet = GetSet();
@@ -151,8 +147,7 @@ public abstract class Set_Base_Tests {
 //    }
 //
 //    
-    
-    
+
     @Test
     public void equals_matchingSet_returnsTrue() {
         SetInterface testSet = GetSet();
@@ -175,7 +170,138 @@ public abstract class Set_Base_Tests {
         assertNotSame(testSet, differentSet);
     }
 
-    
+    @Test
+    public void union_validSets_containsSet1() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface union = set1.union(set2);
+        assertTrue(union.contains("A"));
+    }
+
+    @Test
+    public void union_validSets_containsSet2() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface union = set1.union(set2);
+        assertTrue(union.contains("B"));
+    }
+
+    @Test
+    public void union_sameValues_sizeEqualsOne() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("A");
+        SetInterface union = set1.union(set2);
+        assertEquals(1, union.size());
+    }
+
+    @Test
+    public void union_differentValues_sizeEqualsOne() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface union = set1.union(set2);
+        assertEquals(2, union.size());
+    }
+
+    public void union_emptySet_sizeEqualsOne() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        SetInterface union = set1.union(set2);
+        assertEquals(1, union.size());
+    }
+
+    // union_differentDataTypes_throwsException
+    @Test
+    public void intersection_differentValues_EmptySet() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface intersection = set1.intersection(set2);
+        assertTrue(intersection.isEmpty());
+    }
+
+    @Test
+    public void intersection_sameValues_size1() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("A");
+        SetInterface intersection = set1.intersection(set2);
+        assertEquals(1, intersection.size());
+    }
+
+    @Test
+    public void intersection_emptySet_emptyUnion() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        SetInterface intersection = set1.intersection(set2);
+        assertTrue(intersection.isEmpty());
+    }
+
+    @Test
+    public void difference_differentValues_containsSet1() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface difference = set1.difference(set2);
+        assertTrue(difference.contains("A"));
+    }
+
+    @Test
+    public void difference_differentValues_set2NotPresent() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface difference = set1.difference(set2);
+        assertFalse(difference.contains("B"));
+
+    }
+
+    @Test
+    public void difference_differentValues_sizeEqualsOne() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("B");
+        SetInterface difference = set1.difference(set2);
+        assertEquals(1, difference.size());
+
+    }
+
+    @Test
+    public void difference_sameValues_emptySet() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("A");
+        SetInterface difference = set1.difference(set2);
+        assertTrue(difference.isEmpty());
+
+    }
+
+    @Test
+    public void difference_sameValues_valueNotPresent() {
+        SetInterface set1 = GetSet();
+        SetInterface set2 = GetSet();
+        set1.add("A");
+        set2.add("A");
+        SetInterface difference = set1.difference(set2);
+        assertFalse(difference.contains("A"));
+    }
+
+    // intersection_differentDataTypes_throwsException
     // *************************************************************************
     // *** MUTATOR TESTS *******************************************************
     @Test

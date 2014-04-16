@@ -1,69 +1,70 @@
 package adts;
 
 /**
+ * This is an interface for the abstract MatrixInterface data type. A matrix
+ * manages a m x n sized array of elements.
+ *
+ * MatrixInterface will most commonly be used with Integers, but it could be
+ * used with other numbers like: doubles, floats, longs, shorts, binary, octal,
+ * hex It could also be extended and used with other objects.
+ *
+ *
  *
  * @author lunatunez
- * @param <T>
  */
-public interface MatrixInterface<T> {
+public interface MatrixInterface {
 
-    // m columns, n rows
-    // elements or entries
-    public T getElement(int column, int row);
+    // *************************************************************************
+    // *** STATIC METHODS ******************************************************
+    public int getElement(int row, int column);
 
-    public void setElement(int column, int row, T newEntry);
-
-    public Matrix multiplyBy(Matrix anotherMatrix);
-
-    public Matrix multiplyScalar(int scalar);
-
-    public Matrix addTo(Matrix anotherMatrix);
-    public int getNumberOfElements();
     public int getCapacity();
-    public void transpose();
 
-    public void getInverse();
+    public int getRows();
 
-    public boolean getBinary(); // Or is it something else?
+    public int getColumns();
+
+    public boolean isZeroMatrix();
 
     public boolean isSquareMatrix();
 
-//    public boolean isBinaryMatrix();
+    public boolean isBinaryMatrix();
 
-//    public boolean isInteger();
-//    public boolean isRealMatrix();
-//    public boolean isComplexMatrix();
-//    public boolean isEmptyMatrix(); // no rows/col
-//    public boolean isRowVector(); // no rows/col
-//    public boolean isColumnVector(); // no rows/col
-    
-    
+    public void display();
 
-    // booleanMatrix extends Matrix
-    // private addRow, private addCol
-    // private plusElement(int n, int m, T element);
-    // private minusElement(int n, int m, T element);
+    // public clone();
+//    public Matrix getInverse();
+//    public Matrix getIdentity();   
+    // *************************************************************************
+    // *** MUTATOR METHODS *****************************************************
+    public void setElement(int row, int column, int newEntry);
+
+    public void initialize(); // or initialize()
+
+    public Matrix multiplyScalar(int scalar);
+
+    public Matrix transpose(int adjustment);
+
+    public Matrix addTo(Matrix anotherMatrix);
+
+    public Matrix minus(Matrix anotherMatrix);
+
+    public Matrix multiplyBy(Matrix anotherMatrix);
+
+//    public Matrix reflectX();
+//    public Matrix reflectY();
+//    public Matrix rotate();
     
     
+    // Row operations
+    // interchange 2 rows
+    // multiply a row by a scalar
+    // sum with another (row * scalar) ??
     
-    // reflect x-axis
-    // reflect y-axis
-    // rotate (square)
+    // inRowEcheolon form?
     
+    // solve system of linear equations
     
-    // Identity
-//    The identity matrix In of size n is the n-by-n matrix 
-//    in which all the elements on the main diagonal are 
-//    equal to 1 and all other elements are equal to 0, e.g.
-    
-    
-    // public void addRow(int columns): 
-//    append a row to the end of the matrix, specify # of column
-    // use an ArrayList of Rows. 
-    // We will be able to build any kind of matrix that way.
-    // Diagonal matrix will be easy to build
-    // col 1
-    // col 2
-    // col 3, etc..
+    // isDeterminant?
     
 }

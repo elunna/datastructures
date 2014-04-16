@@ -1,5 +1,7 @@
 package adts;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Erik Lunna<eslunna@gmail.com>
@@ -43,6 +45,11 @@ public interface StackInterface<T> {
      * @return 
      */
     public T[] toArray();
+    
+    
+    public Iterator getIterator();
+    
+    public void display();
     
     
     // *************************************************************************

@@ -1,6 +1,7 @@
 package adts;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -155,63 +156,50 @@ public class Set_Array<T> implements SetInterface<T> {
         return toArray();
     }
 
+
+
     @Override
     public SetInterface union(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Set_Array union = new Set_Array();
+        // Add all the elements of this set
+        for (T t : this.toArray()) {
+            if (!union.contains(t)) {
+                union.add(t);
+            }
+        }
+        // Add the element from the other set, checking duplicates
+        for (Object t : anotherSet.toArray()) {
+            if (!union.contains((Comparable) t)) {
+                union.add((Comparable) t);
+            }
+        }
+        return union;
     }
 
     @Override
     public SetInterface intersection(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set_Array intersection = new Set_Array();
+
+        for (int i = 0; i < this.size(); i++) {
+            if (anotherSet.contains((Comparable) array[i])) {
+                intersection.add(array[i]);
+            }
+        }
+        return intersection;
     }
 
     @Override
     public SetInterface difference(SetInterface anotherSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        Set_Array difference = new Set_Array();
 
-//
-//    @Override
-//    public SetInterface union(SetInterface anotherSet) {
-//        Set_Array union = new Set_Array();
-//        // Add all the elements of this set
-//        for (T t : this.toArray()) {
-//            if (!union.contains(t)) {
-//                union.add(t);
-//            }
-//        }
-//        // Add the element from the other set, checking duplicates
-//        for (Object t : anotherSet.toArray()) {
-//            if (!union.contains((Comparable) t)) {
-//                union.add((Comparable) t);
-//            }
-//        }
-//        return union;
-//    }
-//
-//    @Override
-//    public SetInterface intersection(SetInterface anotherSet) {
-//        Set_Array intersection = new Set_Array();
-//
-//        for (int i = 0; i < this.size(); i++) {
-//            if (anotherSet.contains((Comparable) array[i])) {
-//                intersection.add(array[i]);
-//            }
-//        }
-//        return intersection;
-//    }
-//
-//    @Override
-//    public SetInterface difference(SetInterface anotherSet) {
-//        Set_Array difference = new Set_Array();
-//
-//        for (int i = 0; i < this.size(); i++) {
-//            if (!anotherSet.contains((Comparable) array[i])) {
-//                difference.add(array[i]);
-//            }
-//        }
-//        return difference;
-//    }
+        for (int i = 0; i < this.size(); i++) {
+            if (!anotherSet.contains((Comparable) array[i])) {
+                difference.add(array[i]);
+            }
+        }
+        return difference;
+    }
     
     @Override
     public boolean equals(Object aThat) {
@@ -233,6 +221,32 @@ public class Set_Array<T> implements SetInterface<T> {
         return hash;
     }
 
+    
+    // Displays all the elements of bag line by line.
+    @Override
+    public void display() {
+        displayArray(0, numberOfEntries - 1);
+    }
+
+    /**
+     * Does the work of recursively displaying the individual elements 
+     * 
+     * @param first
+     * @param last 
+     */
+    private void displayArray(int first, int last) {
+        System.out.println(array[first]);
+        if (first < last) {
+            displayArray(first + 1, last);
+        }
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new ArrayIterator(array);
+    }
+    
+    
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     /**
@@ -292,6 +306,7 @@ public class Set_Array<T> implements SetInterface<T> {
      * @param index
      * @return If no such entry exists, returns null.
      */
+    @Override
     public T remove(int index) {
         T result = null;
         if (index < 0 || index > numberOfEntries - 1 || isEmpty()) {
