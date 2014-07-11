@@ -84,7 +84,9 @@ public class List_Array<T> implements ListInterface<T> {
     public Iterator getIterator() {
         return new ArrayIterator(array);
     }
-    // *************************************************************************
+ 
+
+// *************************************************************************
     // *** MUTATOR METHODS *****************************************************
     @Override
     public boolean insert(int index, T newEntry) {
@@ -289,6 +291,19 @@ public class List_Array<T> implements ListInterface<T> {
         return result;
     }
 
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry == null || size() == 0) {
+            return false;
+        }
+
+        int index = getIndexOf(anEntry);
+        T result = remove(index);
+
+        return result != null;
+    }
+    
+    
     /**
      * Removes all entries from this bag.
      */
@@ -298,4 +313,6 @@ public class List_Array<T> implements ListInterface<T> {
             remove();
         }
     }
+
+
 }

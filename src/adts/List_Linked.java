@@ -124,6 +124,7 @@ public class List_Linked<T> implements ListInterface<T> {
      * @param anEntry the entry to be counted
      * @return the number of times anEntry appears in the bag
      */
+    @Override
     public int getFrequencyOf(T anEntry) {
         int frequency = 0;
         int counter = 0;

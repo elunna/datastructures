@@ -166,4 +166,21 @@ public class List_Vector<T> implements ListInterface<T> {
     public boolean isFull() {
         return false;
     }
+
+    @Override
+    public int getFrequencyOf(T anEntry) {
+        int count = 0;
+        for (int i = 0; i < vector.size(); i++) {
+            if (anEntry == vector.get(i) ) {
+                count++;
+            }
+            
+        }
+        return count;
+    }
+
+    @Override
+    public boolean remove(T anEntry) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

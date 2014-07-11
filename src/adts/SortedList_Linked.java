@@ -6,6 +6,7 @@ package adts;
  * @param <T>
  */
 public class SortedList_Linked<T extends Comparable<? super T>>
+        extends LinkedChainBase<T>
         implements SortedListInterface<T> {
 
     private Node firstNode;
@@ -17,7 +18,7 @@ public class SortedList_Linked<T extends Comparable<? super T>>
     }
 
     @Override
-    public void add(T newEntry) {
+    public boolean add(T newEntry) {
         Node newNode = new Node(newEntry);
         Node nodeBefore = getNodeBefore(newEntry);
         if (isEmpty() || (nodeBefore == null)) // add to beginning
@@ -30,6 +31,7 @@ public class SortedList_Linked<T extends Comparable<? super T>>
             nodeBefore.setNext(newNode);
         }
         numberOfEntries++;
+        return true;
     }
 
     @Override
@@ -57,11 +59,7 @@ public class SortedList_Linked<T extends Comparable<? super T>>
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
     @Override
     public int size() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -95,5 +93,15 @@ public class SortedList_Linked<T extends Comparable<? super T>>
             currentNode = currentNode.getNext();
         }
         return nodeBefore;
+    }
+
+    @Override
+    public boolean insert(int index, T newEntry) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean replace(int index, T newEntry) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

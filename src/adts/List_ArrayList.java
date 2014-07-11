@@ -168,4 +168,26 @@ public class List_ArrayList<T> implements ListInterface<T> {
         return arrayList.iterator();
 
     }
+
+    @Override
+    public int getFrequencyOf(T anEntry) {
+        int count = 0;
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (anEntry == arrayList.get(i)) {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    @Override
+    public boolean remove(T anEntry) {
+        if (anEntry != null) {
+            arrayList.remove(anEntry);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

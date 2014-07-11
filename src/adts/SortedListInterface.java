@@ -18,8 +18,9 @@ public interface SortedListInterface<T extends Comparable<? super T>> {
      * the appropriate order.
      *
      * @param newEntry the object to be added as a new entry
+     * @return 
      */
-    public void add(T newEntry);
+    public boolean add(T newEntry);
 
     /**
      * Removes an entry from this list.

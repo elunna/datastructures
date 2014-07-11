@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public interface ListInterface<T> {
 
-    public static final int DEFAULT_CAPACITY = 5;
+    public static final int DEFAULT_CAPACITY = 10;
 
     // *************************************************************************
     // *** STATIC METHODS ******************************************************
@@ -24,11 +24,15 @@ public interface ListInterface<T> {
 
     public boolean contains(T anEntry);
 
+    public int getFrequencyOf(T anEntry);
+    
     public T[] toArray();
 
     public void display();
     
     public Iterator getIterator();
+    
+    
     
     // *************************************************************************
     // *** MUTATOR METHODS *****************************************************
@@ -39,6 +43,10 @@ public interface ListInterface<T> {
     public T remove(); // remove last entry
 
     public T remove(int index);
+    
+    public boolean remove(T anEntry);
+    
+    
     
     public boolean replace(int index, T newEntry);
 
