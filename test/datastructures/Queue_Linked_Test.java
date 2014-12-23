@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.QueueInterface;
-import datastructures.Queue_Linked;
-
 /**
  * Tests for Queue_Linked
  *
@@ -15,8 +12,4 @@ public class Queue_Linked_Test extends Queue_Base_Tests {
         return new Queue_Linked();
     }
 
-    @Override
-    public String toString() {
-        return "Queue_CircularLinkedTest";
-    }
 }

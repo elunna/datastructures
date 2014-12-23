@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.DequeInterface;
-import datastructures.Deque_DoublyLinked;
-
 /**
  * Tests for Deque_DoublyLinked
  *

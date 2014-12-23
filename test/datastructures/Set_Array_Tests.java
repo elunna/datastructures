@@ -1,9 +1,5 @@
 package datastructures;
 
-import datastructures.Set_ResizableArray;
-import datastructures.SetInterface;
-import junit.framework.Assert;
-import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 /**
@@ -32,5 +28,4 @@ public class Set_Array_Tests extends Set_Base_Tests {
     public void newSet_negativeCapacity_throwException() {
         SetInterface testSet = GetSet(-1);
     }
-
 }

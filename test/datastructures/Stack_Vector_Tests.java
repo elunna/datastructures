@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.StackInterface;
-import datastructures.Stack_Vector;
-
 /**
  * Tests for Stack_Vector.
  *

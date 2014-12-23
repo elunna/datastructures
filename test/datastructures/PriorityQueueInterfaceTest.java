@@ -1,6 +1,5 @@
 package datastructures;
 
-import datastructures.PriorityQueueInterface;
 import org.junit.Test;
 
 /**

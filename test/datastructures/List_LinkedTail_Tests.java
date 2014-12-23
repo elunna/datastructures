@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.ListInterface;
-import datastructures.List_LinkedTail;
-
 /**
  * Tests for List_LinkedTail
  *

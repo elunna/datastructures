@@ -61,8 +61,4 @@ public class Bag_Array_Tests extends Bag_Base_Tests {
         assertEquals(expResult, result);
     }
 
-    @Override
-    public String toString() {
-        return "Bag_Array_Tests";
-    }
 }

@@ -1,6 +1,5 @@
 package datastructures;
 
-import datastructures.SetInterface;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -463,5 +462,4 @@ public abstract class Set_Base_Tests {
         boolean expResult = true;
         assertEquals(expResult, result);
     }
-
 }

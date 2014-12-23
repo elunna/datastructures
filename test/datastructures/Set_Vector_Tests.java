@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.Set_Vector;
-import datastructures.SetInterface;
-
 /**
  * Tests for Set_Vector.
  *

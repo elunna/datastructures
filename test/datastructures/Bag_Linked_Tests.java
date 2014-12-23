@@ -15,8 +15,4 @@ public class Bag_Linked_Tests extends Bag_Base_Tests {
         return new Bag_Linked<>();
     }
 
-    @Override
-    public String toString() {
-        return "LinkedBagTests";
-    }
 }

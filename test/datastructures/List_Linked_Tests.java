@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.List_Linked;
-import datastructures.ListInterface;
-
 /**
  * Tests for List_Linked.
  *

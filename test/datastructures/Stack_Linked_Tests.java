@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.Stack_Linked;
-import datastructures.StackInterface;
-
 /**
  * Tests for Stack_Linked
  *

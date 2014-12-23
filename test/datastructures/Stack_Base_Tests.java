@@ -1,6 +1,5 @@
 package datastructures;
 
-import datastructures.StackInterface;
 import junit.framework.Assert;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;

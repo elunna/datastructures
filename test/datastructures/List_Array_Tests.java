@@ -1,7 +1,5 @@
 package datastructures;
 
-import datastructures.ListInterface;
-import datastructures.List_Array;
 import junit.framework.Assert;
 import org.junit.Test;
 

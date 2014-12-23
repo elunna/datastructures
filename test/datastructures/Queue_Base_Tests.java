@@ -1,6 +1,5 @@
 package datastructures;
 
-import datastructures.QueueInterface;
 import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
 

@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.QueueInterface;
-import datastructures.Queue_2PartCircular;
-
 /**
  * Tests for Queue_2PartCircular.
  *

@@ -1,8 +1,5 @@
 package datastructures;
 
-import datastructures.Set_Linked;
-import datastructures.SetInterface;
-
 /**
  * Tests for Set_Linked.
  *

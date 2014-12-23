@@ -1,7 +1,5 @@
 package datastructures;
 
-import datastructures.Stack_Array;
-import datastructures.StackInterface;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -37,8 +35,4 @@ public class Stack_Array_Tests extends Stack_Base_Tests {
         Stack_Array<String> testStack = (Stack_Array) GetStack(-1);
     }
 
-    @Override
-    public String toString() {
-        return "Stack_Array_Tests";
-    }
 }

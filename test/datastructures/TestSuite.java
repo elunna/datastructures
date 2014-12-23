@@ -29,8 +29,7 @@ import org.junit.runners.Suite;
     datastructures.Queue_CircularLinked_Test.class,
     datastructures.Queue_2PartCircular_Tests.class,
     datastructures.Deque_DoublyLinked_Tests.class,
-    datastructures.MatrixTests.class, 
-// IN PROGRESS: // program union, intersection, difference
+    datastructures.MatrixTests.class, // IN PROGRESS: // program union, intersection, difference
 //    adts.Set_Array_Tests.class, //equals
 //    adts.Set_Linked_Tests.class, //equals
 //    adts.Set_Vector_Tests.class, //equals

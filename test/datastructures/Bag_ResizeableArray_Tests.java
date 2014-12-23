@@ -51,9 +51,4 @@ public class Bag_ResizeableArray_Tests extends Bag_Base_Tests {
         boolean addSucceeded = testBag.add("D");
         Assert.assertTrue(addSucceeded);
     }
-
-    @Override
-    public String toString() {
-        return "Bag_ResizeableArray_Tests";
-    }
 }
